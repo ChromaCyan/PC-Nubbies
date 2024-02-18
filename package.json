@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "build": "chmod +x node_modules/.bin/vite && vite build"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
