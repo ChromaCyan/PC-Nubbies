@@ -21,8 +21,8 @@ use Inertia\Inertia;
 
 //User Routes (When logged in, goes to dashboard/Options for profile from default laravel breeze)
 Route::get('/', [UserController::class,'index'])->name('home');
-Route::get('/',[UserController::class,'index'])->middleware(['auth', 'verified'])->name('home');
 Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -54,11 +54,12 @@ Route::prefix('products')->controller(ProductListController::class)->group(funct
 });
 
 //Admin Routes (Show Login Form/Login/Logout)
-Route::group(['prefix' => 'admin', 'middleware' => 'redirectAdmin'], function () {
+Route::group(['prefix' => 'admin'], function () {
     Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [AdminAuthController::class, 'login'])->name('admin.login.post');
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
 });
+
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

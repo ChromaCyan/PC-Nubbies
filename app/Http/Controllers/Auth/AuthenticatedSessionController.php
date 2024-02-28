@@ -34,7 +34,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+    
+        if (Auth::user()->usertype == 1) {
+            return redirect()->route('admin.dashboard'); 
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -48,6 +53,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

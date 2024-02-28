@@ -23,7 +23,7 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout style="background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);">
+    <GuestLayout>
         <Head title="Register" />
 
         <form @submit.prevent="submit" class="max-w-md mx-auto mt-8">

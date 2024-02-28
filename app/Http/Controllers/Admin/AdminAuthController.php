@@ -16,24 +16,30 @@ class AdminAuthController extends Controller
 
     public function login(Request $request)
     {
-        // Add your login logic here
-        // Check if the user is an admin and redirect accordingly
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'usertype' => 1])) {
-            return redirect()->route('admin.dashboard'); // Redirect to the admin dashboard
-        }
+    // Attempt to authenticate the user
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
-        return redirect()->route('admin.login')->with('error', 'Invalid credentials.');
+        //I mean if the usertype is 1 which i designate into addmin then it will go to admin dashboard
+        if (Auth::user()->usertype == 1) {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('home'); // Redirect to the user dashboard or home page
+        }
     }
+
+    return redirect()->route('admin.login')->with('error', 'Invalid credentials.');
+    }
+
 
     public function logout(Request $request)
     {        
-        Auth::guard('web')->logout();
-       
-        $request->session()->invalidate();
+    Auth::guard('web')->logout();
+   
+    $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+    $request->session()->regenerateToken();
 
-        // return redirect('/');
-        return redirect()->route('admin.login');
+    return redirect()->route('login');
     }
+
 }

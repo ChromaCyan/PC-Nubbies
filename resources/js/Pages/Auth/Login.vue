@@ -27,10 +27,11 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
 </script>
 
 <template>
-    <GuestLayout style="background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);">
+    <GuestLayout>
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -77,6 +78,12 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
+                <Link
+                    :href="route('register')"
+                    class="underline text-sm text-gray-600 hover:text-gray-900"
+                >
+                    Not Registered Yet?
+                </Link>
 
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in

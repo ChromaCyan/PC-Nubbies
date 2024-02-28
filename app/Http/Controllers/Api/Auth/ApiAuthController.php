@@ -7,32 +7,38 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Http\Resources\UserResource;
 
 class ApiAuthController extends Controller
 {
     public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|between:2,100',
+        'email' => 'required|string|email|max:100|unique:users',
+        'gender' => 'required|boolean',
+        'age_range' => 'required|integer',
+        'password' => 'required|string|min:6',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($request->password)]
-        ));
-
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
+    if ($validator->fails()) {
+        return response()->json($validator->errors()->toJson(), 400);
     }
+
+    $user = User::create(array_merge(
+        $validator->validated(),
+        ['password' => Hash::make($request->password)]
+    ));
+
+    return response()->json([
+        'message' => 'User successfully registered',
+        'user' => new UserResource($user)
+    ], 201);
+}
+
+
 
     public function login(Request $request)
 {
@@ -40,7 +46,7 @@ class ApiAuthController extends Controller
 
     if (Auth::attempt($credentials)) {
         $user = Auth::user();
-        $token = Str::random(80);
+        $token = Str::random(80); 
         $user->api_token = hash('sha256', $token);
         $user->save();
 
@@ -48,14 +54,12 @@ class ApiAuthController extends Controller
             'access_token' => $user->api_token,
             'token_type' => 'bearer',
             'message' => 'User successfully logged in',
-            'user' => $user
+            'user' => new UserResource($user) 
         ]);
     }
 
     return response()->json(['error' => 'Unauthorized'], 401);
 }
-
-
 
 public function userProfile(Request $request)
 {
@@ -66,7 +70,7 @@ public function userProfile(Request $request)
     }
 
     return response()->json([
-        'user' => $user
+        'user' => new UserResource($user) 
     ]);
 }
 
@@ -82,4 +86,5 @@ public function logout(Request $request)
 
     return response()->json(['message' => 'User successfully signed out']);
 }
+
 }
