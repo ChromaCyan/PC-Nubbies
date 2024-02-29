@@ -16,7 +16,6 @@ class ApiCartController extends Controller
         $cartItems = CartItem::where('user_id', $user->id)->get();
         $products = Product::whereIn('id', $cartItems->pluck('product_id'))->get();
 
-        // Assuming you have a method to get cart items as an associative array
         $cartItemsArray = $this->getCartItemsArray($cartItems, $products);
 
         return new CartResource([$products, $cartItemsArray]);
@@ -24,8 +23,7 @@ class ApiCartController extends Controller
 
     private function getCartItemsArray($cartItems, $products)
     {
-        // Convert CartItem collection to an associative array
-        // This is a simplified example. You might need to adjust it based on your actual data structure.
+        
         $cartItemsArray = [];
         foreach ($cartItems as $cartItem) {
             $cartItemsArray[$cartItem->product_id] = ['quantity' => $cartItem->quantity];
@@ -34,7 +32,7 @@ class ApiCartController extends Controller
     }
 
     public function store(Request $request, Product $product)
-{
+    {
     $quantity = $request->input('quantity', 1);
     $user = $request->user();
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\ProductListController;
+use App\Http\Controllers\User\ProductViewController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\GuideController;
 use Illuminate\Foundation\Application;
@@ -50,6 +51,8 @@ Route::prefix('cart')->controller(CartController::class)->group(function () {
 //Product filter (Does work but not on admin) (Search the Product by Price range/Brand/Category)
 Route::prefix('products')->controller(ProductListController::class)->group(function ()  {
     Route::get('/','index')->name('products.index');
+    Route::get('/{id}', [ProductViewController::class, 'show'])->name('products.show');
+
     
 });
 

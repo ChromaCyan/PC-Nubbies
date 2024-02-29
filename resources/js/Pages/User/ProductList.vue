@@ -1,6 +1,6 @@
 <script setup>
 import UserLayouts from './Layouts/UserLayouts.vue';
-import { ref, watch } from 'vue'
+import { ref, watch, provide } from 'vue'
 import {
     Dialog,
     DialogPanel,
@@ -24,6 +24,14 @@ const sortOptions = [
     { name: 'Price: High to Low', href: '#', current: false },
 ]
 
+const selectedProduct = ref(null);
+
+const setSelectedProduct = (product) => {
+ selectedProduct.value = product;
+};
+
+provide('selectedProduct', selectedProduct);
+provide('setSelectedProduct', setSelectedProduct);
 
 
 const filterPrices = useForm({

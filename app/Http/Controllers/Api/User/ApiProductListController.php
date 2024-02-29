@@ -11,10 +11,17 @@ use Illuminate\Http\Request;
 
 class ApiProductListController extends Controller
 {
-    public function index()
-{
-    $products = Product::with('category', 'brand', 'product_images')->filtered()->paginate(9);
-    return response()->json($products);
-}
+    public function index(Request $request)
+    {
+       
+        $filters = $request->all();
 
+       
+        $products = Product::with('category', 'brand', 'product_images')
+                            ->filtered($filters) 
+                            ->paginate(9);
+
+        
+        return ProductResource::collection($products)->response();
+    }
 }
