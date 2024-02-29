@@ -13,9 +13,24 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category', 'brand', 'product_images')->get();
+        $query = $request->query('query');
+
+        $products = Product::with('category', 'brand', 'product_images');
+
+        if ($query) {
+            $products = $products->where('title', 'like', '%' . $query . '%')
+                ->orWhereHas('category', function ($q) use ($query) {
+                    $q->where('name', 'like', '%' . $query . '%');
+                })
+                ->orWhereHas('brand', function ($q) use ($query) {
+                    $q->where('name', 'like', '%' . $query . '%');
+                });
+        }
+
+        $products = $products->get();
+
         $brands = Brand::get();
         $categories = Category::get();
 
@@ -28,6 +43,7 @@ class ProductController extends Controller
             ]
         );
     }
+
 
 
 
@@ -61,6 +77,31 @@ class ProductController extends Controller
         }
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
+
+        public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $products = Product::with('category', 'brand', 'product_images')
+            ->where('title', 'like', '%' . $query . '%')
+            ->orWhereHas('category', function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%');
+            })
+            ->orWhereHas('brand', function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%');
+            })
+            ->get();
+
+        return Inertia::render(
+            'Admin/Product/Index',
+            [
+                'products' => $products,
+                'brands' => Brand::get(),
+                'categories' => Category::get()
+            ]    
+        );
+    }
+
 
     //update 
     public function update(Request $request, $id)

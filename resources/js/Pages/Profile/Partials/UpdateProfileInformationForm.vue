@@ -18,6 +18,8 @@ const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,
+    gender: user.gender,
+    age_range: user.age_range,
     email: user.email,
 });
 </script>
@@ -64,25 +66,41 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="text-sm mt-2 text-gray-800">
-                    Your email address is unverified.
-                    <Link
-                        :href="route('verification.send')"
-                        method="post"
-                        as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Click here to re-send the verification email.
-                    </Link>
-                </p>
+            <div class="mt-4">
+                <InputLabel for="gender" value="Gender" />
 
-                <div
-                    v-show="status === 'verification-link-sent'"
-                    class="mt-2 font-medium text-sm text-green-600"
+                <select
+                    id="gender"
+                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    v-model="form.gender"
+                    required
                 >
-                    A new verification link has been sent to your email address.
-                </div>
+                    <option value="">Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+
+                <InputError class="mt-2" :message="form.errors.gender" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="age_range" value="Age Group" />
+
+                <select
+                    id="age_range"
+                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    v-model="form.age_range"
+                    required
+                >
+                    <option value="">Select Age Group</option>
+                    <option value="1">18-24</option>
+                    <option value="2">25-34</option>
+                    <option value="3">35-45</option>
+                    <option value="4">46-59</option>
+                    <option value="5">60+</option>
+                </select>
+
+                <InputError class="mt-2" :message="form.errors.age_range" />
             </div>
 
             <div class="flex items-center gap-4">

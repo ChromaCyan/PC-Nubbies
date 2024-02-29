@@ -1,9 +1,11 @@
 <script setup>
-    import { ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
-import { Plus } from '@element-plus/icons-vue';
+import { router, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+import { computed } from 'vue';
 
 const users = usePage().props.users;
+const searchQuery = ref('');
 
 const isAddUser = ref(false);
 const editMode = ref(false);
@@ -69,8 +71,6 @@ const updateUser = async () => {
     formData.append('email', email.value);
     formData.append('gender', gender.value);
     formData.append('age_range', ageRange.value);
-    formData.append('password', password.value);
-    formData.append('password_confirmation', passwordConfirmation.value);
     formData.append("_method", 'PUT');
 
     try {
@@ -98,8 +98,6 @@ const resetFormData = () => {
     email.value = '';
     gender.value = false;
     ageRange.value = false;
-    password.value = '';
-    passwordConfirmation.value = '';
 };
 
 const deleteUser = (user, index) => {
@@ -132,6 +130,31 @@ const deleteUser = (user, index) => {
         }
     });
 };
+
+//Search products (an attempt for me)
+const searchUsers = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('query', searchQuery.value);
+    window.location.href = url.toString();
+};
+
+const clearSearch = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('query');
+    window.location.href = url.toString();
+};
+
+const filteredUsers = computed(() => {
+    if (!searchQuery.value) {
+        return users.value;
+    }
+    const query = searchQuery.value.toLowerCase();
+    return users.value.filter(user =>
+        user.name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+    );
+});
+
 </script>
 <template>
     <section class="p-3 sm:p-5">
@@ -166,15 +189,6 @@ const deleteUser = (user, index) => {
     </select>
     <label for="ageRange" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Age Range</label>
 </div>
-
-                <div class="relative z-0 w-full mb-6 group">
-                    <input v-model="password" type="password" name="password" id="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-                </div>
-                <div class="relative z-0 w-full mb-6 group">
-                    <input v-model="passwordConfirmation" type="password" name="passwordConfirmation" id="passwordConfirmation" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="passwordConfirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm Password</label>
-                </div>
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </form>
             <!-- End form -->
@@ -185,23 +199,19 @@ const deleteUser = (user, index) => {
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
-                        <form class="flex items-center">
+                        <form class="flex items-center" @submit.prevent="searchUsers">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0  0  20  20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M8  4a4  4  0  100  8  4  4  0  000-8zM2  8a6  6  0  1110.89  3.476l4.817  4.817a1  1  0  01-1.414  1.414l-4.816-4.816A6  6  0  012  8z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                                <input type="text" id="simple-search" v-model="searchQuery" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                                <button type="submit" class="absolute inset-y-0 right-0 flex items-center px-4 font-bold text-white bg-blue-700 rounded-r-lg">Search</button>
                             </div>
                         </form>
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                        <button @click="clearSearch" class="flex items-center justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Clear Search
+                        </button>
                         <button type="button" @click="openAddModal" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0  0  20  20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path clip-rule="evenodd" fill-rule="evenodd" d="M10  3a1  1  0  011  1v5h5a1  1  0  110  2h-5v5a1  1  0  11-2  0v-5H4a1  1  0  110-2h5V4a1  1  0  011-1z" />
-                            </svg>
                             Add User
                         </button>
                     </div>

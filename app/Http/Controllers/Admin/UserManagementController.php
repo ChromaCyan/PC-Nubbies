@@ -10,9 +10,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UserManagementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $query = $request->query('query');
+
+        $users = User::query();
+        $users = $users->where('usertype', 0);
+
+        if ($query) {
+            $users = $users->where('name', 'like', '%' . $query . '%')
+                ->orWhere('email', 'like', '%' . $query . '%');
+        }
+
+        $users = $users->get();
 
         return Inertia::render(
             'Admin/UserManagement/Index',
@@ -58,9 +68,7 @@ class UserManagementController extends Controller
         $user->email = $request->email;
         $user->gender = $request->gender;
         $user->age_range = $request->age_range;
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
+
         $user->update();
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');

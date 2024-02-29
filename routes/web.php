@@ -70,7 +70,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     //User Routes (Manage User/Add/Delete/Edit/Check Profile//Search user)
     Route::get('/users', [UserManagementController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserManagementController::class, 'create'])->name('admin.users.create');
-    Route::post('/users/store', [UserManagementController::class, 'store'])->name('admin.users.store');
+    Route::post('/users/store', [UserManagementController::class, 'store'])->name('users.store');
+    Route::get('/admin/users/search', [UserManagementController::class, 'search'])->name('admin.users.search');
     Route::get('/users/{user}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}/update', [UserManagementController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{user}/destroy', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
@@ -78,10 +79,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
  //Products Routes (Store Products from admin/Update/Add image;Delete image/Delete Product)
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
     Route::post('/products/store',[ProductController::class,'store'])->name('admin.products.store');
-    Route::put('/products/update/{id}',[ProductController::class,'update'])->name('admin.products.update');
+    Route::get('/products/search', [ProductController::class, 'search'])->name('admin.products.search');
+    Route::put('/users/update/{id}', [UserManagementController::class, 'update'])->name('users.update');
     Route::delete('/products/image/{id}',[ProductController::class,'deleteImage'])->name('admin.products.image.delete');
-    Route::delete('/products/destory/{id}',[ProductController::class,'destory'])->name('admin.products.destory');
-    
+    Route::delete('/users/destroy/{id}', [UserManagementController::class, 'destroy'])->name('users.destroy');
 });
 
 

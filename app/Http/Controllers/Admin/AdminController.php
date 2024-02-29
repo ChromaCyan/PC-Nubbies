@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class AdminController extends Controller
@@ -54,6 +55,26 @@ class AdminController extends Controller
         //'revenueData' => $revenueData,
     ]);
     }
-    //This to try and get the revenue per day, hopefully it works
+    /*
+    private function getRevenueData($timeFrame)
+   {
+    $query = Order::query()
+        ->selectRaw('DATE(created_at) as date, SUM(total_price) as total_revenue')
+        ->groupBy('date');
+
+    if ($timeFrame === 'week') {
+        $query->selectRaw('YEARWEEK(created_at) as date, SUM(total_price) as total_revenue')
+              ->groupBy('date');
+    } elseif ($timeFrame === 'month') {
+        $query->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(total_price) as total_revenue')
+              ->groupBy('year', 'month');
+    }
+
+    $revenueData = $query->get();
+
+    return $revenueData;
+}
+*/
+
 	
 }

@@ -16,21 +16,7 @@ class ProductViewController extends Controller
     {
         $product = Product::with(['category', 'brand', 'product_images'])->findOrFail($id);
 
-        $productData = [
-            'id' => $product->id,
-            'name' => $product->name,
-            'description' => $product->description,
-            'price' => $product->price,
-            'category' => $product->category->name,
-            'brand' => $product->brand->name,
-            'images' => $product->product_images->map(function ($image) {
-                return [
-                    'id' => $image->id,
-                    'src' => $image->src,
-                    'alt' => $image->alt,
-                ];
-            }),
-        ];
+        $productData = new ProductResource($product);
 
         return Inertia::render('User/Components/ProductView', [
             'product' => $productData,
