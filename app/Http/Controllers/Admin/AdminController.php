@@ -21,7 +21,7 @@ class AdminController extends Controller
         $totalSales = Order::sum('total_price');
         //$timeFrame = 'day';
         //$revenueData = $this->getRevenueData($timeFrame);
-        $totalSalesMade = Order::count();
+        $totalSalesMade = Order::where('status', 'paid')->count();
 
         //Thank you random stackoverflow guy, shit did work (So basically it goes from order, checks the order product id, from that product id, it checks the categories it belongs in and checks the id of that category., and finally it totals the amount of that and finally get the data.)
         $salesByCategory = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')

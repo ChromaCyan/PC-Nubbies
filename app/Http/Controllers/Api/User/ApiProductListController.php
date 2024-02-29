@@ -24,4 +24,9 @@ class ApiProductListController extends Controller
         
         return ProductResource::collection($products)->response();
     }
+    
+    public function search(Product $product)
+    {
+    	return new ProductResource($product);
+    }
 }

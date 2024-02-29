@@ -7,12 +7,39 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 
 class ApiCheckoutController extends Controller
 {
+    public function saveAddress(Request $request)
+    {
+        $request->validate([
+            'address1' => 'required',
+            'state' => 'required',
+            'zipcode' => 'required',
+            'city' => 'required',
+            'country_code' => 'required',
+            'type' => 'required',
+        ]);
+
+        $user = $request->user();
+        $address = new UserAddress();
+        $address->address1 = $request->address1;
+        $address->state = $request->state;
+        $address->zipcode = $request->zipcode;
+        $address->city = $request->city;
+        $address->country_code = $request->country_code;
+        $address->type = $request->type;
+        $address->user_id = $user->id;
+        $address->isMain = 1; // Assuming you want to set this as the main address
+        $address->save();
+
+        return response()->json(['message' => 'Address saved successfully', 'address_id' => $address->id]);
+    }
+
     public function store(Request $request)
     {
         $user = $request->user();
