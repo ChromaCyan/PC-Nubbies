@@ -160,7 +160,7 @@ const updateProduct = async () => {
     }
 
     try {
-        await router.post('products/update/' + id.value, formData, {
+        await router.put('products/update/' + id.value, formData, {
             onSuccess: (page) => {
                 dialogVisible.value = false;
                 resetFormData();
@@ -177,6 +177,7 @@ const updateProduct = async () => {
         console.log(err)
     }
 }
+
 
 //Delete a product from the list (This one is that swastica message pop-up that display a prompt if you really sure lmao)
 const deleteProduct = (product, index) => {

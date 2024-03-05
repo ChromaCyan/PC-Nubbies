@@ -74,7 +74,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/admin/users/search', [UserManagementController::class, 'search'])->name('admin.users.search');
     Route::get('/users/{user}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}/update', [UserManagementController::class, 'update'])->name('admin.users.update');
-    Route::delete('/users/{user}/destroy', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
+    Route::delete('/users/{user}/destroy', [UserManagementController::class, 'destory'])->name('admin.users.destroy');
 
  //Products Routes (Store Products from admin/Update/Add image;Delete image/Delete Product)
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');

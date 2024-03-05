@@ -1,5 +1,5 @@
 <script setup>
-import { router, usePage } from '@inertiajs/vue3';
+    import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { computed } from 'vue';
@@ -159,7 +159,7 @@ const filteredUsers = computed(() => {
 <template>
     <section class="p-3 sm:p-5">
         <!-- Dialog for adding or editing a user -->
-        <el-dialog v-model="dialogVisible" :title="editMode ? 'Edit User' : 'Add User'" width="30%" :before-close="handleClose">
+        <el-dialog v-model="dialogVisible" :title="editMode ? 'User Profile' : 'Add User'" width="30%" :before-close="handleClose">
             <!-- Form start -->
             <form @submit.prevent="editMode ? updateUser() : addUser()">
                 <div class="relative z-0 w-full mb-6 group">
@@ -171,25 +171,27 @@ const filteredUsers = computed(() => {
                     <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-    <select v-model="gender" name="gender" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option value="0">Male</option>
-        <option value="1">Female</option>
-    </select>
-    <label for="gender" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Gender</label>
-</div>
-<div class="relative z-0 w-full mb-6 group">
-    <select v-model="ageRange" name="ageRange" id="ageRange" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option value="0">Under   18</option>
-        <option value="1">18-24</option>
-        <option value="2">25-34</option>
-        <option value="3">35-44</option>
-        <option value="4">45-54</option>
-        <option value="5">55-64</option>
-        <option value="6">65+</option>
-    </select>
-    <label for="ageRange" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Age Range</label>
-</div>
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                    <select v-model="gender" name="gender" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                    </select>
+                    <label for="gender" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Gender</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <select v-model="ageRange" name="ageRange" id="ageRange" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="0">Under 18</option>
+                        <option value="1">18-24</option>
+                        <option value="2">25-34</option>
+                        <option value="3">35-44</option>
+                        <option value="4">45-54</option>
+                        <option value="5">55-64</option>
+                        <option value="6">65+</option>
+                    </select>
+                    <label for="ageRange" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Age Range</label>
+                </div>
+                <button v-if="!editMode" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Submit
+                </button>
             </form>
             <!-- End form -->
         </el-dialog>
@@ -245,7 +247,7 @@ const filteredUsers = computed(() => {
                                     <div :id="`${user.id}`" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`${user.id}-button`">
                                             <li>
-                                                <a href="#" @click="openEditModal(user)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                <a href="#" @click="openEditModal(user)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View Profile</a>
                                             </li>
                                         </ul>
                                         <div class="py-1">
