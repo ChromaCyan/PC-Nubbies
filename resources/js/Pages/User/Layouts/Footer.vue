@@ -13,6 +13,9 @@
           <li>
               <a href="#" class="mr-4 hover:underline md:mr-6">Guides</a>
           </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
+          </li>
       </ul>
       <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023-2024 <a href="#" class="hover:underline">PC-Nubbies™</a>. All Rights Reserved.</span>
   </div>

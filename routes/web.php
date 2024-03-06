@@ -90,5 +90,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 //Guide Routes
 Route::get('/guides', [GuideController::class, 'index'])->name('guide');
+Route::get('/casual', [GuideController::class, 'casual'])->name('casual');
 
 require __DIR__ . '/auth.php';
