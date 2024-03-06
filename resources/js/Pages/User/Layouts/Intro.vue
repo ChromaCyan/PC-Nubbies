@@ -8,7 +8,7 @@
       <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
           <div>
               <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                 v-icon left>mdi-book-open-blank-variant-outline</v-icon>
+                 <v-icon left>mdi-book-open-blank-variant-outline</v-icon>
               </div>
               <h3 class="mb-2 text-xl font-bold dark:text-white">Guides</h3>
               <p class="text-gray-500 dark:text-gray-400"> We guide you through the crucial decisions of choosing the key components that will define your PC's performance. Delve into the interplay of parts, ensuring compatibility and suitability for your desired tasks, whether gaming, productivity, or creative work.</p>
