@@ -13,4 +13,19 @@ class GuideController extends Controller
     {
         return Inertia::render('User/Guides');
     }
+
+    function casual()
+    {
+    	return Inertia::render('User/Guide/Casual');
+    }
+
+    function gamer()
+    {
+    	return Inertia::render('User/Guide/Gamer');
+    }
+
+    function work()
+    {
+    	return Inertia::render('User/Guide/Work');
+    }
 }
