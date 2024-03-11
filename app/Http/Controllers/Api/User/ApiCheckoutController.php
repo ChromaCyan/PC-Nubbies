@@ -34,7 +34,7 @@ class ApiCheckoutController extends Controller
         $address->country_code = $request->country_code;
         $address->type = $request->type;
         $address->user_id = $user->id;
-        $address->isMain = 1; // Assuming you want to set this as the main address
+        $address->isMain = 1; 
         $address->save();
 
         return response()->json(['message' => 'Address saved successfully', 'address_id' => $address->id]);

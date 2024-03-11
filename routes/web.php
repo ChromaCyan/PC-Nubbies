@@ -1,8 +1,10 @@
 <?php
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminBarController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
@@ -66,6 +68,19 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    //Admin Sales Report BarChart testing
+    Route::get('/sales', [AdminBarController::class, 'index'])->name('admin.barchart');
+
+    //Admin Order List
+    //Route::get('/orders' [AdminOrderController::class, 'index'])->name('admin.orders');
+
+    // Category Routes
+    Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::post('/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::put('/categories/update/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/categories/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
     
     //User Routes (Manage User/Add/Delete/Edit/Check Profile//Search user)
     Route::get('/users', [UserManagementController::class, 'index'])->name('admin.users.index');
@@ -74,15 +89,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/admin/users/search', [UserManagementController::class, 'search'])->name('admin.users.search');
     Route::get('/users/{user}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}/update', [UserManagementController::class, 'update'])->name('admin.users.update');
-    Route::delete('/users/{user}/destroy', [UserManagementController::class, 'destory'])->name('admin.users.destroy');
+    Route::delete('/users/{user}/destroy', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
 
  //Products Routes (Store Products from admin/Update/Add image;Delete image/Delete Product)
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
     Route::post('/products/store',[ProductController::class,'store'])->name('admin.products.store');
     Route::get('/products/search', [ProductController::class, 'search'])->name('admin.products.search');
-    Route::put('/users/update/{id}', [UserManagementController::class, 'update'])->name('users.update');
+    Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/products/image/{id}',[ProductController::class,'deleteImage'])->name('admin.products.image.delete');
-    Route::delete('/users/destroy/{id}', [UserManagementController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/products/destroy/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
 });
 
 
@@ -91,5 +106,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 //Guide Routes
 Route::get('/guides', [GuideController::class, 'index'])->name('guide');
 Route::get('/casual', [GuideController::class, 'casual'])->name('casual');
+Route::get('/gamer', [GuideController::class, 'gamer'])->name('gamer');
+Route::get('/work', [GuideController::class, 'work'])->name('work');
 
 require __DIR__ . '/auth.php';

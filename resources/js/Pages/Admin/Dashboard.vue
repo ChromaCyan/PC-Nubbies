@@ -75,13 +75,6 @@
                     </v-card-text>
                 </div>
             </div>
-            <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4 flex justify-end items-start mt-4">
-                <select v-model="selectedTimeFrame" @change="updateRevenueData" class="mr-4">
-                    <option value="day">Day</option>
-                    <option value="week">Week</option>
-                    <option value="month">Month</option>
-                </select>
-            </div>
         </div>
     </AdminLayout>
 </template>
