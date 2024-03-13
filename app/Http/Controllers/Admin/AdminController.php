@@ -18,7 +18,7 @@ class AdminController extends Controller
     {
     	//This where i'll put the functions to check the table in models for the corresponding shit i need to display in admin dashboard
     	$totalUsers = User::where('usertype',   0)->count();
-        $totalSales = Order::sum('total_price');
+        $totalSales = Order::where('status', 'paid')->sum('total_price');
         //$timeFrame = 'day';
         //$revenueData = $this->getRevenueData($timeFrame);
         $totalSalesMade = Order::where('status', 'paid')->count();
@@ -27,6 +27,7 @@ class AdminController extends Controller
         $salesByCategory = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
                         ->join('products', 'order_items.product_id', '=', 'products.id')
                         ->join('categories', 'products.category_id', '=', 'categories.id')
+                        ->where('orders.status', 'paid')
                         ->selectRaw('categories.name as category_name, COUNT(orders.id) as total_sales')
                         ->groupBy('categories.name')
                         ->get();
@@ -34,6 +35,7 @@ class AdminController extends Controller
         //Shit does work the same way but it checks the user address this time rather than the actual order because it is connected from the user address, which that is connected to user table. so he can check the gender there if it's 0 or 1.                
         $salesByGender = Order::join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
                       ->join('users', 'user_addresses.user_id', '=', 'users.id')
+                      ->where('orders.status', 'paid')
                       ->selectRaw('users.gender as gender, COUNT(orders.id) as total_sales')
                       ->groupBy('users.gender')
                       ->get();
@@ -41,6 +43,7 @@ class AdminController extends Controller
 
         $salesByAgeRange = Order::join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
                         ->join('users', 'user_addresses.user_id', '=', 'users.id')
+                        ->where('orders.status', 'paid')
                         ->selectRaw('users.age_range as age_range, COUNT(orders.id) as total_sales')
                         ->groupBy('users.age_range')
                         ->get();

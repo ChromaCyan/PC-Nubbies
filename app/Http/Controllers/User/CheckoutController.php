@@ -144,7 +144,6 @@ class CheckoutController extends Controller
 
     public function cancel(Request $request)
 {
-    
     $orderId = session('order_id');
 
     if ($orderId) {
@@ -159,16 +158,11 @@ class CheckoutController extends Controller
             $payment->status = 'cancelled';
             $payment->save();
         }
-
-        
-        $newAddress = UserAddress::where('created_by', Auth::user()->id)->where('isMain', 0)->first();
-        if ($newAddress) {
-            $newAddress->save();
-        }
     }
 
-    return Inertia::render('User/CartList', [
+    return Inertia::render('User/Index', [
         'message' => 'Order cancelled. You can continue shopping.',
     ]);
 }
+
 }

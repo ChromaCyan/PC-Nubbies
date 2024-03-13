@@ -16,7 +16,7 @@ class AdminDashboardController extends Controller
     public function show()
     {
         $totalUsers = User::count();
-        $totalSales = Order::sum('amount');
+        $totalSales = Order::where('status', 'paid')->sum('amount');
         /*$salesByCategory = Sale::selectRaw('category, SUM(amount) as total_sales')
                               ->groupBy('category')
                               ->get();

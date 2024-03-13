@@ -55,6 +55,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+
+        if ($category->products()->exists()) {
+            return redirect()->route('admin.categories.index')->with('error', 'Cannot delete category because it is associated with products or order items.');
+        }
+
         $category->delete();
 
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');

@@ -36,7 +36,7 @@
         formData.append('description', description.value);
 
         try {
-            await router.post('admin/categories/store', formData, {
+            await router.post('categories/store', formData, {
                 onSuccess: page => {
                     Swal.fire({
                         toast: true,
@@ -61,7 +61,7 @@
         formData.append("_method", 'PUT');
 
         try {
-            await router.post(`admin/categories/update/${id.value}`, formData, {
+            await router.post(`categories/update/${id.value}`, formData, {
                 onSuccess: (page) => {
                     dialogVisible.value = false;
                     resetFormData();
@@ -92,8 +92,15 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    router.delete(`admin/categories/destroy/${category.id}`, {
+                    router.delete(`categories/destroy/${category.id}`, {
                         onSuccess: (page) => {
+                            if (page.props.flash.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: page.props.flash.error,
+                            });
+                        } else {
                             Swal.fire({
                                 toast: true,
                                 icon: "success",
@@ -102,13 +109,14 @@
                                 title: page.props.flash.success
                             });
                         }
-                    });
-                } catch (err) {
-                    console.log(err);
-                }
+                    }
+                });
+            } catch (err) {
+                console.log(err);
             }
-        });
-    };
+        }
+    });
+};
 
     const resetFormData = () => {
         id.value = '';

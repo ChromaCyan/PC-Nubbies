@@ -1,49 +1,91 @@
 <template>
   <UserLayout>
- <div class="flex flex-col md:flex-row justify-between px-4 mx-auto max-w-screen-xl mt-24">
-    <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert mt-16 mb-16">
-      <header class="mb-4 lg:mb-6 not-format">
-        <address class="flex items-center mb-6 not-italic">
-          <div class="inline-flex mr-3 text-sm text-gray-900 dark:text-white">
-            <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Jese Leos">
-            <div>
-              <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">Jese Leos</a>
-              <p class="text-base text-gray-500 dark:text-gray-400">Graphic Designer, educator & CEO Flowbite</p>
-              <p class="text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="2022-02-08" title="February 8th, 2022">Feb. 8, 2022</time></p>
+
+    <section class="bg-white dark:bg-slate-900 relative pt-16">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-12 relative z-10">
+        <div class="relative rounded-s bg-transparent dark:bg-gray-900 shadow-lg p-2 md:p-10">
+            <div class="bg-gray-100 dark:bg-gray-800 rounded-lg opacity-80 absolute inset-0"></div>
+            <div class="px-8 py-4 relative">
+                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-fuchsia-800">
+                    Step 1
+                </h1>
+                <!-- Adjust the image to fill the container side to side -->
+                <img class="mt-4 w-full lg:mt-10 mb-6 rounded-lg" src="https://image.made-in-china.com/202f0j00YzLoINnJwybS/Cheap-Glass-Computer-Gaming-PC-Case-with-Cooling-Fan-Transparent-Side-Panel.webp" alt="office content 2" style="width: 726px; height: 520px; object-fit: contain;">
+                <h3 class="mb-4 text-2xl tracking-tight font-extrabold text-gray-900 dark:text-white">Recommended PC for Gamers: Brands and Builds</h3>
             </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    <section class="bg-white dark:bg-gray-900">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      <div class="max-w-screen-md mb-8 lg:mb-16">
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Recommended PC for Gamers: Brands and Builds</h2>
+          <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at PC-Nubbies, You can check some in-depth guides on what are the recommended, as well as check out shop to buy those parts</p>
+      </div>
+      <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+          <div>
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                 <v-icon left>mdi-book-open-blank-variant-outline</v-icon>
+              </div>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">Casual</h3>
+              <p class="text-gray-500 dark:text-gray-400"> We guide you through the crucial decisions of choosing the key components that will define your PC's performance. Delve into the interplay of parts, ensuring compatibility and suitability for your desired tasks, whether gaming, productivity, or creative work.</p>
           </div>
-        </address>
-        <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">Best practices for successful prototypes</h1>
-      </header>
-      <p class="lead">Flowbite is an open-source library of UI components built with the utility-first
-          classes from Tailwind CSS. It also includes interactive elements such as dropdowns, modals,
-          datepickers.</p>
-      <p>Before going digital, you might benefit from scribbling down some ideas in a sketchbook. This way,
-          you can think things through before committing to an actual design project.</p>
-      <p>But then I found a <a href="https://flowbite.com">component library based on Tailwind CSS called
-              Flowbite</a>. It comes with the most commonly used UI components, such as buttons, navigation
-              bars, cards, form elements, and more which are conveniently built with the utility classes from
-              Tailwind CSS.</p>
-      <figure><img src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png" alt="">
-          <figcaption>Digital art by Anonymous</figcaption>
-      </figure>
-      <h2>Getting started with Flowbite</h2>
-      <p>First of all you need to understand how Flowbite works. This library is not another framework.
-          Rather, it is a set of components based on Tailwind CSS that you can just copy-paste from the
-          documentation.</p>
-      <p>It also includes a JavaScript file that enables interactive components, such as modals, dropdowns,
-          and datepickers which you can optionally include into your project via CDN or NPM.</p>
-      <p>You can check out the <a href="https://flowbite.com/docs/getting-started/quickstart/">quickstart
-              guide</a> to explore the elements by including the CDN files into your project. But if you want
-              to build a project with Flowbite I recommend you to follow the build tools steps so that you can
-              purge and minify the generated CSS.</p>
-      <p>You'll also receive a lot of useful application UI, marketing UI, and e-commerce pages that can help
-          you get started with your projects even faster. You can check out this <a
-              href="https://flowbite.com/docs/components/tables/">comparison table</a> to better understand
-          the differences between the open-source and pro version of Flowbite.</p>
-      <!-- Additional content continues here -->
-    </article>
- </div>
+          <div>
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                <v-icon left>mdi-tag-check-outline</v-icon>  
+              </div>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">Gaming</h3>
+              <p class="text-gray-500 dark:text-gray-400">You can expect to find a wide range of components within an average price range. This is a balance between quality and affordability, ensuring that you can build a PC that meets your needs without breaking the bank.</p>
+          </div>
+          <div>
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                <v-icon left>mdi-cart-outline</v-icon>                
+              </div>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">Compatibility</h3>
+              <p class="text-gray-500 dark:text-gray-400">To enhance the user experience, we've made it easier for visitors to navigate to category pages from product pages. This simplification not only improves the flow of information but also makes it easier for users to discover new products or explore different brands within our categories</p>
+          </div>
+      </div>
+  </div>
+</section>
+
+<section class="bg-white dark:bg-gray-900">
+  <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Step 1</h2>
+            <p class="mb-4">We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick, but big enough to deliver the scope you want at the pace you need. Small enough to be simple and quick, but big enough to deliver the scope you want at the pace you need.</p>
+            <p>We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick.</p>
+        </div>
+        <div class="grid grid-cols-1 gap-4 mt-8">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/5cdwLtGJIk8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>r 
+    </div>
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Computer 1, Budget $1000-$2000</h2>
+            <p class="mb-4"><ul>
+              <li>meow</li>
+            </ul></p>
+            <p>We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick.</p>
+        </div>
+        <div class="grid grid-cols-1 gap-4 mt-8">
+            <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://image.made-in-china.com/202f0j00YzLoINnJwybS/Cheap-Glass-Computer-Gaming-PC-Case-with-Cooling-Fan-Transparent-Side-Panel.webp" alt="office content 2">
+        </div>
+    </div>
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+        <div class="grid grid-cols-1 gap-4 mt-8">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/5cdwLtGJIk8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Step 1</h2>
+            <p class="mb-4">We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick, but big enough to deliver the scope you want at the pace you need. Small enough to be simple and quick, but big enough to deliver the scope you want at the pace you need.</p>
+            <p>We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick.</p>
+        </div>
+    </div>
+</section>
 
     <Related></Related>
   </UserLayout>
