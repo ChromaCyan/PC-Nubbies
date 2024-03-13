@@ -1,8 +1,8 @@
 <script setup>
 import { computed, reactive } from 'vue'
-
 import UserLayouts from './Layouts/UserLayouts.vue';
 import { router, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 
 defineProps({
     userAddress: Object
@@ -34,17 +34,26 @@ const formFilled = computed(()=>{
 
 
 
-const update = (product, quantity) =>
-    router.patch(route('cart.update', product), {
-        quantity,
-    });
-//remove form cart 
+const update = (product, newQuantity) => {
+    const item = carts.value.find(item => item.product_id === product.id);
+    const availableQuantity = product.quantity;
+    const updatedQuantity = Math.min(Math.max(1, newQuantity), availableQuantity);
+
+    if (updatedQuantity !== item.quantity) {
+        router.patch(route('cart.update', product), {
+            quantity: updatedQuantity,
+        });
+    }
+};
 const remove = (product) => router.delete(route('cart.delete', product));
 
 
-//confirm order 
-
 function submit() {
+    if (!formFilled.value) {
+        alert('Fill up all the fields first before proceeding!');
+        return;
+    }
+
     router.visit(route('checkout.store'), {
         method: 'post',
         data: {
@@ -53,13 +62,8 @@ function submit() {
             total: usePage().props.cart.data.total,
             address: form
         }
-    })
+    });
 }
-
-
-
-
-
 </script>
 <template>
     <UserLayouts>
@@ -94,7 +98,7 @@ function submit() {
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="w-32 p-4">
                                     <img v-if="product.product_images.length > 0"
-                                        :src="`/${product.product_images[0].image}`" alt="Apple Watch">
+                                        :src="`${product.product_images[0].image}`" alt="Apple Watch">
                                     <img v-else
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png"
                                         alt="Apple Watch">
@@ -150,15 +154,7 @@ function submit() {
                     <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Summary</h2>
                     <p class="leading-relaxed mb-5 text-gray-600">Total : $ {{ total }} </p>
 
-                    <div v-if="userAddress">
-                        <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Shipping Address</h2>
-                        <p class="leading-relaxed mb-5 text-gray-600">{{ userAddress.address1 }} , {{ userAddress.city }}, {{
-                            userAddress.zipcode }}</p>
-                        <p class="leading-relaxed mb-5 text-gray-600">or you can add new below</p>
-
-                    </div>
-
-                  <div v-else>
+                  <div>
                     <p class="leading-relaxed mb-5 text-gray-600"> Add shipping address to continue</p>
                   </div>
 

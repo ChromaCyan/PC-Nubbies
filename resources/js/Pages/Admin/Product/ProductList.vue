@@ -183,19 +183,27 @@ const updateProduct = async () => {
 const deleteProduct = (product, index) => {
     Swal.fire({
         title: 'Are you Sure',
-        text: "This actions cannot undo!",
+        text: "This actions can't be undone! Continue?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        cancelButtonText: 'no',
-        confirmButtonText: 'yes, delete!'
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Confirm'
     }).then((result) => {
         if (result.isConfirmed) {
-            try {
-                router.delete('products/destory/' + product.id, {
-                    onSuccess: (page) => {
-                        this.delete(product, index);
+            router.delete('products/destroy/' + product.id, {
+                onSuccess: (page) => {
+                    // Check if there's an error message in the response
+                    if (page.props.flash.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: page.props.flash.error,
+                        });
+                    } else {
+                        // If successful, remove the product from the list
+                        products.value.splice(index, 1);
                         Swal.fire({
                             toast: true,
                             icon: "success",
@@ -204,14 +212,12 @@ const deleteProduct = (product, index) => {
                             title: page.props.flash.success
                         });
                     }
-                })
-            } catch (err) {
-                console.log(err)
-            }
+                }
+            })
         }
     })
-
 }
+
 
 //Search products (an attempt for me)
 const searchProducts = () => {
@@ -332,9 +338,6 @@ const filteredProducts = computed(() => {
 
                 <!-- end -->
 
-
-
-
                 <button type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </form>
@@ -347,7 +350,6 @@ const filteredProducts = computed(() => {
 
         <!-- end -->
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-            <!-- Start coding here -->
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
@@ -361,7 +363,7 @@ const filteredProducts = computed(() => {
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                         <button @click="clearSearch" class="flex items-center justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            Clear Search
+                            Clear Search / Refresh Page
                         </button>
                         <button type="button" @click="openAddModal" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             Add product

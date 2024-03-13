@@ -52,21 +52,19 @@ export default {
         startSlideshow() {
             setInterval(() => {
                 this.currentIndex = (this.currentIndex + 1) % this.slides.length;
-            }, 10000); // Change slide every 10 seconds (10000ms)
+            }, 10000); 
         },
     },
 };
 
 </script>
 <style scoped>
-/* Slideshow container styles */
 .slideshow-container {
     position: absolute;
     inset: 0;
     overflow: hidden;
 }
 
-/* Fade animation for slides */
 .mySlides {
     position: absolute;
     top: 0;
@@ -77,10 +75,8 @@ export default {
 
 .slideshow-container {
     backdrop-filter: blur(5px);
-    /* Adjust the blur value as needed */
 }
 
-/* Custom CSS for text and other elements */
-/* Add your styles here */
+
 
 </style>

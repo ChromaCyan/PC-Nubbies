@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\CartItem;
+use App\Models\UserAddress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -76,7 +79,22 @@ class UserManagementController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+
+        $user->orders()->with('order_items')->get()->each(function ($order) {
+            $order->order_items()->delete();
+        });
+
+        $user->orders()->with('payments')->get()->each(function ($order) {
+            $order->payments()->delete();
+        });
+
+        Order::where('created_by', $id)->delete();
+        CartItem::where('user_id', $id)->delete();
+        UserAddress::where('user_id', $id)->delete();
+
+        $user->delete();
+
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
 }

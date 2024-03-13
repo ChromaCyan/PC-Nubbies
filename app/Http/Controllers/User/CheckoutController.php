@@ -51,8 +51,6 @@ class CheckoutController extends Controller
                 ];
         }
 
-
-
         $checkout_session = $stripe->checkout->sessions->create([
             'line_items' =>  $lineItems,
             'mode' => 'payment',
@@ -84,19 +82,19 @@ class CheckoutController extends Controller
             $order->total_price = $request->total;
             $order->session_id = $checkout_session->id;
             $order->created_by = $user->id;
-            // If a main address with isMain = 1 exists, set its id as customer_address_id
+            
             $order->user_address_id = $mainAddress->id;
             $order->save();
             $cartItems = CartItem::where(['user_id' => $user->id])->get();
             foreach ($cartItems as $cartItem) {
                 OrderItem::create([
-                    'order_id' => $order->id, // Assuming you have an 'id' field in your orders table
+                    'order_id' => $order->id, 
                     'product_id' => $cartItem->product_id,
                     'quantity' => $cartItem->quantity,
-                    'unit_price' => $cartItem->product->price, // You may adjust this depending on your logic
+                    'unit_price' => $cartItem->product->price, 
                 ]);
                 $cartItem->delete();
-                //remove cart items from cookies
+                
                 $cartItems = Cart::getCookieCartItems();
                 foreach ($cartItems as $item) {
                     unset($item);
@@ -112,7 +110,7 @@ class CheckoutController extends Controller
                 'type' => 'stripe',
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
-                // 'session_id' => $session->id
+                
             ];
 
             Payment::create($paymentData);
@@ -143,4 +141,34 @@ class CheckoutController extends Controller
             throw new NotFoundHttpException();
         }
     }
+
+    public function cancel(Request $request)
+{
+    
+    $orderId = session('order_id');
+
+    if ($orderId) {
+        $order = Order::find($orderId);
+        if ($order) {
+            $order->status = 'cancelled';
+            $order->save();
+        }
+
+        $payment = Payment::where('order_id', $orderId)->first();
+        if ($payment) {
+            $payment->status = 'cancelled';
+            $payment->save();
+        }
+
+        
+        $newAddress = UserAddress::where('created_by', Auth::user()->id)->where('isMain', 0)->first();
+        if ($newAddress) {
+            $newAddress->save();
+        }
+    }
+
+    return Inertia::render('User/CartList', [
+        'message' => 'Order cancelled. You can continue shopping.',
+    ]);
+}
 }

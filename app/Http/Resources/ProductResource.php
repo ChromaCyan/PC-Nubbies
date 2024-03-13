@@ -31,8 +31,6 @@ class ProductResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'brand_id' => $this->brand_id,
             'brand' => new BrandResource($this->whenLoaded('brand')),
-
-       
         ];
     }
 }

@@ -109,7 +109,7 @@ const deleteUser = (user, index) => {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancel',
-        confirmButtonText: 'Yes, Delete this User.'
+        confirmButtonText: 'Confirm'
     }).then((result) => {
         if (result.isConfirmed) {
             try {
@@ -248,7 +248,7 @@ const filteredUsers = computed(() => {
                                             </li>
                                         </ul>
                                         <div class="py-1">
-                                            <a href="#" @click="deleteUser(user, index)" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                            <a href="#" @click="deleteUser(user, index)" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Remove</a>
                                         </div>
                                     </div>
                                 </td>

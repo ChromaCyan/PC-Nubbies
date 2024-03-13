@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\CartItem;
+use App\Models\OrderItem;
 use App\Models\Category;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -145,7 +147,20 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::findOrFail($id)->delete();
+        $product = Product::findOrFail($id);
+
+        // Check if the product is in any cart or order
+        $inCart = CartItem::where('product_id', $product->id)->exists();
+        $inOrder = OrderItem::where('product_id', $product->id)->exists();
+    
+        if ($inCart || $inOrder) {
+            // If the product is in use, redirect back with an error message
+            return redirect()->route('admin.products.index')->with('error', 'Product cannot be deleted     because it exist in customer cart or order');
+        }
+
+        // If not in use, proceed to delete the product
+        $product->delete();
+
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }

@@ -12,7 +12,10 @@ class DashboardController extends Controller
 
     function index()
     {
-        $orders = Order::with('order_items.product.brand', 'order_items.product.category')->get();
+        $orders = Order::with('order_items.product.brand', 'order_items.product.category')
+                        ->where('status', 'paid')
+                        ->get();
+                        
         return Inertia::render('User/Dashboard', ['orders' => $orders]);
     }
 }

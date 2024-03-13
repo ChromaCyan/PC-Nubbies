@@ -30,7 +30,7 @@ const addToCart = (product) => {
     <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in products" :key="product.id" class="group relative">
             <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none  lg:h-80">
-                <img v-if="product.product_images.length > 0" :src="`/${product.product_images[0].image}`" :alt="product.imageAlt" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
+                <img v-if="product.product_images.length > 0" :src="product.product_images[0].image" :alt="product.imageAlt" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
                 <img v-else src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png" :alt="product.imageAlt" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
                 <!-- add to cart icon -->
                 <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer ">
@@ -41,6 +41,7 @@ const addToCart = (product) => {
                             </svg>
                         </a>
                     </div>
+                    <!-- end
                     <div class="bg-blue-700 p-2 rounded-full ml-6">
                         <Link :href="route('products.show', { id: product.id })">
                         
@@ -50,8 +51,9 @@ const addToCart = (product) => {
                             </svg>
                         </Link>
                     </div>
+                     end -->
                 </div>
-                <!-- end -->
+               
             </div>
             <div class="mt-4 flex justify-between">
                 <div>
