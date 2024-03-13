@@ -11,6 +11,15 @@ class BrandController extends Controller
 {
     public function index(Request $request)
     {
+        $query = $request->query('query');
+
+        $brands = Brand::query();
+
+        if ($query) {
+            $brands->where('name', 'like', '%' . $query . '%')
+                ->orWhere('slug', 'like', '%' . $query . '%');
+        }
+
         $brands = $brands->get();
 
         return Inertia::render(

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminBarController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
@@ -40,7 +41,6 @@ Route::middleware('auth')->group(function () {
     }));
   
 });
-
 
 //Add to Cart (Display Cart/Store on Cart/Cart updates when you do something on quantity/Remove from cart)
 Route::prefix('cart')->controller(CartController::class)->group(function () {
@@ -80,6 +80,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store');
     Route::put('/categories/update/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
     Route::delete('/categories/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
+    // Brand Routes
+    Route::get('/brands', [BrandController::class, 'index'])->name('admin.brands.index');
+    Route::post('/brands/store', [BrandController::class, 'store'])->name('admin.brands.store');
+    Route::put('/brands/update/{id}', [BrandController::class, 'update'])->name('admin.brands.update');
+    Route::delete('/brands/destroy/{id}', [BrandController::class, 'destroy'])->name('admin.brands.destroy');
 
     
     //User Routes (Manage User/Add/Delete/Edit/Check Profile//Search user)
