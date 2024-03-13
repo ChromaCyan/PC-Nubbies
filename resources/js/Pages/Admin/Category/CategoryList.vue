@@ -124,20 +124,6 @@
         description.value = '';
     };
 
-    const searchCategories = () => {
-        const url = new URL(window.location.href);
-        url.searchParams.set('query', searchQuery.value);
-        window.location.href = url.toString();
-    };
-
-    const clearSearch = () => {
-        const url = new URL(window.location.href);
-        url.searchParams.delete('query');
-        window.location.href = url.toString();
-    };
-
-    const filteredCategories = ref(categories);
-
 </script>
 
 <template>

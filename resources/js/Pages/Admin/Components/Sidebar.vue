@@ -56,7 +56,7 @@
                             <Link :href="route('admin.categories.index')" class="flex items-center p-2 pl-11 w-full text-base font-medium rounded-lg transition duration-75 hover:bg-gray-100 text-white hover:bg-gray-700">Category</Link>
                         </li>
                         <li>
-                            <Link :href="route('admin.products.index')" class="flex items-center p-2 pl-11 w-full text-base font-medium rounded-lg transition duration-75 hover:bg-gray-100 text-white hover:bg-gray-700">Brands</Link>
+                            <Link :href="route('admin.brands.index')" class="flex items-center p-2 pl-11 w-full text-base font-medium rounded-lg transition duration-75 hover:bg-gray-100 text-white hover:bg-gray-700">Brands</Link>
                         </li>
                     </ul>
                 </li>
