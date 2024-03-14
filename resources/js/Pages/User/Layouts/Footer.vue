@@ -2,7 +2,7 @@
 <footer class="p-4 bg-white md:p-8 lg:p-10 dark:bg-gray-800">
   <div class="mx-auto max-w-screen-xl text-center">
       <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white">
-          <img src="/images/logo.png" alt="Logo" class="mr-2 h-8">
+          <img src="/images/logonubbies.png" alt="Logo" class="mr-2 h-8">
           PC-Nubbies
       </a>
       <p class="my-6 text-gray-500 dark:text-gray-400">A Guide/E-commerce website for complete beginners and professional alike!</p>

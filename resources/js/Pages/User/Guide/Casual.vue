@@ -1,90 +1,112 @@
 <template>
-  <UserLayout>
-
-    <div class="mt-16 text-center pt-16">
-        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-fuchsia-800">
-            How to get started on building your PC!
-        </h1>
-    </div>
-
-<!-- component -->
-<section class="max-w-2xl px-6 py-8 mx-auto bg-white dark:bg-gray-900">
-
-    <main class="mt-8">
-        <h3 class="mt-6 text-gray-800 dark:text-gray-200">Hi Olivia,</h3>
-
-        <p class="mt-2 leading-loose text-gray-600 dark:text-gray-300">
-            Welcome to Meraki UI! You’re already on your way to creating beautiful visual products.
-            We’ve created a quick intro video to get you up and running as soon as possible. 
-            If you have any questions, <a href="#" class="underline transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400">please get in touch</a>.
-        </p>
-
-        <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/L6Jwa7al8os" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        
-        <p class="mt-2 text-gray-600 dark:text-gray-300">
-            Thanks, <br>
-            Meraki UI team
-        </p>
-    </main>
-    
-
-    <footer class="mt-8 text-center">
-        <h3 class="font-medium text-gray-800 dark:text-white">Download the app</h3>
-        <p class="mt-2 text-gray-500 dark:text-gray-400">Get the most of Meraki UI by installing our new mobile app.</p>
-
-        <div class="mt-6">
-            <a href="#" class="inline-flex items-center justify-center w-full px-4 py-2.5 text-sm overflow-hidden text-white transition-colors duration-300 bg-gray-900 rounded-lg shadow sm:w-auto sm:mx-2 hover:bg-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
-                <svg class="w-5 h-5 mx-2 fill-current" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve">
-                    <g>
-                        <g>
-                            <path d="M407,0H105C47.103,0,0,47.103,0,105v302c0,57.897,47.103,105,105,105h302c57.897,0,105-47.103,105-105V105C512,47.103,464.897,0,407,0z M482,407c0,41.355-33.645,75-75,75H105c-41.355,0-75-33.645-75-75V105c0-41.355,33.645-75,75-75h302c41.355,0,75,33.645,75,75V407z"></path>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <path d="M305.646,123.531c-1.729-6.45-5.865-11.842-11.648-15.18c-11.936-6.892-27.256-2.789-34.15,9.151L256,124.166l-3.848-6.665c-6.893-11.937-22.212-16.042-34.15-9.151h-0.001c-11.938,6.893-16.042,22.212-9.15,34.151l18.281,31.664L159.678,291H110.5c-13.785,0-25,11.215-25,25c0,13.785,11.215,25,25,25h189.86l-28.868-50h-54.079l85.735-148.498C306.487,136.719,307.375,129.981,305.646,123.531z"></path>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <path d="M401.5,291h-49.178l-55.907-96.834l-28.867,50l86.804,150.348c3.339,5.784,8.729,9.921,15.181,11.65c2.154,0.577,4.339,0.863,6.511,0.863c4.332,0,8.608-1.136,12.461-3.361c11.938-6.893,16.042-22.213,9.149-34.15L381.189,341H401.5c13.785,0,25-11.215,25-25C426.5,302.215,415.285,291,401.5,291z"></path>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <path d="M119.264,361l-4.917,8.516c-6.892,11.938-2.787,27.258,9.151,34.15c3.927,2.267,8.219,3.345,12.458,3.344c8.646,0,17.067-4.484,21.693-12.495L176.999,361H119.264z"></path>
-                        </g>
-                    </g>
-                </svg>
-
-                <span class="mx-2">
-                    Get it on the App Store
-                </span>
-            </a>
-
-            <a href="#" class="inline-flex items-center justify-center w-full px-4 py-2.5 mt-4 text-sm overflow-hidden text-white transition-colors duration-300 bg-blue-600 rounded-lg shadow sm:w-auto sm:mx-2 sm:mt-0 hover:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                <svg class="w-5 h-5 mx-2 fill-current" viewBox="-28 0 512 512.00075" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m432.320312 215.121094-361.515624-208.722656c-14.777344-8.53125-32.421876-8.53125-47.203126 0-.121093.070312-.230468.148437-.351562.21875-.210938.125-.421875.253906-.628906.390624-14.175782 8.636719-22.621094 23.59375-22.621094 40.269532v417.445312c0 17.066406 8.824219 32.347656 23.601562 40.878906 7.390626 4.265626 15.496094 6.398438 23.601563 6.398438s16.214844-2.132812 23.601563-6.398438l361.519531-208.722656c14.777343-8.53125 23.601562-23.8125 23.601562-40.878906s-8.824219-32.347656-23.605469-40.878906zm-401.941406 253.152344c-.21875-1.097657-.351562-2.273438-.351562-3.550782v-417.445312c0-2.246094.378906-4.203125.984375-5.90625l204.324219 213.121094zm43.824219-425.242188 234.21875 135.226562-52.285156 54.539063zm-6.480469 429.679688 188.410156-196.527344 54.152344 56.484375zm349.585938-201.835938-80.25 46.332031-60.125-62.714843 58.261718-60.773438 82.113282 47.40625c7.75 4.476562 8.589844 11.894531 8.589844 14.875s-.839844 10.398438-8.589844 14.875zm0 0">
-                    </path>
-                </svg>
-
-                <span class="mx-2">
-                    Get it on Google Play
-                </span>
-            </a>
-        </div>
-
-        <p class="mt-6 text-gray-500 dark:text-gray-400">
-            This email was sent to <a href="#" class="text-blue-600 hover:underline dark:text-blue-400" target="_blank">contact@merakiui.com</a>. 
-            If you'd rather not receive this kind of email, you can <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">unsubscribe</a> or <a href="#" class="text-blue-600 hover:underline dark:text-blue-400">manage your email preferences</a>.
-        </p>
-
-        <p class="mt-3 text-gray-500 dark:text-gray-400">© 2023 Meraki UI. All Rights Reserved.</p>
-    </footer>
-</section>
-
-    <Related></Related>
-  </UserLayout>
+    <UserLayout>
+        <main class="mt-24 pd-24 ">
+            <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
+                <div class="absolute left-0 bottom-0 w-full h-full z-10" style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
+                <img src="https://res.cloudinary.com/corsair-pwa/image/upload/f_auto,q_auto/v1/akamai/landing/pc-builder/images/bg-plan-specs.jpg" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
+                <div class="p-4 absolute bottom-0 left-0 z-10">
+                    <a href="#" class="px-4 py-1 bg-purple-500 text-black inline-flex items-center justify-center mb-2">Introduction for PC Building</a>
+                    <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
+                        Brief Introductions for beginner/casual users
+                    </h2>
+                    <div class="flex mt-3">
+                        <img src="https://scontent.fbag1-2.fna.fbcdn.net/v/t1.6435-1/50428361_663986754017291_8249036698344751104_n.jpg?stp=c0.35.320.320a_dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHMI3Fy28AQq09ZCKmRLARh03WpF0OgYurTdakXQ6Bi6lvOi1J-plXu-d4MYEb-5IUnSRHWmsgj3GrFqMaDmzjM&_nc_ohc=Az884ExjcA0AX_4xk5d&_nc_ht=scontent.fbag1-2.fna&oh=00_AfBYQkgWkiJ4aZjGnKFt9EUQWjlwOhLKCRFr2tYDphxjbA&oe=661AAD72" class="h-10 w-10 rounded-full mr-2 object-cover" />
+                        <div>
+                            <p class="font-semibold text-gray-200 text-sm"> Josh Brian Bugarin </p>
+                            <p class="font-semibold text-gray-400 text-xs"> 14 March </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
+                <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4">Introduction</h1>
+                <p class="pb-6">Building your own computer may seem like a daunting project, especially for a first timer. You might be worried it’s too complex, too expensive, or too time-consuming, but it doesn’t have to be!</p>
+                <p class="pb-6">In this guide, we’ll explain how to build a PC step by step, starting with understanding your PC needs, exploring the different parts of a computer, and guiding you through the PC build process.</p>
+                <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://as2.ftcdn.net/v2/jpg/00/74/04/19/1000_F_74041923_Mhk9MftLIwunVLHmkK9rVZhpMbimYxlk.jpg" alt="office content 2">
+                <section class="bg-white dark:bg-gray-900">
+                    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+                        <div class="max-w-screen-md mb-8 lg:mb-16">
+                            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Introduction for PC Casuals</h2>
+                            <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here are what you will need to take note of for starting your PC journey as a newbie. Check out the 3 Essentials below.</p>
+                        </div>
+                        <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+                            <div>
+                                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                                    <v-icon left>mdi mdi-magnify</v-icon>
+                                </div>
+                                <h3 class="mb-2 text-xl font-bold dark:text-white">Compatibility</h3>
+                                <p class="text-gray-500 dark:text-gray-400">When choosing PC parts, ensure compatibility by checking motherboard support for the CPU, RAM, and GPU, along with power supply and case fit. This prevents compatibility issues, ensuring a smooth build process.</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                                    <v-icon left>mdi-cash-multiple</v-icon>
+                                </div>
+                                <h3 class="mb-2 text-xl font-bold dark:text-white">Budgeting</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Determine your budget and prioritize components accordingly. Allocate a larger portion to essential components like the CPU and GPU.</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
+                                    <v-icon left>mdi-tools</v-icon>
+                                </div>
+                                <h3 class="mb-2 text-xl font-bold dark:text-white">Tools and Knowledge</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Gain familiarity with the tools and knowledge needed for PC building, such as understanding the physical dimensions of components and the importance of proper installation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4 text-center">Watch a brief introduction to different computer parts needed</h1>
+                    <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/ExxFxD4OSZ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Brief overview</h2>
+                    <p class="mb-4">
+                        <ul>
+                            <h3 class="mt-16 text-2xl font-extrabold dark:text-gray-400">Motherboard</h3>
+                            <li class="mb-6">The motherboard is the circuit board that connects everything together. Your hardware, the power supply and the graphics cards. So it’s the first component you'll want to choose. The motherboard also determines what other pieces of hardware the computer can use. In other words, not all components are compatible with all motherboards.</li>
+                            <img class="rounded-lg" src="https://www.digitaltrends.com/wp-content/uploads/2023/05/Asus-RTX-4070-hidden-connectors-6.jpg?fit=720%2C720&p=1">
+                            <h1 class="mt-16 text-2xl font-extrabold dark:text-white">Central Processing Unit (CPU)</h1>
+                            <li class="mb-6">The CPU is the engine of your computer and sets the performance expectations for the entire build. The CPU provides the processing power and instructions behind all your computer’s operations.</li>
+                            <img class="rounded-lg" src="https://www.pcworld.com/wp-content/uploads/2023/10/cpu-hub-100758206-orig.jpg?quality=50&strip=all">
+                            <h3 class="mt-16 text-2xl font-bold dark:text-white">Memory (Ram)</h3>
+                            <li class="mb-6">RAM gives your system more available space to temporarily store data that's being used, so it helps you carry out simultaneous tasks, like having several programs open, or surfing the web without long load times.</li>
+                            <img class="rounded-lg" src="https://assetsio.reedpopcdn.com/best-ddr4-ram-header.jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp">
+                            <h3 class="mt-16 text-2xl font-bold dark:text-white">Storage (SSD)</h3>
+                            <li class="mb-6">Your files and data are saved on a storage drive — either a hard disk drive (HDD) or a solid state drive (SSD). Although HDDs have traditionally given you more storage for a higher value, SSDs have essentially made them outdated – performing 6x faster on average and 90x more energy-efficient2 than HDDs.</li>
+                            <img class="rounded-lg" src="https://www.zdnet.com/a/img/resize/7c8659945f7f9122db26d4b1c4b4d609c9377c08/2022/11/15/05ffec5b-f61c-448f-8bdd-bf52d68b549c/adobestock-394422035.jpg?auto=webp&fit=crop&height=900&width=1200">
+                            <h3 class="mt-16 text-2xl font-bold dark:text-white">Case, fans and power supply</h3>
+                            <li class="mb-6">The type of PC being built dictates the necessary components such as the case, fan, and power supply; for instance, a high-performance workstation demands a robust power supply for operation, as well as a case with efficient internal airflow and fans to expel heat and safeguard the system from potential damage.</li>
+                            <img class="rounded-lg" src="https://www.digitaltrends.com/wp-content/uploads/2023/05/Asus-RTX-4070-hidden-connectors-6.jpg?fit=720%2C720&p=1">
+                        </ul>
+                    </p>
+                    <p></p>
+                </section>
+                <div class="mt-16 text-center pt-16">
+                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Here's an example of a computer build</h2>
+                </div>
+                <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+                    <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Specifications</h2>
+                        <p class="mb-4">
+                            <ul style="list-style-type: disc;">
+                                <li>CPU: Intel Core i5-7500</li>
+                                <li>Cooler: Cooler Master Hyper 212 Evo</li>
+                                <li>Graphics card: MSI GeForce GTX 1070</li>
+                                <li>Motherboard: Asus Prime H270-Pro</li>
+                                <li>RAM: G.SKILL Aegis 16GB (2x8GB) DDR4 clocked at 2133MHz</li>
+                                <li>SSD: SanDisk SD8SBAT-256G-1122 Z400s 256GB SSD</li>
+                                <li>HDD: Seagate Desktop HDD ST2000DM001 2TB</li>
+                                <li>Case: Fractal Design Define R5</li>
+                                <li>PSU:</li>
+                                <li>PSU: EVGA SuperNOVA 550 G2</li>
+                            </ul>
+                        </p>
+                        <p></p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4 mt-8">
+                        <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://www.gamespot.com/a/uploads/scale_super/1568/15683559/3148018-fractal%20design%20define%20r5.jpg" alt="office content 2">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <Related></Related>
+    </UserLayout>
 </template>
 <script setup>
 import Related from './Components/RelatedCasual.vue';

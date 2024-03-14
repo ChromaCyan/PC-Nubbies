@@ -11,8 +11,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-        // Fetch all orders with their related data
-        $orders = Order::with(['order_items', 'createBy'])->get();
+        // Fetch only paid orders with their related data
+        $orders = Order::where('status', 'paid')
+                        ->with(['order_items', 'createBy'])
+                        ->get();
 
         // Pass the orders to the view
         return Inertia::render('Admin/Order/Index', [
