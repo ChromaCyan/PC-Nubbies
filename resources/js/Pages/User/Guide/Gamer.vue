@@ -20,8 +20,8 @@
             </div>
             <div class="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
                 <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4">Introduction</h1>
-                <p class="pb-6">Building your own gaming PC may seem like a daunting project, especially for a first timer. You might be worried it’s too complex, too expensive, or too time-consuming, but it doesn’t have to be!</p>
-                <p class="pb-6">In this guide, we’ll explain how to build a gaming PC step by step, starting with understanding your gaming needs, exploring the different parts of a computer, and guiding you through the PC build process.</p>
+                <p class="pb-6">PC build guide section, embark on a journey to unlock the full potential of your gaming experience. Whether you're a seasoned gamer seeking the ultimate rig or a newcomer ready to dive into the world of PC gaming, our comprehensive guides will walk you through the ropes of knowing some fundementals of building your gaming PC.</p>
+                <p class="pb-6">In this guide, we’ll breifly go over basic build components to build a gaming PC step by step,starting with exploring the different parts of a computer, and guiding you through.</p>
                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://as2.ftcdn.net/v2/jpg/00/74/04/19/1000_F_74041923_Mhk9MftLIwunVLHmkK9rVZhpMbimYxlk.jpg" alt="office content 2">
                 <section class="bg-white dark:bg-gray-900">
                     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
@@ -32,24 +32,24 @@
                         <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                             <div>
                                 <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                                    <v-icon left>mdi mdi-magnify</v-icon>
+                                    <v-icon left>mdi mdi-speedometer</v-icon>
                                 </div>
-                                <h3 class="mb-2 text-xl font-bold dark:text-white">Compatibility</h3>
-                                <p class="text-gray-500 dark:text-gray-400">When choosing PC parts, ensure compatibility by checking motherboard support for the CPU, RAM, and GPU, along with power supply and case fit. This prevents compatibility issues, ensuring a smooth build process.</p>
+                                <h3 class="mb-2 text-xl font-bold dark:text-white">Performance</h3>
+                                <p class="text-gray-500 dark:text-gray-400"> Determine your budget and performance expectations. Gaming PCs can range from budget-friendly builds to high-end rigs, so it's important to balance performance with affordability based on your needs.</p>
                             </div>
                             <div>
                                 <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                                    <v-icon left>mdi-cash-multiple</v-icon>
+                                    <v-icon left>mdi-snowflake</v-icon>
                                 </div>
-                                <h3 class="mb-2 text-xl font-bold dark:text-white">Budgeting</h3>
-                                <p class="text-gray-500 dark:text-gray-400">Determine your budget and prioritize components accordingly. Allocate a larger portion to essential components like the CPU and GPU.</p>
+                                <h3 class="mb-2 text-xl font-bold dark:text-white">Cooling</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Ensure adequate cooling for your components to prevent overheating and maintain optimal performance. Consider CPU coolers, case fans, and liquid cooling solutions for overclocking and quiet operation.</p>
                             </div>
                             <div>
                                 <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                                    <v-icon left>mdi-tools</v-icon>
+                                    <v-icon left>mdi-controller-classic-outline</v-icon>
                                 </div>
-                                <h3 class="mb-2 text-xl font-bold dark:text-white">Tools and Knowledge</h3>
-                                <p class="text-gray-500 dark:text-gray-400">Gain familiarity with the tools and knowledge needed for PC building, such as understanding the physical dimensions of components and the importance of proper installation.</p>
+                                <h3 class="mb-2 text-xl font-bold dark:text-white">Periphirals</h3>
+                                <p class="text-gray-500 dark:text-gray-400">Peripherals like monitors, keyboards, mice, and headsets are integral when considering  your gaming needs. Invest in high-quality peripherals that enhance your gaming experience and complement your gaming PC build.</p>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                             <img class="rounded-lg" src="https://www.zdnet.com/a/img/resize/7c8659945f7f9122db26d4b1c4b4d609c9377c08/2022/11/15/05ffec5b-f61c-448f-8bdd-bf52d68b549c/adobestock-394422035.jpg?auto=webp&fit=crop&height=900&width=1200">
                             <h3 class="mt-16 text-2xl font-bold dark:text-white">Graphics Processing Unit (GPU)</h3>
                             <li class="mb-6">The GPU is the most critical component for gaming. Look for high-end models from NVIDIA or AMD, such as the NVIDIA GeForce RTX 3080 or AMD Radeon RX 6800, for the best gaming experience.</li>
-                            <img class="rounded-lg" src="https://www.gamingscan.com/wp-content/uploads/2023/05/nvidia-geforce-rtx-3080-ti-1.jpg">
+                            <img class="rounded-lg" src="https://www.pcgamesn.com/wp-content/uploads/2017/08/how-to-install-graphics-card.jpg">
                             <h3 class="mt-16 text-2xl font-bold dark:text-white">Case, fans, and power supply</h3>
                             <li class="mb-6">Choose a case with good airflow and enough space for your components. High-quality fans are essential for cooling, and a power supply with enough wattage is crucial for running all components efficiently.</li>
                             <img class="rounded-lg" src="https://www.digitaltrends.com/wp-content/uploads/2023/05/Asus-RTX-4070-hidden-connectors-6.jpg?fit=720%2C720&p=1">
@@ -102,7 +102,7 @@
                         <p></p>
                     </div>
                     <div class="grid grid-cols-1 gap-4 mt-8">
-                        <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://www.nzxt.com/wp-content/uploads/2023/05/nzxt-h710i-1.jpg" alt="NZXT H710i case">
+                        <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://images10.newegg.com/ProductImageCompressAll1280/11-146-326-03.jpg" alt="NZXT H710i case">
                     </div>
                 </div>
             </div>
