@@ -1,6 +1,7 @@
 <template>
     <UserLayout>
         <main class="mt-24 pd-24 ">
+            <!-- BGM top -->
             <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
                 <div class="absolute left-0 bottom-0 w-full h-full z-10" style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
                 <img src="https://res.cloudinary.com/corsair-pwa/image/upload/f_auto,q_auto/v1/akamai/landing/pc-builder/images/bg-plan-specs.jpg" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
@@ -18,11 +19,18 @@
                     </div>
                 </div>
             </div>
+            <!-- Top end -->
+
+
             <div class="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
+                <!-- Intro -->
                 <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4">Introduction</h1>
                 <p class="pb-6">Building your own computer may seem like a daunting project, especially for a first timer. You might be worried it’s too complex, too expensive, or too time-consuming, but it doesn’t have to be!</p>
                 <p class="pb-6">In this guide, we’ll explain how to build a PC step by step, starting with understanding your PC needs, exploring the different parts of a computer, and guiding you through the PC build process.</p>
                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://as2.ftcdn.net/v2/jpg/00/74/04/19/1000_F_74041923_Mhk9MftLIwunVLHmkK9rVZhpMbimYxlk.jpg" alt="office content 2">
+                <!-- Intro End -->
+
+                <!-- 3 Essential -->
                 <section class="bg-white dark:bg-gray-900">
                     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
                         <div class="max-w-screen-md mb-8 lg:mb-16">
@@ -53,8 +61,14 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 3 Essential -->
+
+                    <!-- Video -->
                     <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4 text-center">Watch a brief introduction to different computer parts needed</h1>
                     <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/ExxFxD4OSZ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <!-- Video -->
+
+                    <!-- Guides -->
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Brief overview</h2>
                     <p class="mb-4">
                         <ul>
@@ -76,6 +90,9 @@
                         </ul>
                     </p>
                     <p></p>
+                    <!-- Guides End -->
+
+                    <!-- PC Sample -->
                 </section>
                 <div class="mt-16 text-center pt-16">
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Here's an example of a computer build</h2>
@@ -104,6 +121,7 @@
                     </div>
                 </div>
             </div>
+            <!-- PC Sample -->
         </main>
         <Related></Related>
     </UserLayout>
