@@ -50,7 +50,7 @@
         <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
             <!-- Article 1 -->
             <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="#" class="block">
+                <a href="/step-2" class="block">
                     <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
                 </a>
                 <div class="px-6 py-4">
@@ -62,7 +62,7 @@
             </article>
 
             <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 320px; min-height: 100px;">
-                <a href="#" class="block">
+                <a href="step2" class="block">
                     <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
                 </a>
                 <div class="px-6 py-4">
@@ -74,7 +74,7 @@
             </article>
 
             <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="#" class="block">
+                <a href="step2" class="block">
                     <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
                 </a>
                 <div class="px-6 py-4">

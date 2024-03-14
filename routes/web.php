@@ -119,5 +119,6 @@ Route::get('/guides', [GuideController::class, 'index'])->name('guide');
 Route::get('/casual', [GuideController::class, 'casual'])->name('casual');
 Route::get('/gamer', [GuideController::class, 'gamer'])->name('gamer');
 Route::get('/work', [GuideController::class, 'work'])->name('work');
+Route::get('/step-2', [GuideController::class, 'step2'])->name('step2');
 
 require __DIR__ . '/auth.php';
