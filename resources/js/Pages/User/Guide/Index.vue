@@ -49,7 +49,7 @@
         </div>
         <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
             <!-- Article 1 -->
-            <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+            <a href="/step-1" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
                     <img class="w-full h-64 object-cover" src="https://img.freepik.com/premium-photo/trying-help-someone-young-businessman-formalwear-talking-phone-analyzing-data-using-computer-while-sitting-office_425904-5649.jpg" alt="Sunshine">
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">Work Oriented</div>
