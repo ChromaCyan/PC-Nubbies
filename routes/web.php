@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
@@ -68,6 +69,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/revenue-data', [AdminController::class, 'fetchRevenueData'])->name('admin.revenueData');
 
     //Admin Sales Report BarChart testing
     Route::get('/sales', [AdminBarController::class, 'index'])->name('admin.barchart');
@@ -97,13 +99,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/users/{user}/update', [UserManagementController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/destroy/{id}', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
 
- //Products Routes (Store Products from admin/Update/Add image;Delete image/Delete Product)
+    //Products Routes (Store Products from admin/Update/Add image;Delete image/Delete Product)
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
     Route::post('/products/store',[ProductController::class,'store'])->name('admin.products.store');
     Route::get('/products/search', [ProductController::class, 'search'])->name('admin.products.search');
     Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/products/image/{id}',[ProductController::class,'deleteImage'])->name('admin.products.image.delete');
     Route::delete('/products/destroy/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+
+    //Order Route
+    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
 });
 
 

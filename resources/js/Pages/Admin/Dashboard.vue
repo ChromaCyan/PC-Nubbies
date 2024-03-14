@@ -71,16 +71,29 @@
                             <li v-for="ageRange in salesByAgeRange" :key="ageRange.age_range" class="text-lg">
                                 Ages {{ ageRangeMapping[ageRange.age_range] }} : {{ ageRange.total_sales }}
                             </li>
+
                         </ul>
                     </v-card-text>
                 </div>
             </div>
         </div>
+        <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
+                  <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                     <div class="flex items-center justify-between mb-4">
+                        <div class="flex-shrink-0">
+                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">Total Revenue</span>
+                           <h3 class="text-base font-normal text-gray-500">By Week</h3>
+                        </div>
+                     </div>
+                    <Chart></Chart>
+                  </div>
+              </div>
     </AdminLayout>
 </template>
 <script setup>
 import { defineProps, ref } from 'vue';
 import AdminLayout from './Components/AdminLayout.vue';
+import Chart from './Bar/BarChart.vue';
 
 const props = defineProps({
     totalUsers: Number,
@@ -110,27 +123,8 @@ const chartOptions = ref({
         },
     },
 });
-/*
-const updateRevenueData = () => {
-  const revenueData = [
-    { date: '2024-03-01', total_revenue: 100 },
-    { date: '2024-03-02', total_revenue: 200 },
-    { date: '2024-03-03', total_revenue: 150 },
-  ];
 
-  const labels = revenueData.map((data) => data.date);
-  const revenueAmounts = revenueData.map((data) => data.total_revenue);
 
-  chartData.value = {
-    labels: labels,
-    datasets: [{
-      label: 'Revenue',
-      backgroundColor: '#f87979',
-      data: revenueAmounts,
-    }],
-  };
-};
-*/
 </script>
 <style scoped>
 .dashboard-card {

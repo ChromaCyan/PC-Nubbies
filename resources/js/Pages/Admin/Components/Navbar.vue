@@ -12,7 +12,7 @@
                     <span class="sr-only">Toggle sidebar</span>
                 </button>
                 <Link :href="route('admin.dashboard')" class="flex items-center justify-between mr-4">
-                    <img src="/images/logo.png" class="mr-3 h-12" alt="Flowbite Logo" />
+                    <img src="/images/logonubbies.png" class="mr-3 h-12" alt="Flowbite Logo" />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Admin Dashboard</span>
                 </Link>
             </div>

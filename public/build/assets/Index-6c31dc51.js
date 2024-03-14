@@ -1,1 +1,0 @@
-import t from"./AdminLayout-6f94b12f.js";import o from"./BarChart-797504d0.js";import{o as r,k as e,f as a,e as m}from"./app-fcd85f0d.js";import"./index-69dc2dc7.js";import"./Navbar-44d982f7.js";import"./Sidebar-9d583002.js";const d={__name:"Index",setup(_){return(c,p)=>(r(),e(t,null,{default:a(()=>[m(o)]),_:1}))}};export{d as default};

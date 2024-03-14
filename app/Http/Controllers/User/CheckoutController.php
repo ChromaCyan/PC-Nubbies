@@ -78,7 +78,7 @@ class CheckoutController extends Controller
         $mainAddress = $user->user_address()->where('isMain', 1)->first();
         if ($mainAddress) {
             $order = new Order();
-            $order->status = 'unpaid';
+            $order->status = 'cancelled';
             $order->total_price = $request->total;
             $order->session_id = $checkout_session->id;
             $order->created_by = $user->id;
@@ -106,7 +106,7 @@ class CheckoutController extends Controller
             $paymentData = [
                 'order_id' => $order->id,
                 'amount' => $request->total,
-                'status' => 'pending',
+                'status' => 'cancelled',
                 'type' => 'stripe',
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
@@ -131,7 +131,7 @@ class CheckoutController extends Controller
             if (!$order) {
                 throw new NotFoundHttpException();
             }
-            if ($order->status === 'unpaid') {
+            if ($order->status === 'cancelled') {
                 $order->status = 'paid';
                 $order->save();
             }
@@ -148,13 +148,13 @@ class CheckoutController extends Controller
 
     if ($orderId) {
         $order = Order::find($orderId);
-        if ($order) {
+        if ($order->status === 'unpaid'){
             $order->status = 'cancelled';
             $order->save();
         }
 
         $payment = Payment::where('order_id', $orderId)->first();
-        if ($payment) {
+        if ($payment->status === 'pending'){
             $payment->status = 'cancelled';
             $payment->save();
         }

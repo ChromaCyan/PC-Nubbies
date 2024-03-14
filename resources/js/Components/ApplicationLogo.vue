@@ -1,3 +1,3 @@
 <template>
-    <img src="/images/logo.png" alt="Logo" width="500" height="450">
+    <img src="/images/logonubbies.png" alt="Logo" width="750" height="650">
 </template>

@@ -19,8 +19,14 @@ class AdminController extends Controller
     	//This where i'll put the functions to check the table in models for the corresponding shit i need to display in admin dashboard
     	$totalUsers = User::where('usertype',   0)->count();
         $totalSales = Order::where('status', 'paid')->sum('total_price');
-        //$timeFrame = 'day';
-        //$revenueData = $this->getRevenueData($timeFrame);
+
+
+        // Define a default time frame. For example, 'day'
+        $defaultTimeFrame = 'day';
+
+        // Pass the default time frame to getRevenueData
+        $revenueData = $this->getRevenueData($defaultTimeFrame);
+
         $totalSalesMade = Order::where('status', 'paid')->count();
 
         //Thank you random stackoverflow guy, shit did work (So basically it goes from order, checks the order product id, from that product id, it checks the categories it belongs in and checks the id of that category., and finally it totals the amount of that and finally get the data.)
@@ -55,29 +61,44 @@ class AdminController extends Controller
         'salesByCategory' => $salesByCategory,
         'salesByGender' => $salesByGender,
         'salesByAgeRange' => $salesByAgeRange,
-        //'revenueData' => $revenueData,
+        'revenueData' => $revenueData,
     ]);
     }
-    /*
-    private function getRevenueData($timeFrame)
-   {
-    $query = Order::query()
-        ->selectRaw('DATE(created_at) as date, SUM(total_price) as total_revenue')
-        ->groupBy('date');
 
-    if ($timeFrame === 'week') {
-        $query->selectRaw('YEARWEEK(created_at) as date, SUM(total_price) as total_revenue')
-              ->groupBy('date');
-    } elseif ($timeFrame === 'month') {
-        $query->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(total_price) as total_revenue')
-              ->groupBy('year', 'month');
+    public function fetchRevenueData(Request $request)
+        {
+            $timeFrame = $request->input('timeFrame');
+            $revenueData = $this->getRevenueData($timeFrame);
+            return response()->json($revenueData);
+        }
+
+        private function getRevenueData($timeFrame)
+    {
+        $query = Order::query()
+            ->where('status', 'paid') // Ensure only paid orders are considered
+            ->selectRaw('DATE(created_at) as date, SUM(total_price) as total_revenue')
+            ->groupBy('date');
+
+        // Use Carbon to get the start and end of the current day
+        $startOfDay = Carbon::now()->startOfDay();
+        $endOfDay = Carbon::now()->endOfDay();
+
+        // Apply the date filter based on the selected time frame
+        if ($timeFrame === 'day') {
+            // For the 'day' time frame, filter orders created today
+            $query->whereBetween('created_at', [$startOfDay, $endOfDay]);
+        } elseif ($timeFrame === 'week') {
+            // For the 'week' time frame, filter orders created this week
+            $query->whereBetween('created_at', [$startOfDay->startOfWeek(), $endOfDay->endOfWeek()]);
+        } elseif ($timeFrame === 'month') {
+            // For the 'month' time frame, filter orders created this month
+            $query->whereBetween('created_at', [$startOfDay->startOfMonth(), $endOfDay->endOfMonth()]);
+        }
+
+        $revenueData = $query->get();
+
+        return $revenueData;
     }
 
-    $revenueData = $query->get();
 
-    return $revenueData;
-}
-*/
-
-	
 }

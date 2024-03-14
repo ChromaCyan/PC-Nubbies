@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-c27b6911.js";import{o as e,c as t}from"./app-eca1849b.js";const c={},n={src:"/images/logonubbies.png",alt:"Logo",width:"500",height:"450"};function r(s,i){return e(),t("img",n)}const m=o(c,[["render",r]]);export{m as A};
