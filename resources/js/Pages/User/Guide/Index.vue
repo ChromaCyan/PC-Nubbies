@@ -10,7 +10,7 @@
                     <img class="w-full h-64 object-cover" src="https://www.shutterstock.com/image-photo/young-business-man-sitting-desk-600nw-129114017.jpg" alt="Sunshine">
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">Casual User/Beginner</div>
-                        <p class="text-gray-700 text-base">Someone who has 0 experience and workaround with computers but wanting to build one.</p>
+                        <p class="text-gray-700 text-base">What you need to know as a casual/beginner in building a computer</p>
                         <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
                             Read More
                         </button>
@@ -49,77 +49,71 @@
         </div>
         <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
             <!-- Article 1 -->
-            <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="/step-2" class="block">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
+            <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+                    <img class="w-full h-64 object-cover" src="https://img.freepik.com/premium-photo/trying-help-someone-young-businessman-formalwear-talking-phone-analyzing-data-using-computer-while-sitting-office_425904-5649.jpg" alt="Sunshine">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Work Oriented</div>
+                        <p class="text-gray-700 text-base">Needed to build computer for video editing, and other memory intensive applications for business use.</p>
+                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
+                            Read More
+                        </button>
+                    </div>
                 </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">DDR3 Computers</div>
-                    <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                        Read More
-                    </button>
-                </div>
-            </article>
-
-            <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 320px; min-height: 100px;">
-                <a href="step2" class="block">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
+                <!-- Article 2 -->
+                <a href="/step-2" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+                    <img class="w-full h-64 object-cover" src="https://www.intel.com/content/dam/www/central-libraries/us/en/images/rog-strix-z390-e-gaming-motherboard-vertical-rwd.png.rendition.intel.web.864.486.png" alt="Sunshine">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Step 2: Motherboard</div>
+                        <p class="text-gray-700 text-base">Step-by-step guide on how to install the motherboard</p>
+                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
+                            Read More
+                        </button>
+                    </div>
                 </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">DDR3 Computers</div>
-                    <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                        Read More
-                    </button>
-                </div>
-            </article>
-
-            <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="step2" class="block">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
+                <!-- Article 3 -->
+                <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+                    <img class="w-full h-64 object-cover" src="https://t3.ftcdn.net/jpg/00/81/24/72/360_F_81247213_OYvGTCn5mnQQ2c0gWJ1U5ixcbmNBaMOp.jpg">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Step 3: CPU</div>
+                        <p class="text-gray-700 text-base">Step-by-step guide on how to install the cpu on your motherboard</p>
+                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
+                            Read More
+                        </button>
+                    </div>
                 </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">DDR3 Computers</div>
-                    <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                        Read More
-                    </button>
-                </div>
-            </article>
-
-            <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="#" class="block">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
+                <!-- Article 4 -->
+                <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+                    <img class="w-full h-64 object-cover" src="https://img.freepik.com/premium-photo/trying-help-someone-young-businessman-formalwear-talking-phone-analyzing-data-using-computer-while-sitting-office_425904-5649.jpg" alt="Sunshine">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Work Oriented</div>
+                        <p class="text-gray-700 text-base">Needed to build computer for video editing, and other memory intensive applications for business use.</p>
+                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
+                            Read More
+                        </button>
+                    </div>
                 </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">DDR3 Computers</div>
-                    <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                        Read More
-                    </button>
-                </div>
-            </article>
-
-            <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="#" class="block">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
+                <!-- Article 5 -->
+                <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+                    <img class="w-full h-64 object-cover" src="https://img.freepik.com/premium-photo/trying-help-someone-young-businessman-formalwear-talking-phone-analyzing-data-using-computer-while-sitting-office_425904-5649.jpg" alt="Sunshine">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Work Oriented</div>
+                        <p class="text-gray-700 text-base">Needed to build computer for video editing, and other memory intensive applications for business use.</p>
+                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
+                            Read More
+                        </button>
+                    </div>
                 </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">DDR3 Computers</div>
-                    <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                        Read More
-                    </button>
-                </div>
-            </article>
-
-            <article class="transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out flex" style="width: 300px; min-height: 100px;">
-                <a href="#" class="block">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png" class="mb-5 rounded-lg w-full h-full object-cover" alt="Image 2" style="height: 100%;">
+                <!-- Article 6 -->
+                <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+                    <img class="w-full h-64 object-cover" src="https://img.freepik.com/premium-photo/trying-help-someone-young-businessman-formalwear-talking-phone-analyzing-data-using-computer-while-sitting-office_425904-5649.jpg" alt="Sunshine">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Work Oriented</div>
+                        <p class="text-gray-700 text-base">Needed to build computer for video editing, and other memory intensive applications for business use.</p>
+                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
+                            Read More
+                        </button>
+                    </div>
                 </a>
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">DDR3 Computers</div>
-                    <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                        Read More
-                    </button>
-                </div>
-            </article>
         </div>
     </div>
 </section>
