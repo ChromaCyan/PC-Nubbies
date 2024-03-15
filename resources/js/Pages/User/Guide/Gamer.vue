@@ -10,9 +10,9 @@
                         Brief Introductions for Gaming Enthusiasts
                     </h2>
                     <div class="flex mt-3">
-                        <img src="https://scontent.fbag1-2.fna.fbcdn.net/v/t1.6435-1/50428361_663986754017291_8249036698344751104_n.jpg?stp=c0.35.320.320a_dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHMI3Fy28AQq09ZCKmRLARh03WpF0OgYurTdakXQ6Bi6lvOi1J-plXu-d4MYEb-5IUnSRHWmsgj3GrFqMaDmzjM&_nc_ohc=Az884ExjcA0AX_4xk5d&_nc_ht=scontent.fbag1-2.fna&oh=00_AfBYQkgWkiJ4aZjGnKFt9EUQWjlwOhLKCRFr2tYDphxjbA&oe=661AAD72" class="h-10 w-10 rounded-full mr-2 object-cover" />
+                        <img src="https://scontent.fbag1-2.fna.fbcdn.net/v/t39.30808-6/333488536_2393012150875428_5357122696918627255_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGl1rU4xt4_PYTogQauGkoCZxUYQE3SW3FnFRhATdJbccARYyxPw555uTTMLx3wgD7nakvHixojKdK0qIK_2w3v&_nc_ohc=mjx7erVKIw0AX-jPtyj&_nc_ht=scontent.fbag1-2.fna&oh=00_AfDIZttYSXGnVNQXWAWUgC0tj0hfY9S2svD2o271ZjiCTg&oe=65F8C1F9" class="h-10 w-10 rounded-full mr-2 object-cover" />
                         <div>
-                            <p class="font-semibold text-gray-200 text-sm"> Josh Brian Bugarin </p>
+                            <p class="font-semibold text-gray-200 text-sm"> Adnan T. Chohan </p>
                             <p class="font-semibold text-gray-400 text-xs"> 14 March </p>
                         </div>
                     </div>
