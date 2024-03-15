@@ -6,16 +6,6 @@
             </div>
             <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
                 <!-- Article 1 -->
-                <a href="casual" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
-                    <img class="w-full h-64 object-cover" src="https://www.shutterstock.com/image-photo/young-business-man-sitting-desk-600nw-129114017.jpg" alt="Sunshine">
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">Casual User/Beginner</div>
-                        <p class="text-gray-700 text-base">Someone who has 0 experience and workaround with computers but wanting to build one.</p>
-                        <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
-                            Read More
-                        </button>
-                    </div>
-                </a>
                 <!-- Article 2 -->
                 <a href="gamer" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
                     <img class="w-full h-64 object-cover" src="https://idsb.tmgrup.com.tr/ly/uploads/images/2020/03/19/26153.jpg" alt="Sunshine">

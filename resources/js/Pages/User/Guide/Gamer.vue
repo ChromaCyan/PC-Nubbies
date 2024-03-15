@@ -3,7 +3,7 @@
         <main class="mt-24 pd-24 ">
             <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
                 <div class="absolute left-0 bottom-0 w-full h-full z-10" style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
-                <img src="https://res.cloudinary.com/corsair-pwa/image/upload/f_auto,q_auto/v1/akamai/landing/pc-builder/images/bg-plan-specs.jpg" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
+                <img src="https://images.ctfassets.net/u4vv676b8z52/5ru1R2Q53Y9kHJmiVSyysv/eee95c4e74bed2be6c6c14272bc6cec9/video-games-health-678x446.gif?fm=jpg&q=80" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
                 <div class="p-4 absolute bottom-0 left-0 z-10">
                     <a href="#" class="px-4 py-1 bg-purple-500 text-black inline-flex items-center justify-center mb-2">Introduction for PC Building</a>
                     <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
@@ -49,12 +49,13 @@
                                     <v-icon left>mdi-controller-classic-outline</v-icon>
                                 </div>
                                 <h3 class="mb-2 text-xl font-bold dark:text-white">Periphirals</h3>
-                                <p class="text-gray-500 dark:text-gray-400">Peripherals like monitors, keyboards, mice, and headsets are integral when considering  your gaming needs. Invest in high-quality peripherals that enhance your gaming experience and complement your gaming PC build.</p>
+                                <p class="text-gray-500 dark:text-gray-400">Peripherals like monitors, keyboards, mice, and headsets are integral when considering your gaming needs. Invest in high-quality peripherals that enhance your gaming experience and complement your gaming PC build.</p>
                             </div>
                         </div>
                     </div>
                     <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4 text-center">Watch a brief introduction to different computer parts needed for gaming</h1>
-                    <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/ExxFxD4OSZ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/tar9g1qKrDM
+" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Brief overview</h2>
                     <p class="mb-4">
                         <ul>
@@ -64,7 +65,7 @@
                             <h1 class="mt-16 text-2xl font-extrabold dark:text-white">Central Processing Unit (CPU)</h1>
                             <li class="mb-6">A powerful CPU is essential for gaming. Look for high-end models like the Intel Core i9 or AMD Ryzen 9 for the best performance.</li>
                             <img class="rounded-lg" src="https://www.pcworld.com/wp-content/uploads/2023/10/cpu-hub-100758206-orig.jpg?quality=50&strip=all">
-                                                        <h3 class="mt-16 text-2xl font-bold dark:text-white">Memory (RAM)</h3>
+                            <h3 class="mt-16 text-2xl font-bold dark:text-white">Memory (RAM)</h3>
                             <li class="mb-6">For gaming, 16GB of RAM is the minimum, but 32GB is recommended for smoother performance, especially in games with high settings.</li>
                             <img class="rounded-lg" src="https://assetsio.reedpopcdn.com/best-ddr4-ram-header.jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp">
                             <h3 class="mt-16 text-2xl font-bold dark:text-white">Storage (SSD)</h3>
@@ -111,8 +112,7 @@
     </UserLayout>
 </template>
 <script setup>
-import Related from './Components/RelatedCasual.vue';
+import Related from './Components/RelatedGamer.vue';
 import UserLayout from '@/Pages/User/Layouts/UserLayouts.vue';
 
 </script>
-

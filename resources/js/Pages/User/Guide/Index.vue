@@ -49,10 +49,10 @@
         </div>
         <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
             <!-- Article 1 -->
-            <a href="work" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
+            <a href="/step-1" class="block transform hover:scale-105 hover:shadow-2xl transition-all duration-500 ease-in-out text-center">
                     <img class="w-full h-64 object-cover" src="https://thumbs.dreamstime.com/b/cpu-other-computer-parts-table-central-processing-unit-wooden-copy-space-building-personal-gaming-video-production-92409061.jpg" alt="Sunshine">
                     <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">Preparations</div>
+                        <div class="font-bold text-xl mb-2">Step 1: Preparations</div>
                         <p class="text-gray-700 text-base">What are the needed materials to build your computer</p>
                         <button class="mt-4 bg-gradient-to-r from-purple-700 to-rose-700 hover:bg-gradient-to-l hover:from-purple-950 hover:to-rose-950 text-white font-bold py-2 px-4 rounded">
                             Read More

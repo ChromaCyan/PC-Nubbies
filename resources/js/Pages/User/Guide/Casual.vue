@@ -8,7 +8,7 @@
                 <div class="p-4 absolute bottom-0 left-0 z-10">
                     <a href="#" class="px-4 py-1 bg-purple-500 text-black inline-flex items-center justify-center mb-2">Introduction for PC Building</a>
                     <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
-                        Brief Introductions for beginner/casual users
+                        Brief Introductions for Beginner/Casual Users
                     </h2>
                     <div class="flex mt-3">
                         <img src="https://scontent.fbag1-2.fna.fbcdn.net/v/t1.6435-1/50428361_663986754017291_8249036698344751104_n.jpg?stp=c0.35.320.320a_dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHMI3Fy28AQq09ZCKmRLARh03WpF0OgYurTdakXQ6Bi6lvOi1J-plXu-d4MYEb-5IUnSRHWmsgj3GrFqMaDmzjM&_nc_ohc=Az884ExjcA0AX_4xk5d&_nc_ht=scontent.fbag1-2.fna&oh=00_AfBYQkgWkiJ4aZjGnKFt9EUQWjlwOhLKCRFr2tYDphxjbA&oe=661AAD72" class="h-10 w-10 rounded-full mr-2 object-cover" />

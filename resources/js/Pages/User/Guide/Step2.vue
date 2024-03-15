@@ -53,7 +53,7 @@
     </UserLayout>
 </template>
 <script setup>
-import Related from './Components/RelatedCasual.vue';
+import Related from './Components/RelatedStep2.vue';
 import UserLayout from '@/Pages/User/Layouts/UserLayouts.vue';
 
 </script>
