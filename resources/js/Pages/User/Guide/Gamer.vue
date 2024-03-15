@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <h1 class="text-3xl text-gray-800 font-semibold mb-4 mt-4 text-center">Watch a brief introduction to different computer parts needed for gaming</h1>
-                    <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/ExxFxD4OSZ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe class="w-full h-64 my-10 rounded-lg md:h-80" src="https://www.youtube.com/embed/tar9g1qKrDM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Brief overview</h2>
                     <p class="mb-4">
                         <ul>
