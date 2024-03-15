@@ -125,5 +125,8 @@ Route::get('/step-3', [GuideController::class, 'step3'])->name('step3');
 Route::get('/step-4', [GuideController::class, 'step4'])->name('step4');
 Route::get('/step-5', [GuideController::class, 'step5'])->name('step5');
 Route::get('/step-6', [GuideController::class, 'step6'])->name('step6');
+Route::get('/step-7', [GuideController::class, 'step7'])->name('step7');
+Route::get('/step-8', [GuideController::class, 'step8'])->name('step8');
+Route::get('/step-9', [GuideController::class, 'step9'])->name('step9');
 
 require __DIR__ . '/auth.php';

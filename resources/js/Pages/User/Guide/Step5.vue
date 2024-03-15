@@ -53,7 +53,7 @@ GPUs have an extremely wide price range, which could seriously inflate your expe
     </UserLayout>
 </template>
 <script setup>
-import Related from './Components/RelatedStep3.vue';
+import Related from './Components/RelatedStep5.vue';
 import UserLayout from '@/Pages/User/Layouts/UserLayouts.vue';
 
 </script>

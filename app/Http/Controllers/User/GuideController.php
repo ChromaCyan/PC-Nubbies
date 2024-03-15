@@ -54,5 +54,25 @@ class GuideController extends Controller
         return Inertia::render('User/Guide/Step5');
     }
 
+    function step6()
+    {
+        return Inertia::render('User/Guide/Step6');
+    }
+
+    function step7()
+    {
+        return Inertia::render('User/Guide/Step7');
+    }
+
+    function step8()
+    {
+        return Inertia::render('User/Guide/Step8');
+    }
+
+    function step9()
+    {
+        return Inertia::render('User/Guide/Step9');
+    }
+
 
 }
