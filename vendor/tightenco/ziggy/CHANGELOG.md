@@ -8,6 +8,54 @@ Breaking changes are marked with ⚠️.
 
 ## [Unreleased]
 
+<<<<<<< HEAD
+=======
+## [v1.8.2] - 2024-02-20
+
+**Added**
+
+- Test on Laravel 11 by @shuvroroy in https://github.com/tighten/ziggy/pull/709
+
+**Fixed**
+
+- Fix `route().current()` with encoded characters by @bakerkretzmar in https://github.com/tighten/ziggy/pull/668
+- Fix retrieving ziggys config from an api endpoint link in readme by @RomainMazB in https://github.com/tighten/ziggy/pull/694
+- Fix `route().current()` with nested/object query params by @bakerkretzmar in https://github.com/tighten/ziggy/pull/712
+
+**Changed**
+
+- Enable provenance for npm package by @saibotk in https://github.com/tighten/ziggy/pull/684
+- Handle generated file extensions more robustly by @bakerkretzmar in https://github.com/tighten/ziggy/pull/687
+
+## [v1.8.1] - 2023-10-12
+
+**Fixed**
+
+- Update: Correction of some spellings and articles in the Readme file. by @prince-noman in https://github.com/tighten/ziggy/pull/678
+- Fix `route().current()` with encoded characters by @bakerkretzmar in https://github.com/tighten/ziggy/pull/668
+
+**Changed**
+
+- Update Readme, formatting, and testing setup by @bakerkretzmar in https://github.com/tighten/ziggy/pull/675
+
+## [v1.8.0] - 2023-10-06
+
+**Added**
+
+- Add type declarations and `ziggy.d.ts` generation by @lmeysel and @bakerkretzmar in https://github.com/tighten/ziggy/pull/664
+
+## [v1.7.0] - 2023-10-04
+
+**Added**
+
+- Add `useRoute()` React hook by @bakerkretzmar in https://github.com/tighten/ziggy/pull/473
+
+**Fixed**
+
+- URL-encode fewer special characters inside in route parameters by @bakerkretzmar in https://github.com/tighten/ziggy/pull/662
+- Fix empty root URL with `absolute: false` by @bakerkretzmar in https://github.com/tighten/ziggy/pull/667
+
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 ## [v1.6.2] - 2023-08-18
 
 **Fixed**
@@ -288,7 +336,15 @@ Breaking changes are marked with ⚠️.
 
 For previous changes see the [Releases](https://github.com/tighten/ziggy/releases) page.
 
+<<<<<<< HEAD
 [Unreleased]: https://github.com/tighten/ziggy/compare/v1.6.2...HEAD
+=======
+[Unreleased]: https://github.com/tighten/ziggy/compare/v1.8.2...HEAD
+[v1.8.2]: https://github.com/tighten/ziggy/compare/v1.8.1...v1.8.2
+[v1.8.1]: https://github.com/tighten/ziggy/compare/v1.8.0...v1.8.1
+[v1.8.0]: https://github.com/tighten/ziggy/compare/v1.7.0...v1.8.0
+[v1.7.0]: https://github.com/tighten/ziggy/compare/v1.6.2...v1.7.0
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 [v1.6.2]: https://github.com/tighten/ziggy/compare/v1.6.1...v1.6.2
 [v1.6.1]: https://github.com/tighten/ziggy/compare/v1.6.0...v1.6.1
 [v1.6.0]: https://github.com/tighten/ziggy/compare/v1.5.2...v1.6.0

@@ -16,7 +16,11 @@ class redirectAdmin
      */
     public function handle(Request $request, Closure $next , $guard = null): Response
     {
+<<<<<<< HEAD
         if (Auth::guard($guard)->check() && Auth::user()->isAdmin == 1) {
+=======
+        if (Auth::guard($guard)->check() && Auth::user()->usertype == 1) {
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
             return redirect()->route('admin.dashboard');
         }
 

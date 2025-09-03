@@ -5,17 +5,27 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import Vuetify from './vuetify';
+import '@mdi/font/css/materialdesignicons.css';
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+<<<<<<< HEAD
 
 //swal alart 
 import VueSweetalert2 from 'vue-sweetalert2';
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+=======
+//swal alert  
+import VueSweetalert2 from 'vue-sweetalert2';
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -27,6 +37,10 @@ createInertiaApp({
             app.use(ElementPlus)
             app.use(VueSweetalert2),
             window.Swal =  app.config.globalProperties.$swal
+<<<<<<< HEAD
+=======
+            app.use(Vuetify) // Use Vuetify
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
             app.mount(el)
             

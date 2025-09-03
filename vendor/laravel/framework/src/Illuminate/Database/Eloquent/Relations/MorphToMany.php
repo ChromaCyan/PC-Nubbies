@@ -188,6 +188,16 @@ class MorphToMany extends BelongsToMany
     }
 
     /**
+     * Get the fully qualified morph type for the relation.
+     *
+     * @return string
+     */
+    public function getQualifiedMorphTypeName()
+    {
+        return $this->qualifyPivotColumn($this->morphType);
+    }
+
+    /**
      * Get the class name of the parent model.
      *
      * @return string

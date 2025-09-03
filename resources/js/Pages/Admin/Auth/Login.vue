@@ -30,7 +30,11 @@ const submit = () => {
 </script>
 
 <template>
+<<<<<<< HEAD
     <GuestLayout>
+=======
+    <GuestLayout style="background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);">
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">

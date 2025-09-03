@@ -1,12 +1,23 @@
 <script setup>
+<<<<<<< HEAD
 import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
+=======
+    import { router, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+import { computed } from 'vue';
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 defineProps({
     products: Array
 })
 
+<<<<<<< HEAD
+=======
+const searchQuery = ref('');
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 const brands = usePage().props.brands;
 const categories = usePage().props.categories;
 
@@ -120,6 +131,12 @@ const resetFormData = () => {
     dialogImageUrl.value = ''
 };
 
+<<<<<<< HEAD
+=======
+const isFormValid = computed(() => {
+    return title.value && price.value && quantity.value && description.value && category_id.value && brand_id.value && productImages.value.length > 0;
+});
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 
 //delete sigal product image 
@@ -181,11 +198,16 @@ const updateProduct = async () => {
 const deleteProduct = (product, index) => {
     Swal.fire({
         title: 'Are you Sure',
+<<<<<<< HEAD
         text: "This actions cannot undo!",
+=======
+        text: "This actions can't be undone! Continue?",
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
+<<<<<<< HEAD
         cancelButtonText: 'no',
         confirmButtonText: 'yes, delete!'
     }).then((result) => {
@@ -194,6 +216,24 @@ const deleteProduct = (product, index) => {
                 router.delete('products/destory/' + product.id, {
                     onSuccess: (page) => {
                         this.delete(product, index);
+=======
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Confirm'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.delete('products/destroy/' + product.id, {
+                onSuccess: (page) => {
+                    // Check if there's an error message in the response
+                    if (page.props.flash.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: page.props.flash.error,
+                        });
+                    } else {
+                        // If successful, remove the product from the list
+                        products.value.splice(index, 1);
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                         Swal.fire({
                             toast: true,
                             icon: "success",
@@ -202,6 +242,7 @@ const deleteProduct = (product, index) => {
                             title: page.props.flash.success
                         });
                     }
+<<<<<<< HEAD
                 })
             } catch (err) {
                 console.log(err)
@@ -210,10 +251,48 @@ const deleteProduct = (product, index) => {
     })
 
 }
+=======
+                }
+            })
+        }
+    })
+}
+
+
+//Search products (an attempt for me)
+const searchProducts = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('query', searchQuery.value);
+    window.location.href = url.toString();
+};
+
+const clearSearch = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('query');
+    window.location.href = url.toString();
+};
+
+
+const filteredProducts = computed(() => {
+    if (!searchQuery.value) {
+        return products.value;
+    }
+    const query = searchQuery.value.toLowerCase();
+    return products.value.filter(product =>
+        product.title.toLowerCase().includes(query) ||
+        product.category.name.toLowerCase().includes(query) ||
+        product.brand.name.toLowerCase().includes(query)
+    );
+});
+
+
+
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 </script>
 <template>
     <section class="  p-3 sm:p-5">
         <!-- dialog for adding product or editing product -->
+<<<<<<< HEAD
         <el-dialog v-model="dialogVisible" :title="editMode ? 'Edit product' : 'Add Product'" width="30%"
             :before-close="handleClose">
             <!-- form start -->
@@ -438,6 +517,92 @@ const deleteProduct = (product, index) => {
                         </div>
                     </div>
                 </div>
+=======
+        <el-dialog v-model="dialogVisible" :title="editMode ? 'Edit product' : 'Add Product'" width="30%" :before-close="handleClose">
+            <!-- form start -->
+            <form @submit.prevent="editMode ? updateProduct() : AddProduct()">
+                <div class="relative z-0 w-full mb-6 group">
+                    <input v-model="title" type="text" name="floating_title" id="floating_title" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="text" name="floating_price" id="floating_price" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required v-model="price" />
+                    <label for="floating_price" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Price</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input type="number" name="qty" id="floating_qty" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required v-model="quantity" />
+                    <label for="floating_qty" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Quantity</label>
+                </div>
+                <div>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                        Category</label>
+                    <select id="countries" v-model="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                        Brand</label>
+                    <select id="countries" v-model="brand_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
+                    </select>
+                </div>
+                <div class="grid  md:gap-6">
+                    <div class="relative z-0 w-full mb-6 group">
+                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                        <textarea id="message" rows="4" v-model="description" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
+                    </div>
+                </div>
+                <!-- multiple images upload -->
+                <div class="grid  md:gap-6">
+                    <div class="relative z-0 w-full mb-6 group">
+                        <el-upload v-model:file-list="productImages" list-type="picture-card" multiple :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-change="handleFileChange">
+                            <el-icon>
+                                <Plus />
+                            </el-icon>
+                        </el-upload>
+                    </div>
+                </div>
+                <!-- end -->
+                <!-- list of images for selected product -->
+                <div class="flex flex-nowrap mb-8 ">
+                    <div v-for="(pimage, index) in product_images" :key="pimage.id" class="relative w-32 h-32 ">
+                        <img class="w-24 h-20 rounded" :src="`/${pimage.image}`" alt="">
+                        <span class="absolute top-0 right-8 transform -translate-y-1/2 w-3.5 h-3.5 bg-red-400 border-2 border-white dark:border-gray-800 rounded-full">
+                            <span @click="deleteImage(pimage, index)" class="text-white text-xs font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">x</span>
+                        </span>
+                    </div>
+                </div>
+                <!-- end -->
+                <div v-if="!isFormValid" class="text-red-500 mt-2">Please fill in all fields.</div>
+                <button type="submit" :disabled="!isFormValid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            </form>
+            <!-- end -->
+        </el-dialog>
+        <!-- end -->
+        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                    <div class="w-full md:w-1/2">
+                        <form class="flex items-center" @submit.prevent="searchProducts">
+                            <label for="simple-search" class="sr-only">Search</label>
+                            <div class="relative w-full">
+                                <input type="text" id="simple-search" v-model="searchQuery" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                                <button type="submit" class="absolute inset-y-0 right-0 flex items-center px-4 font-bold text-white bg-blue-700 rounded-r-lg">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                        <button @click="clearSearch" class="flex items-center justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Clear Search / Refresh Page
+                        </button>
+                        <button type="button" @click="openAddModal" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Add product
+                        </button>
+                    </div>
+                </div>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -447,23 +612,32 @@ const deleteProduct = (product, index) => {
                                 <th scope="col" class="px-4 py-3">Brand</th>
                                 <th scope="col" class="px-4 py-3">Quantity</th>
                                 <th scope="col" class="px-4 py-3">Price</th>
+<<<<<<< HEAD
                                 <th scope="col" class="px-4 py-3">Stock</th>
                                 <th scope="col" class="px-4 py-3">Publish</th>
+=======
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                                 <th scope="col" class="px-4 py-3">
                                     <span class="sr-only">Actions</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
                             <tr v-for="(product, index) in products" :key="product.id"
                                 class="border-b dark:border-gray-700">
                                 <th scope="row"
                                     class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+=======
+                            <tr v-for="(product, index) in products" :key="product.id" class="border-b dark:border-gray-700">
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                                     {{ product.title }}</th>
                                 <td class="px-4 py-3">{{ product.category.name }}</td>
                                 <td class="px-4 py-3">{{ product.brand.name }}</td>
                                 <td class="px-4 py-3">{{ product.quantity }}</td>
                                 <td class="px-4 py-3">${{ product.price }}</td>
+<<<<<<< HEAD
 
                                 <td class="px-4 py-3">
                                     <span v-if="product.inStock == 0"
@@ -505,10 +679,27 @@ const deleteProduct = (product, index) => {
                                         <div class="py-1">
                                             <a href="#" @click="deleteProduct(product, index)"
                                                 class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+=======
+                                <td class="px-4 py-3 flex items-center justify-end">
+                                    <button :id="`${product.id}-button`" :data-dropdown-toggle="`${product.id}`" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
+                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        </svg>
+                                    </button>
+                                    <div :id="`${product.id}`" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`${product.id}-button`">
+                                            <li>
+                                                <a href="#" @click="openEditModal(product)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                            </li>
+                                        </ul>
+                                        <div class="py-1">
+                                            <a href="#" @click="deleteProduct(product, index)" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+<<<<<<< HEAD
 
                         </tbody>
                     </table>
@@ -568,6 +759,11 @@ const deleteProduct = (product, index) => {
                         </li>
                     </ul>
                 </nav>
+=======
+                        </tbody>
+                    </table>
+                </div>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
             </div>
         </div>
     </section>

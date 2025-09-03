@@ -1,6 +1,10 @@
 <template>
+<<<<<<< HEAD
     <nav
         class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+=======
+    <nav class="bg-gray-800 border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
         <div class="flex flex-wrap justify-between items-center">
             <div class="flex justify-start items-center">
                 <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation"
@@ -21,6 +25,7 @@
                     <span class="sr-only">Toggle sidebar</span>
                 </button>
                 <Link :href="route('admin.dashboard')" class="flex items-center justify-between mr-4">
+<<<<<<< HEAD
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -28,6 +33,10 @@
                 </svg>
 
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PCNubbies</span>
+=======
+                    <img src="/images/logonubbies.png" class="mr-3 h-12" alt="Flowbite Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Admin Dashboard</span>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                 </Link>
                 <form action="#" method="GET" class="hidden md:block md:pl-2">
                     <label for="topbar-search" class="sr-only">Search</label>
@@ -47,6 +56,7 @@
                 </form>
             </div>
             <div class="flex items-center lg:order-2">
+<<<<<<< HEAD
                 <button type="button" data-drawer-toggle="drawer-navigation" aria-controls="drawer-navigation"
                     class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                     <span class="sr-only">Toggle search</span>
@@ -362,6 +372,11 @@
                 <button type="button"
                     class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
+=======
+                <!-- Apps -->
+                <!-- Dropdown menu -->
+                <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                     <span class="sr-only">Open user menu</span>
                     <img class="w-8 h-8 rounded-full"
                         src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png"
@@ -376,6 +391,7 @@
                     </div>
                     <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
                         <li>
+<<<<<<< HEAD
                             <a href="#"
                                 class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">My
                                 profile</a>
@@ -436,6 +452,11 @@
                                 class="block cursor-pointer py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                             Sign
                             out</Link>
+=======
+                            <Link href="/logout" method="post" as="button" type="button" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">
+                            Logout
+                            </Link>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                         </li>
                     </ul>
                 </div>
@@ -445,6 +466,18 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { Link } from '@inertiajs/vue3';
 
 </script>
+=======
+import { usePage } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3';
+const { $inertia } = usePage();
+
+const logout = () => {
+    $inertia.post(route('admin.logout'));
+};
+
+</script>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268

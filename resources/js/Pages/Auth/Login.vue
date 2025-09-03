@@ -27,6 +27,7 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
 </script>
 
 <template>
@@ -78,11 +79,18 @@ const submit = () => {
 
             <div class="flex items-center justify-end mt-4">
                 <Link
+<<<<<<< HEAD
                     v-if="canResetPassword"
                     :href="route('password.request')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Forgot your password?
+=======
+                    :href="route('register')"
+                    class="underline text-sm text-gray-600 hover:text-gray-900"
+                >
+                    Not Registered Yet?
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                 </Link>
 
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">

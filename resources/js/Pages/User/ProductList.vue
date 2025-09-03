@@ -1,6 +1,10 @@
 <script setup>
 import UserLayouts from './Layouts/UserLayouts.vue';
+<<<<<<< HEAD
 import { ref, watch } from 'vue'
+=======
+import { ref, watch, provide } from 'vue'
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 import {
     Dialog,
     DialogPanel,
@@ -20,13 +24,27 @@ import Products from '../User/Components/Products.vue'
 import SecondaryButtonVue from '@/Components/SecondaryButton.vue';
 import { router, useForm } from '@inertiajs/vue3';
 const sortOptions = [
+<<<<<<< HEAD
     { name: 'Most Popular', href: '#', current: true },
     { name: 'Best Rating', href: '#', current: false },
     { name: 'Newest', href: '#', current: false },
+=======
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     { name: 'Price: Low to High', href: '#', current: false },
     { name: 'Price: High to Low', href: '#', current: false },
 ]
 
+<<<<<<< HEAD
+=======
+const selectedProduct = ref(null);
+
+const setSelectedProduct = (product) => {
+ selectedProduct.value = product;
+};
+
+provide('selectedProduct', selectedProduct);
+provide('setSelectedProduct', setSelectedProduct);
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 
 const filterPrices = useForm({
@@ -152,11 +170,16 @@ function updateFilteredProducts() {
 
                 <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+<<<<<<< HEAD
                         <h1 class="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+=======
+                        <h1 class="text-4xl font-bold tracking-tight text-gray-900">Peripherals Shop</h1>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
                         <div class="flex items-center">
                             <Menu as="div" class="relative inline-block text-left">
                                 <div>
+<<<<<<< HEAD
                                     <MenuButton
                                         class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                                         Sort
@@ -164,6 +187,9 @@ function updateFilteredProducts() {
                                             class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true" />
                                     </MenuButton>
+=======
+                                    
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                                 </div>
 
                                 <transition enter-active-class="transition ease-out duration-100"
@@ -185,10 +211,14 @@ function updateFilteredProducts() {
                                 </transition>
                             </Menu>
 
+<<<<<<< HEAD
                             <button type="button" class="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                                 <span class="sr-only">View grid</span>
                                 <Squares2X2Icon class="h-5 w-5" aria-hidden="true" />
                             </button>
+=======
+                            
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                             <button type="button" class="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                                 @click="mobileFiltersOpen = true">
                                 <span class="sr-only">Filters</span>
@@ -240,7 +270,11 @@ function updateFilteredProducts() {
                                     <h3 class="-my-3 flow-root">
                                         <DisclosureButton
                                             class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+<<<<<<< HEAD
                                             <span class="font-medium text-gray-900">Brands</span>
+=======
+                                            <span class="font-medium text-gray-900">Filter by Brands</span>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                                             <span class="ml-6 flex items-center">
                                                 <PlusIcon v-if="!open" class="h-5 w-5" aria-hidden="true" />
                                                 <MinusIcon v-else class="h-5 w-5" aria-hidden="true" />
@@ -302,4 +336,8 @@ function updateFilteredProducts() {
             </div>
         </div>
 
+<<<<<<< HEAD
     </UserLayouts></template>
+=======
+    </UserLayouts></template>
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268

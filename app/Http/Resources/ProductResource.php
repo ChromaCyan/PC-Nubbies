@@ -31,8 +31,11 @@ class ProductResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'brand_id' => $this->brand_id,
             'brand' => new BrandResource($this->whenLoaded('brand')),
+<<<<<<< HEAD
 
        
+=======
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
         ];
     }
 }

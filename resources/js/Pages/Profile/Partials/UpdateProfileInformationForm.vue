@@ -18,6 +18,11 @@ const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,
+<<<<<<< HEAD
+=======
+    gender: user.gender,
+    age_range: user.age_range,
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     email: user.email,
 });
 </script>
@@ -62,6 +67,7 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+<<<<<<< HEAD
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
@@ -88,6 +94,50 @@ const form = useForm({
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 
+=======
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="gender" value="Gender" />
+
+                <select
+                    id="gender"
+                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    v-model="form.gender"
+                    required
+                >
+                    <option value="">Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+
+                <InputError class="mt-2" :message="form.errors.gender" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="age_range" value="Age Group" />
+
+                <select
+                    id="age_range"
+                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    v-model="form.age_range"
+                    required
+                >
+                    <option value="">Select Age Group</option>
+                    <option value="1">18-24</option>
+                    <option value="2">25-34</option>
+                    <option value="3">35-45</option>
+                    <option value="4">46-59</option>
+                    <option value="5">60+</option>
+                </select>
+
+                <InputError class="mt-2" :message="form.errors.age_range" />
+            </div>
+
+            <div class="flex items-center gap-4">
+                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                 <Transition
                     enter-active-class="transition ease-in-out"
                     enter-from-class="opacity-0"

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Category;
 
 class CategorySeeder extends Seeder
 {
@@ -14,24 +14,32 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-        	'name' => 'CPU',
-        	'slug' => 'dell'
+            'name' => 'CPU',
+            'slug'=>'cpu'
         ]);
         Category::create([
-        	'name' => 'Motherboard',
-        	'slug' => 'dell'
+            'name' => 'Motherboard',
+            'slug'=>'motherboard'
         ]);
         Category::create([
-        	'name' => 'Graphics Card',
-        	'slug' => 'dell'
+            'name' => 'Graphics Card',
+            'slug'=>'graphics'
         ]);
         Category::create([
-        	'name' => 'PSU',
-        	'slug' => 'dell'
+            'name' => 'PSU',
+            'slug'=>'psu'
         ]);
         Category::create([
-        	'name' => 'RAM/SSD',
-        	'slug' => 'dell'
+            'name' => 'SSD',
+            'slug'=>'ssd'
+        ]);
+        Category::create([
+            'name' => 'RAM',
+            'slug'=>'ram'
+        ]);
+        Category::create([
+            'name' => 'Computer Case',
+            'slug'=>'case'
         ]);
     }
 }

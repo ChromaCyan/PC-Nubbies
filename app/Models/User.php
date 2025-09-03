@@ -20,7 +20,14 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+<<<<<<< HEAD
         'password',
+=======
+        'gender',
+        'age_range',
+        'password',
+        'api_token',
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     ];
 
     /**
@@ -31,6 +38,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+<<<<<<< HEAD
+=======
+        'api_token',
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     ];
 
     /**
@@ -47,4 +58,11 @@ class User extends Authenticatable
     function user_address() {
         return $this->hasMany(UserAddress::class);
     }
+<<<<<<< HEAD
+=======
+
+    public function orders(){
+        return $this->hasMany(Order::class, 'created_by');
+    }
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 }

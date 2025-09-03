@@ -492,6 +492,33 @@ class Arr
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Select an array of values from an array.
+     *
+     * @param  array  $array
+     * @param  array|string  $keys
+     * @return array
+     */
+    public static function select($array, $keys)
+    {
+        return static::map($array, function ($item) use ($keys) {
+            $result = [];
+
+            foreach ($keys as $key) {
+                if (Arr::accessible($item) && Arr::exists($item, $key)) {
+                    $result[$key] = $item[$key];
+                } elseif (is_object($item) && isset($item->{$key})) {
+                    $result[$key] = $item->{$key};
+                }
+            }
+
+            return $result;
+        });
+    }
+
+    /**
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
      * Pluck an array of values from an array.
      *
      * @param  iterable  $array

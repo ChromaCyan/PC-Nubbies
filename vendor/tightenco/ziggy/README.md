@@ -305,14 +305,33 @@ const Ziggy = {
 export { Ziggy };
 ```
 
+<<<<<<< HEAD
 You can optionally create an alias to make importing Ziggy's core source files easier:
+=======
+### Importing the `route()` function
+
+You can import Ziggy like any other JavaScript library. Without the `@routes` Blade directive Ziggy's config is not available globally, so it must be passed to the `route()` function manually:
+
+```js
+import route from '../../vendor/tightenco/ziggy';
+import { Ziggy } from './ziggy.js';
+
+route('home', undefined, undefined, Ziggy);
+```
+
+To simplify importing the `route()` function, you can create an alias to the vendor path:
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 ```js
 // vite.config.js
 export default defineConfig({
     resolve: {
         alias: {
+<<<<<<< HEAD
             ziggy: 'vendor/tightenco/ziggy/dist',
+=======
+            'ziggy-js': path.resolve('vendor/tightenco/ziggy'),
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
             // 'vendor/tightenco/ziggy/dist/vue.es.js' if using the Vue plugin
         },
     },
@@ -387,7 +406,51 @@ Now you can use `route()` anywhere in your Vue components and templates, like so
 
 #### React
 
+<<<<<<< HEAD
 To use Ziggy with React, start by importing the `route()` function and your Ziggy config. Because the Ziggy config object is not available globally in this setup, you'll have to pass it to the `route()` function manually:
+=======
+```js
+import { createApp } from 'vue';
+import { ZiggyVue } from 'ziggy-js';
+import { Ziggy } from './ziggy.js';
+import App from './App.vue';
+
+createApp(App).use(ZiggyVue, Ziggy);
+```
+
+If you use the Vue plugin with the `ziggy-js` import alias shown above, make sure to update the alias to `'vendor/tightenco/ziggy/dist/vue.es.js'`.
+
+### React
+
+Ziggy includes a `useRoute()` hook to make it easy to use the `route()` helper in your React app:
+
+```jsx
+import React from 'react';
+import { useRoute } from 'ziggy-js';
+
+export default function PostsLink() {
+    const route = useRoute();
+
+    return <a href={route('posts.index')}>Posts</a>;
+}
+```
+
+If you are not using the `@routes` Blade directive, import Ziggy's configuration too and pass it to `useRoute()`:
+
+```jsx
+import React from 'react';
+import { useRoute } from 'ziggy-js';
+import { Ziggy } from './ziggy.js';
+
+export default function PostsLink() {
+    const route = useRoute(Ziggy);
+
+    return <a href={route('posts.index')}>Posts</a>;
+}
+```
+
+You can also make the `Ziggy` config object available globally, so you can call `useRoute()` without passing Ziggy's configuration to it every time:
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 ```js
 // app.js
@@ -404,6 +467,7 @@ We're working on adding a Hook to Ziggy to make this cleaner, but for now make s
 
 > Note: If you include the `@routes` Blade directive in your views, the `route()` helper will already be available globally, including in your React app, so you don't need to import `route` or `Ziggy` anywhere.
 
+<<<<<<< HEAD
 #### SPAs or separate repos
 
 Ziggy's `route()` helper function is also available as an NPM package, for use in JavaScript projects managed separately from their Laravel backend (i.e. without Composer or a `vendor` directory). You can install the NPM package with `npm install ziggy-js`.
@@ -426,6 +490,9 @@ const Ziggy = await response.json();
 
 route('home', undefined, undefined, Ziggy);
 ```
+=======
+To make your routes available on the frontend for this function to use, you can either run `php artisan ziggy:generate` and add the generated config file to your frontend project, or you can return Ziggy's config as JSON from an endpoint in your Laravel API (see [Retrieving Ziggy's config from an API endpoint](#retrieving-ziggys-config-from-an-api-endpoint) below for an example of how to set this up).
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
 
 ## Filtering Routes
 

@@ -6,7 +6,11 @@
         "build": "vite build"
     },
     "devDependencies": {
+<<<<<<< HEAD
         "@inertiajs/vue3": "^1.0.0",
+=======
+        "@inertiajs/vue3": "^1.0.15",
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^4.0.0",
         "autoprefixer": "^10.4.12",
@@ -15,16 +19,36 @@
         "postcss": "^8.4.18",
         "tailwindcss": "^3.2.1",
         "vite": "^4.0.0",
+<<<<<<< HEAD
         "vue": "^3.2.41"
+=======
+        "vue": "^3.4.20"
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.16",
         "@heroicons/vue": "^2.0.18",
+<<<<<<< HEAD
         "@vue-hero-icons/outline": "^1.7.2",
         "@vue-hero-icons/solid": "^1.7.2",
         "element-plus": "^2.3.12",
         "flowbite": "^1.8.1",
         "sweetalert2": "^11.7.27",
         "vue-sweetalert2": "^5.0.5"
+=======
+        "@mdi/font": "^7.4.47",
+        "@vue-hero-icons/outline": "^1.7.2",
+        "@vue-hero-icons/solid": "^1.7.2",
+        "apexcharts": "^3.47.0",
+        "chart.js": "^4.4.2",
+        "element-plus": "^2.5.6",
+        "flowbite": "^1.8.1",
+        "sweetalert2": "^11.7.27",
+        "swiper": "^11.0.7",
+        "vue-apexcharts": "^1.6.2",
+        "vue-chartjs": "^5.3.0",
+        "vue-sweetalert2": "^5.0.5",
+        "vuetify": "^3.4.0-beta.1"
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     }
 }

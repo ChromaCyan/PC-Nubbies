@@ -954,6 +954,44 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Select specific values from the items within the collection.
+     *
+     * @param  \Illuminate\Support\Enumerable<array-key, TKey>|array<array-key, TKey>|string  $keys
+     * @return static
+     */
+    public function select($keys)
+    {
+        if ($keys instanceof Enumerable) {
+            $keys = $keys->all();
+        } elseif (! is_null($keys)) {
+            $keys = is_array($keys) ? $keys : func_get_args();
+        }
+
+        return new static(function () use ($keys) {
+            if (is_null($keys)) {
+                yield from $this;
+            } else {
+                foreach ($this as $item) {
+                    $result = [];
+
+                    foreach ($keys as $key) {
+                        if (Arr::accessible($item) && Arr::exists($item, $key)) {
+                            $result[$key] = $item[$key];
+                        } elseif (is_object($item) && isset($item->{$key})) {
+                            $result[$key] = $item->{$key};
+                        }
+                    }
+
+                    yield $result;
+                }
+            }
+        });
+    }
+
+    /**
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
      * Push all of the given items onto the collection.
      *
      * @param  iterable<array-key, TValue>  $source

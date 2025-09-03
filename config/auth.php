@@ -36,12 +36,24 @@ return [
     */
 
     'guards' => [
+<<<<<<< HEAD
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+=======
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
     ],
 
+    'api' => [
+        'driver' => 'token',
+        'provider' => 'users',
+        'hash' => false,
+    ],
+],
     /*
     |--------------------------------------------------------------------------
     | User Providers

@@ -113,7 +113,11 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+<<<<<<< HEAD
                             Dashboard
+=======
+                            Order List
+>>>>>>> 539b01a78333c5afd9b506c2a4e3d33686af6268
                         </ResponsiveNavLink>
                     </div>
 
