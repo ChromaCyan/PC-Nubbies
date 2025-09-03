@@ -21,7 +21,6 @@ use Symfony\Component\VarDumper\Cloner\Data;
  */
 class HtmlDumper extends CliDumper
 {
-    /** @var callable|resource|string|null */
     public static $defaultOutput = 'php://output';
 
     protected static $themes = [
@@ -75,7 +74,7 @@ class HtmlDumper extends CliDumper
     ];
     private array $extraDisplayOptions = [];
 
-    public function __construct($output = null, ?string $charset = null, int $flags = 0)
+    public function __construct($output = null, string $charset = null, int $flags = 0)
     {
         AbstractDumper::__construct($output, $charset, $flags);
         $this->dumpId = 'sf-dump-'.mt_rand();
@@ -664,7 +663,7 @@ pre.sf-dump:after {
    clear: both;
 }
 pre.sf-dump span {
-    display: inline-flex;
+    display: inline;
 }
 pre.sf-dump a {
     text-decoration: none;

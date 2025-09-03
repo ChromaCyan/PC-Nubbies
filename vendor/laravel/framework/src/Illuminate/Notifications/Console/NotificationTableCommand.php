@@ -2,11 +2,13 @@
 
 namespace Illuminate\Notifications\Console;
 
-use Illuminate\Console\MigrationGeneratorCommand;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Composer;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'notifications:table')]
-class NotificationTableCommand extends MigrationGeneratorCommand
+class NotificationTableCommand extends Command
 {
     /**
      * The console command name.
@@ -23,22 +25,59 @@ class NotificationTableCommand extends MigrationGeneratorCommand
     protected $description = 'Create a migration for the notifications table';
 
     /**
-     * Get the migration table name.
+     * The filesystem instance.
      *
-     * @return string
+     * @var \Illuminate\Filesystem\Filesystem
      */
-    protected function migrationTableName()
+    protected $files;
+
+    /**
+     * @var \Illuminate\Support\Composer
+     *
+     * @deprecated Will be removed in a future Laravel version.
+     */
+    protected $composer;
+
+    /**
+     * Create a new notifications table command instance.
+     *
+     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param  \Illuminate\Support\Composer  $composer
+     * @return void
+     */
+    public function __construct(Filesystem $files, Composer $composer)
     {
-        return 'notifications';
+        parent::__construct();
+
+        $this->files = $files;
+        $this->composer = $composer;
     }
 
     /**
-     * Get the path to the migration stub file.
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $fullPath = $this->createBaseMigration();
+
+        $this->files->put($fullPath, $this->files->get(__DIR__.'/stubs/notifications.stub'));
+
+        $this->components->info('Migration created successfully.');
+    }
+
+    /**
+     * Create a base migration file for the notifications.
      *
      * @return string
      */
-    protected function migrationStubFile()
+    protected function createBaseMigration()
     {
-        return __DIR__.'/stubs/notifications.stub';
+        $name = 'create_notifications_table';
+
+        $path = $this->laravel->databasePath().'/migrations';
+
+        return $this->laravel['migration.creator']->create($name, $path);
     }
 }

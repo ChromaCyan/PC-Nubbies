@@ -86,7 +86,7 @@ class BackedEnumValueResolver implements ArgumentValueResolverInterface, ValueRe
 
         try {
             return [$enumType::from($value)];
-        } catch (\ValueError|\TypeError $e) {
+        } catch (\ValueError $e) {
             throw new NotFoundHttpException(sprintf('Could not resolve the "%s $%s" controller argument: ', $argument->getType(), $argument->getName()).$e->getMessage(), $e);
         }
     }

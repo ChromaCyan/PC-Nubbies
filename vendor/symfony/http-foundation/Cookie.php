@@ -32,7 +32,6 @@ class Cookie
 
     private bool $raw;
     private ?string $sameSite = null;
-    private bool $partitioned = false;
     private bool $secureDefault = false;
 
     private const RESERVED_CHARS_LIST = "=,; \t\r\n\v\f";
@@ -52,7 +51,6 @@ class Cookie
             'httponly' => false,
             'raw' => !$decode,
             'samesite' => null,
-            'partitioned' => false,
         ];
 
         $parts = HeaderUtils::split($cookie, ';=');
@@ -68,20 +66,17 @@ class Cookie
             $data['expires'] = time() + (int) $data['max-age'];
         }
 
-        return new static($name, $value, $data['expires'], $data['path'], $data['domain'], $data['secure'], $data['httponly'], $data['raw'], $data['samesite'], $data['partitioned']);
+        return new static($name, $value, $data['expires'], $data['path'], $data['domain'], $data['secure'], $data['httponly'], $data['raw'], $data['samesite']);
     }
 
     /**
      * @see self::__construct
      *
      * @param self::SAMESITE_*|''|null $sameSite
-     * @param bool                     $partitioned
      */
-    public static function create(string $name, ?string $value = null, int|string|\DateTimeInterface $expire = 0, ?string $path = '/', ?string $domain = null, ?bool $secure = null, bool $httpOnly = true, bool $raw = false, ?string $sameSite = self::SAMESITE_LAX /* , bool $partitioned = false */): self
+    public static function create(string $name, string $value = null, int|string|\DateTimeInterface $expire = 0, ?string $path = '/', string $domain = null, bool $secure = null, bool $httpOnly = true, bool $raw = false, ?string $sameSite = self::SAMESITE_LAX): self
     {
-        $partitioned = 9 < \func_num_args() ? func_get_arg(9) : false;
-
-        return new self($name, $value, $expire, $path, $domain, $secure, $httpOnly, $raw, $sameSite, $partitioned);
+        return new self($name, $value, $expire, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
     }
 
     /**
@@ -97,7 +92,7 @@ class Cookie
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $name, ?string $value = null, int|string|\DateTimeInterface $expire = 0, ?string $path = '/', ?string $domain = null, ?bool $secure = null, bool $httpOnly = true, bool $raw = false, ?string $sameSite = self::SAMESITE_LAX, bool $partitioned = false)
+    public function __construct(string $name, string $value = null, int|string|\DateTimeInterface $expire = 0, ?string $path = '/', string $domain = null, bool $secure = null, bool $httpOnly = true, bool $raw = false, ?string $sameSite = self::SAMESITE_LAX)
     {
         // from PHP source code
         if ($raw && false !== strpbrk($name, self::RESERVED_CHARS_LIST)) {
@@ -117,7 +112,6 @@ class Cookie
         $this->httpOnly = $httpOnly;
         $this->raw = $raw;
         $this->sameSite = $this->withSameSite($sameSite)->sameSite;
-        $this->partitioned = $partitioned;
     }
 
     /**
@@ -244,17 +238,6 @@ class Cookie
     }
 
     /**
-     * Creates a cookie copy that is tied to the top-level site in cross-site context.
-     */
-    public function withPartitioned(bool $partitioned = true): static
-    {
-        $cookie = clone $this;
-        $cookie->partitioned = $partitioned;
-
-        return $cookie;
-    }
-
-    /**
      * Returns the cookie as a string.
      */
     public function __toString(): string
@@ -285,20 +268,16 @@ class Cookie
             $str .= '; domain='.$this->getDomain();
         }
 
-        if ($this->isSecure()) {
+        if (true === $this->isSecure()) {
             $str .= '; secure';
         }
 
-        if ($this->isHttpOnly()) {
+        if (true === $this->isHttpOnly()) {
             $str .= '; httponly';
         }
 
         if (null !== $this->getSameSite()) {
             $str .= '; samesite='.$this->getSameSite();
-        }
-
-        if ($this->isPartitioned()) {
-            $str .= '; partitioned';
         }
 
         return $str;
@@ -384,14 +363,6 @@ class Cookie
     public function isRaw(): bool
     {
         return $this->raw;
-    }
-
-    /**
-     * Checks whether the cookie should be tied to the top-level site in cross-site context.
-     */
-    public function isPartitioned(): bool
-    {
-        return $this->partitioned;
     }
 
     /**

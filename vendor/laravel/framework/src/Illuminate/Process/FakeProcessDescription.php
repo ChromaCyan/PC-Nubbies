@@ -178,7 +178,7 @@ class FakeProcessDescription
     }
 
     /**
-     * Convert the process description into a process result.
+     * Conver the process description into a process result.
      *
      * @param  string  $command
      * @return \Illuminate\Contracts\Process\ProcessResult

@@ -36,8 +36,10 @@ final class MacroScanner
     /**
      * Return true if the given pair class-method is a Carbon macro.
      *
-     * @param class-string $className
-     * @param string       $methodName
+     * @param string $className
+     * @phpstan-param class-string $className
+     *
+     * @param string $methodName
      *
      * @return bool
      */
@@ -59,8 +61,10 @@ final class MacroScanner
     /**
      * Return the Macro for a given pair class-method.
      *
-     * @param class-string $className
-     * @param string       $methodName
+     * @param string $className
+     * @phpstan-param class-string $className
+     *
+     * @param string $methodName
      *
      * @throws ReflectionException
      *

@@ -36,7 +36,7 @@ trait Has
     }
 
     /**
-     * @param mixed $value
+     * @param mixed|null $value
      *
      * @return $this
      */

@@ -13,12 +13,12 @@
         }
     ],
     "require": {
-        "php": "^8.0 || ^7.4",
+        "php": "^8.0 || ^7.0.8",
         "ext-json": "*",
         "ext-tokenizer": "*",
-        "nikic/php-parser": "^5.0 || ^4.0",
-        "symfony/console": "^7.0 || ^6.0 || ^5.0 || ^4.0 || ^3.4",
-        "symfony/var-dumper": "^7.0 || ^6.0 || ^5.0 || ^4.0 || ^3.4"
+        "symfony/console": "^6.0 || ^5.0 || ^4.0 || ^3.4",
+        "symfony/var-dumper": "^6.0 || ^5.0 || ^4.0 || ^3.4",
+        "nikic/php-parser": "^4.0 || ^3.1"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.2"
@@ -26,6 +26,7 @@
     "suggest": {
         "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
         "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
+        "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history.",
         "ext-pdo-sqlite": "The doc command requires SQLite to work."
     },
     "autoload": {
@@ -47,11 +48,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "0.12.x-dev"
-        },
-        "bamarni-bin": {
-            "bin-links": false,
-            "forward-command": false
+            "dev-main": "0.11.x-dev"
         }
     },
     "conflict": {

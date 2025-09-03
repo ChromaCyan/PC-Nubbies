@@ -53,14 +53,4 @@ class ConvertEmptyStringsToNull extends TransformsRequest
     {
         static::$skipCallbacks[] = $callback;
     }
-
-    /**
-     * Flush the middleware's global state.
-     *
-     * @return void
-     */
-    public static function flushState()
-    {
-        static::$skipCallbacks = [];
-    }
 }

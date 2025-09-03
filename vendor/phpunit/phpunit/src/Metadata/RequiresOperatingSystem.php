@@ -16,15 +16,8 @@ namespace PHPUnit\Metadata;
  */
 final class RequiresOperatingSystem extends Metadata
 {
-    /**
-     * @psalm-var non-empty-string
-     */
     private readonly string $operatingSystem;
 
-    /**
-     * @psalm-param 0|1 $level
-     * @psalm-param non-empty-string $operatingSystem
-     */
     public function __construct(int $level, string $operatingSystem)
     {
         parent::__construct($level);
@@ -32,17 +25,11 @@ final class RequiresOperatingSystem extends Metadata
         $this->operatingSystem = $operatingSystem;
     }
 
-    /**
-     * @psalm-assert-if-true RequiresOperatingSystem $this
-     */
     public function isRequiresOperatingSystem(): bool
     {
         return true;
     }
 
-    /**
-     * @psalm-return non-empty-string
-     */
     public function operatingSystem(): string
     {
         return $this->operatingSystem;

@@ -30,7 +30,7 @@ final class Constant
         return $this->name;
     }
 
-    public function value(): bool|string
+    public function value(): mixed
     {
         return $this->value;
     }

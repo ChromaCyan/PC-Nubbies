@@ -23,9 +23,6 @@ class OpenAiSolutionResponse
         $textLinks = explode(PHP_EOL, $textLinks);
 
         $textLinks = array_map(function ($textLink) {
-            $textLink = str_replace('\\', '\\\\', $textLink);
-            $textLink = str_replace('\\\\\\', '\\\\', $textLink);
-
             return json_decode($textLink, true);
         }, $textLinks);
 

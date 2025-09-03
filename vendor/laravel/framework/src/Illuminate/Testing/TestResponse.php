@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 use Illuminate\Support\ViewErrorBag;
@@ -26,7 +25,6 @@ use LogicException;
 use PHPUnit\Framework\ExpectationFailedException;
 use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\StreamedJsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -34,7 +32,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class TestResponse implements ArrayAccess
 {
-    use Concerns\AssertsStatusCodes, Conditionable, Tappable, Macroable {
+    use Concerns\AssertsStatusCodes, Tappable, Macroable {
         __call as macroCall;
     }
 
@@ -145,7 +143,7 @@ class TestResponse implements ArrayAccess
     {
         $message = $this->statusMessageWithDetails($status, $actual = $this->getStatusCode());
 
-        PHPUnit::assertSame($status, $actual, $message);
+        PHPUnit::assertSame($actual, $status, $message);
 
         return $this;
     }
@@ -499,8 +497,7 @@ class TestResponse implements ArrayAccess
                     $cookie->isSecure(),
                     $cookie->isHttpOnly(),
                     $cookie->isRaw(),
-                    $cookie->getSameSite(),
-                    $cookie->isPartitioned()
+                    $cookie->getSameSite()
                 );
             }
         }
@@ -530,17 +527,6 @@ class TestResponse implements ArrayAccess
         PHPUnit::assertSame($value, $this->streamedContent());
 
         return $this;
-    }
-
-    /**
-     * Assert that the given array matches the streamed JSON response content.
-     *
-     * @param  array  $value
-     * @return $this
-     */
-    public function assertStreamedJsonContent($value)
-    {
-        return $this->assertStreamedContent(json_encode($value, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -1217,28 +1203,26 @@ class TestResponse implements ArrayAccess
 
         foreach (Arr::wrap($errors) as $key => $value) {
             PHPUnit::assertArrayHasKey(
-                $resolvedKey = (is_int($key)) ? $value : $key,
+                (is_int($key)) ? $value : $key,
                 $sessionErrors,
-                "Failed to find a validation error in session for key: '{$resolvedKey}'".PHP_EOL.PHP_EOL.$errorMessage
+                "Failed to find a validation error in session for key: '{$value}'".PHP_EOL.PHP_EOL.$errorMessage
             );
 
-            foreach (Arr::wrap($value) as $message) {
-                if (! is_int($key)) {
-                    $hasError = false;
+            if (! is_int($key)) {
+                $hasError = false;
 
-                    foreach (Arr::wrap($sessionErrors[$key]) as $sessionErrorMessage) {
-                        if (Str::contains($sessionErrorMessage, $message)) {
-                            $hasError = true;
+                foreach (Arr::wrap($sessionErrors[$key]) as $sessionErrorMessage) {
+                    if (Str::contains($sessionErrorMessage, $value)) {
+                        $hasError = true;
 
-                            break;
-                        }
+                        break;
                     }
+                }
 
-                    if (! $hasError) {
-                        PHPUnit::fail(
-                            "Failed to find a validation error for key and message: '$key' => '$message'".PHP_EOL.PHP_EOL.$errorMessage
-                        );
-                    }
+                if (! $hasError) {
+                    PHPUnit::fail(
+                        "Failed to find a validation error for key and message: '$key' => '$value'".PHP_EOL.PHP_EOL.$errorMessage
+                    );
                 }
             }
         }
@@ -1576,8 +1560,7 @@ class TestResponse implements ArrayAccess
             return $this->streamedContent;
         }
 
-        if (! $this->baseResponse instanceof StreamedResponse
-            && ! $this->baseResponse instanceof StreamedJsonResponse) {
+        if (! $this->baseResponse instanceof StreamedResponse) {
             PHPUnit::fail('The response is not a streamed response.');
         }
 
@@ -1651,7 +1634,7 @@ class TestResponse implements ArrayAccess
      */
     protected function appendExceptionToException($exceptionToAppend, $exception)
     {
-        $exceptionMessage = is_string($exceptionToAppend) ? $exceptionToAppend : $exceptionToAppend->getMessage();
+        $exceptionMessage = $exceptionToAppend->getMessage();
 
         $exceptionToAppend = (string) $exceptionToAppend;
 
@@ -1679,7 +1662,7 @@ class TestResponse implements ArrayAccess
     protected function appendErrorsToException($errors, $exception, $json = false)
     {
         $errors = $json
-            ? json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            ? json_encode($errors, JSON_PRETTY_PRINT)
             : implode(PHP_EOL, Arr::flatten($errors));
 
         // JSON error messages may already contain the errors, so we shouldn't duplicate them...

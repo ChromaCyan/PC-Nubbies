@@ -16,9 +16,6 @@ namespace PHPUnit\Metadata;
  */
 final class CoversNothing extends Metadata
 {
-    /**
-     * @psalm-assert-if-true CoversNothing $this
-     */
     public function isCoversNothing(): bool
     {
         return true;

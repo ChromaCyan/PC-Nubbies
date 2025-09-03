@@ -13,8 +13,6 @@ namespace PHPUnit\Metadata;
  * @psalm-immutable
  *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
- * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5513
  */
 final class IgnoreClassForCodeCoverage extends Metadata
 {
@@ -24,7 +22,6 @@ final class IgnoreClassForCodeCoverage extends Metadata
     private readonly string $className;
 
     /**
-     * @psalm-param 0|1 $level
      * @psalm-param class-string $className
      */
     protected function __construct(int $level, string $className)
@@ -34,9 +31,6 @@ final class IgnoreClassForCodeCoverage extends Metadata
         $this->className = $className;
     }
 
-    /**
-     * @psalm-assert-if-true IgnoreClassForCodeCoverage $this
-     */
     public function isIgnoreClassForCodeCoverage(): bool
     {
         return true;

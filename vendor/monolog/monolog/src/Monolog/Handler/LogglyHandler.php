@@ -89,7 +89,6 @@ class LogglyHandler extends AbstractProcessingHandler
 
     /**
      * @param string[]|string $tag
-     * @return $this
      */
     public function setTag(string|array $tag): self
     {
@@ -104,7 +103,6 @@ class LogglyHandler extends AbstractProcessingHandler
 
     /**
      * @param string[]|string $tag
-     * @return $this
      */
     public function addTag(string|array $tag): self
     {
@@ -126,7 +124,7 @@ class LogglyHandler extends AbstractProcessingHandler
         $level = $this->level;
 
         $records = array_filter($records, function ($record) use ($level) {
-            return ($record->level->value >= $level->value);
+            return ($record->level >= $level);
         });
 
         if (\count($records) > 0) {

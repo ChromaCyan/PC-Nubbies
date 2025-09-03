@@ -19,8 +19,6 @@ use Symfony\Component\Console\Input\StringInput;
  */
 class ShellInput extends StringInput
 {
-    public const REGEX_STRING = '([^\s]+?)(?:\s|(?<!\\\\)"|(?<!\\\\)\'|$)';
-
     private $hasCodeArgument = false;
 
     /**
@@ -47,7 +45,7 @@ class ShellInput extends StringInput
      *
      * @throws \InvalidArgumentException if $definition has CodeArgument before the final argument position
      */
-    public function bind(InputDefinition $definition): void
+    public function bind(InputDefinition $definition)
     {
         $hasCodeArgument = false;
 
@@ -68,7 +66,7 @@ class ShellInput extends StringInput
 
         $this->hasCodeArgument = $hasCodeArgument;
 
-        parent::bind($definition);
+        return parent::bind($definition);
     }
 
     /**
@@ -100,7 +98,7 @@ class ShellInput extends StringInput
                     \stripcslashes(\substr($match[0], 1, \strlen($match[0]) - 2)),
                     \stripcslashes(\substr($input, $cursor)),
                 ];
-            } elseif (\preg_match('/'.self::REGEX_STRING.'/A', $input, $match, 0, $cursor)) {
+            } elseif (\preg_match('/'.StringInput::REGEX_STRING.'/A', $input, $match, 0, $cursor)) {
                 $tokens[] = [
                     \stripcslashes($match[1]),
                     \stripcslashes(\substr($input, $cursor)),
@@ -121,7 +119,7 @@ class ShellInput extends StringInput
     /**
      * Same as parent, but with some bonus handling for code arguments.
      */
-    protected function parse(): void
+    protected function parse()
     {
         $parseOptions = true;
         $this->parsed = $this->tokenPairs;

@@ -3,7 +3,6 @@
 namespace Illuminate\Validation\Rules;
 
 use BackedEnum;
-use Illuminate\Contracts\Support\Arrayable;
 use UnitEnum;
 
 class In
@@ -25,16 +24,12 @@ class In
     /**
      * Create a new in rule instance.
      *
-     * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $values
+     * @param  array  $values
      * @return void
      */
-    public function __construct($values)
+    public function __construct(array $values)
     {
-        if ($values instanceof Arrayable) {
-            $values = $values->toArray();
-        }
-
-        $this->values = is_array($values) ? $values : func_get_args();
+        $this->values = $values;
     }
 
     /**

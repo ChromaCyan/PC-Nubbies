@@ -16,9 +16,6 @@ namespace PHPUnit\Metadata;
  */
 final class Test extends Metadata
 {
-    /**
-     * @psalm-assert-if-true Test $this
-     */
     public function isTest(): bool
     {
         return true;

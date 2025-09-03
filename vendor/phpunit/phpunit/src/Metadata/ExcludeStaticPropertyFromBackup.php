@@ -20,16 +20,10 @@ final class ExcludeStaticPropertyFromBackup extends Metadata
      * @psalm-var class-string
      */
     private readonly string $className;
-
-    /**
-     * @psalm-var non-empty-string
-     */
     private readonly string $propertyName;
 
     /**
-     * @psalm-param 0|1 $level
      * @psalm-param class-string $className
-     * @psalm-param non-empty-string $propertyName
      */
     protected function __construct(int $level, string $className, string $propertyName)
     {
@@ -39,9 +33,6 @@ final class ExcludeStaticPropertyFromBackup extends Metadata
         $this->propertyName = $propertyName;
     }
 
-    /**
-     * @psalm-assert-if-true ExcludeStaticPropertyFromBackup $this
-     */
     public function isExcludeStaticPropertyFromBackup(): bool
     {
         return true;
@@ -55,9 +46,6 @@ final class ExcludeStaticPropertyFromBackup extends Metadata
         return $this->className;
     }
 
-    /**
-     * @psalm-return non-empty-string
-     */
     public function propertyName(): string
     {
         return $this->propertyName;

@@ -3,9 +3,8 @@
 namespace Laravel\Prompts\Themes\Default;
 
 use Laravel\Prompts\SelectPrompt;
-use Laravel\Prompts\Themes\Contracts\Scrolling;
 
-class SelectPromptRenderer extends Renderer implements Scrolling
+class SelectPromptRenderer extends Renderer
 {
     use Concerns\DrawsBoxes;
     use Concerns\DrawsScrollbars;
@@ -15,6 +14,7 @@ class SelectPromptRenderer extends Renderer implements Scrolling
      */
     public function __invoke(SelectPrompt $prompt): string
     {
+        $prompt->scroll = min($prompt->scroll, $prompt->terminal()->lines() - 5);
         $maxWidth = $prompt->terminal()->cols() - 6;
 
         return match ($prompt->state) {
@@ -82,13 +82,5 @@ class SelectPromptRenderer extends Renderer implements Scrolling
             min($this->longest($prompt->options, padding: 6), $prompt->terminal()->cols() - 6),
             $prompt->state === 'cancel' ? 'dim' : 'cyan'
         )->implode(PHP_EOL);
-    }
-
-    /**
-     * The number of lines to reserve outside of the scrollable area.
-     */
-    public function reservedLines(): int
-    {
-        return 5;
     }
 }

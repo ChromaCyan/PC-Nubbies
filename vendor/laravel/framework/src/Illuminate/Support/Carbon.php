@@ -29,11 +29,9 @@ class Carbon extends BaseCarbon
      */
     public static function createFromId($id)
     {
-        if (is_string($id)) {
-            $id = Ulid::isValid($id) ? Ulid::fromString($id) : Uuid::fromString($id);
-        }
-
-        return static::createFromInterface($id->getDateTime());
+        return Ulid::isValid($id)
+            ? static::createFromInterface(Ulid::fromString($id)->getDateTime())
+            : static::createFromInterface(Uuid::fromString($id)->getDateTime());
     }
 
     /**

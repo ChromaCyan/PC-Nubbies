@@ -93,10 +93,10 @@ class Sanctum
     /**
      * Specify a callback that should be used to fetch the access token from the request.
      *
-     * @param  callable|null  $callback
+     * @param  callable  $callback
      * @return void
      */
-    public static function getAccessTokenFromRequestUsing(?callable $callback)
+    public static function getAccessTokenFromRequestUsing(callable $callback)
     {
         static::$accessTokenRetrievalCallback = $callback;
     }

@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.4
----
-
- * Add early directory pruning to `Finder::filter()`
-
 6.2
 ---
 

@@ -29,13 +29,9 @@ class UnsupportedSchemeException extends LogicException
             'class' => Bridge\Lokalise\LokaliseProviderFactory::class,
             'package' => 'symfony/lokalise-translation-provider',
         ],
-        'phrase' => [
-            'class' => Bridge\Phrase\PhraseProviderFactory::class,
-            'package' => 'symfony/phrase-translation-provider',
-        ],
     ];
 
-    public function __construct(Dsn $dsn, ?string $name = null, array $supported = [])
+    public function __construct(Dsn $dsn, string $name = null, array $supported = [])
     {
         $provider = $dsn->getScheme();
         if (false !== $pos = strpos($provider, '+')) {

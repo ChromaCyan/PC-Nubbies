@@ -55,8 +55,6 @@ class SqlServerBuilder extends Builder
     /**
      * Drop all tables from the database.
      *
-     * @deprecated Will be removed in a future Laravel version.
-     *
      * @return array
      */
     public function getAllTables()
@@ -68,8 +66,6 @@ class SqlServerBuilder extends Builder
 
     /**
      * Get all of the view names for the database.
-     *
-     * @deprecated Will be removed in a future Laravel version.
      *
      * @return array
      */

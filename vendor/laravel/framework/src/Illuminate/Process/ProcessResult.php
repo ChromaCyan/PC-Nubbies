@@ -113,8 +113,6 @@ class ProcessResult implements ProcessResultContract
      *
      * @param  callable|null  $callback
      * @return $this
-     *
-     * @throws \Illuminate\Process\Exceptions\ProcessFailedException
      */
     public function throw(callable $callback = null)
     {
@@ -137,8 +135,6 @@ class ProcessResult implements ProcessResultContract
      * @param  bool  $condition
      * @param  callable|null  $callback
      * @return $this
-     *
-     * @throws \Throwable
      */
     public function throwIf(bool $condition, callable $callback = null)
     {

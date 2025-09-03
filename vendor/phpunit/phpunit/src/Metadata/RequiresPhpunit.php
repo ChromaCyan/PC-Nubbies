@@ -20,9 +20,6 @@ final class RequiresPhpunit extends Metadata
 {
     private readonly Requirement $versionRequirement;
 
-    /**
-     * @psalm-param 0|1 $level
-     */
     protected function __construct(int $level, Requirement $versionRequirement)
     {
         parent::__construct($level);
@@ -30,9 +27,6 @@ final class RequiresPhpunit extends Metadata
         $this->versionRequirement = $versionRequirement;
     }
 
-    /**
-     * @psalm-assert-if-true RequiresPhpunit $this
-     */
     public function isRequiresPhpunit(): bool
     {
         return true;

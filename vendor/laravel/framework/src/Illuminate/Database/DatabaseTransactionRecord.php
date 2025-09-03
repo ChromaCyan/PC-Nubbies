@@ -19,13 +19,6 @@ class DatabaseTransactionRecord
     public $level;
 
     /**
-     * The parent instance of this transaction.
-     *
-     * @var \Illuminate\Database\DatabaseTransactionRecord
-     */
-    public $parent;
-
-    /**
      * The callbacks that should be executed after committing.
      *
      * @var array
@@ -37,14 +30,12 @@ class DatabaseTransactionRecord
      *
      * @param  string  $connection
      * @param  int  $level
-     * @param  \Illuminate\Database\DatabaseTransactionRecord|null  $parent
      * @return void
      */
-    public function __construct($connection, $level, ?DatabaseTransactionRecord $parent = null)
+    public function __construct($connection, $level)
     {
         $this->connection = $connection;
         $this->level = $level;
-        $this->parent = $parent;
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Laravel\Prompts;
 
+use Closure;
+
 class TextPrompt extends Prompt
 {
     use Concerns\TypedValue;
@@ -14,8 +16,8 @@ class TextPrompt extends Prompt
         public string $placeholder = '',
         public string $default = '',
         public bool|string $required = false,
-        public mixed $validate = null,
-        public string $hint = '',
+        public ?Closure $validate = null,
+        public string $hint = ''
     ) {
         $this->trackTypedValue($default);
     }

@@ -16,9 +16,6 @@ namespace PHPUnit\Metadata;
  */
 final class WithoutErrorHandler extends Metadata
 {
-    /**
-     * @psalm-assert-if-true WithoutErrorHandler $this
-     */
     public function isWithoutErrorHandler(): bool
     {
         return true;

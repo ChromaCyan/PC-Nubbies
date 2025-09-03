@@ -55,7 +55,7 @@ class LocaleSwitcher implements LocaleAwareInterface
      *
      * @template T
      *
-     * @param callable(string $locale):T $callback
+     * @param callable():T $callback
      *
      * @return T
      */
@@ -65,7 +65,7 @@ class LocaleSwitcher implements LocaleAwareInterface
         $this->setLocale($locale);
 
         try {
-            return $callback($locale);
+            return $callback();
         } finally {
             $this->setLocale($original);
         }

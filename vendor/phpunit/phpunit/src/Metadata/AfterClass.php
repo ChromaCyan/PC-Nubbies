@@ -16,9 +16,6 @@ namespace PHPUnit\Metadata;
  */
 final class AfterClass extends Metadata
 {
-    /**
-     * @psalm-assert-if-true AfterClass $this
-     */
     public function isAfterClass(): bool
     {
         return true;

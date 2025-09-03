@@ -194,7 +194,7 @@ final class Cobertura
                 }
             }
 
-            if ($item->numberOfFunctions() === 0) {
+            if ($report->numberOfFunctions() === 0) {
                 $packageElement->setAttribute('complexity', (string) $packageComplexity);
 
                 continue;
@@ -218,7 +218,7 @@ final class Cobertura
 
             $classElement->appendChild($classLinesElement);
 
-            $functions = $item->functions();
+            $functions = $report->functions();
 
             foreach ($functions as $functionName => $function) {
                 if ($function['executableLines'] === 0) {

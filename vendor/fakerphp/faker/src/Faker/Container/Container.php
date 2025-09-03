@@ -16,9 +16,9 @@ final class Container implements ContainerInterface
     /**
      * @var array<string, callable|object|string>
      */
-    private array $definitions;
+    private $definitions;
 
-    private array $services = [];
+    private $services = [];
 
     /**
      * Create a container object with a set of definitions. The array value MUST
@@ -63,7 +63,7 @@ final class Container implements ContainerInterface
 
         $definition = $this->definitions[$id];
 
-        $service = $this->getService($id, $definition);
+        $service = $this->services[$id] = $this->getService($id, $definition);
 
         if (!$service instanceof Extension) {
             throw new \RuntimeException(sprintf(
@@ -73,8 +73,6 @@ final class Container implements ContainerInterface
             ));
         }
 
-        $this->services[$id] = $service;
-
         return $service;
     }
 
@@ -83,7 +81,7 @@ final class Container implements ContainerInterface
      *
      * @param callable|object|string $definition
      */
-    private function getService(string $id, $definition)
+    private function getService($id, $definition)
     {
         if (is_callable($definition)) {
             try {
@@ -135,5 +133,13 @@ final class Container implements ContainerInterface
         }
 
         return array_key_exists($id, $this->definitions);
+    }
+
+    /**
+     * Get the bindings between Extension interfaces and implementations.
+     */
+    public function getDefinitions(): array
+    {
+        return $this->definitions;
     }
 }

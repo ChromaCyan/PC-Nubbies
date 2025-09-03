@@ -152,6 +152,10 @@ final class PhptTestCase implements Reorderable, SelfDescribing, Test
 
         $this->phpUtil->setUseStderrRedirection(true);
 
+        if (ConfigurationRegistry::get()->enforceTimeLimit()) {
+            $this->phpUtil->setTimeout(ConfigurationRegistry::get()->timeoutForLargeTests());
+        }
+
         if ($this->shouldTestBeSkipped($sections, $settings)) {
             return;
         }
@@ -193,6 +197,8 @@ final class PhptTestCase implements Reorderable, SelfDescribing, Test
                 $this->filename,
                 true,
                 TestStatus::unknown(),
+                [],
+                [],
             );
         }
 
@@ -217,8 +223,8 @@ final class PhptTestCase implements Reorderable, SelfDescribing, Test
                 $failure = new PhptAssertionFailedError(
                     $e->getMessage(),
                     0,
-                    (string) $trace[0]['file'],
-                    (int) $trace[0]['line'],
+                    $trace[0]['file'],
+                    $trace[0]['line'],
                     $trace,
                     $comparisonFailure ? $diff : '',
                 );

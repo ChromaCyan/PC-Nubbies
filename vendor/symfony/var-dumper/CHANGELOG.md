@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-6.4
----
-
- * Dump uninitialized properties
-
 6.3
 ---
 

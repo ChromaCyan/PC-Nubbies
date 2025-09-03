@@ -31,7 +31,7 @@ trait ServiceLocatorTrait
     private array $providedTypes;
 
     /**
-     * @param array<string, callable> $factories
+     * @param callable[] $factories
      */
     public function __construct(array $factories)
     {

@@ -15,7 +15,8 @@ use Psy\Formatter\DocblockFormatter;
 use Psy\Formatter\SignatureFormatter;
 use Psy\Input\CodeArgument;
 use Psy\Output\ShellOutput;
-use Psy\Reflection\ReflectionConstant;
+use Psy\Reflection\ReflectionClassConstant;
+use Psy\Reflection\ReflectionConstant_;
 use Psy\Reflection\ReflectionLanguageConstruct;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -62,7 +63,7 @@ HELP
      *
      * @return int 0 if everything went fine, or an exit code
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $value = $input->getArgument('target');
         if (ReflectionLanguageConstruct::isLanguageConstruct($value)) {
@@ -145,13 +146,14 @@ HELP
                 break;
 
             case \ReflectionClassConstant::class:
+            case ReflectionClassConstant::class:
                 // @todo this is going to collide with ReflectionMethod ids
                 // someday... start running the query by id + type if the DB
                 // supports it.
                 $id = $reflector->class.'::'.$reflector->name;
                 break;
 
-            case ReflectionConstant::class:
+            case ReflectionConstant_::class:
                 $id = $reflector->name;
                 break;
 

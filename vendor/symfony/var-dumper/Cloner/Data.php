@@ -17,7 +17,7 @@ use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class Data implements \ArrayAccess, \Countable, \IteratorAggregate, \Stringable
+class Data implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     private array $data;
     private int $position = 0;
@@ -121,9 +121,6 @@ class Data implements \ArrayAccess, \Countable, \IteratorAggregate, \Stringable
         yield from $value;
     }
 
-    /**
-     * @return mixed
-     */
     public function __get(string $key)
     {
         if (null !== $data = $this->seek($key)) {

@@ -1,4 +1,4 @@
-![Ziggy - Use your Laravel routes in JavaScript](https://raw.githubusercontent.com/tighten/ziggy/main/ziggy-banner.png)
+![Ziggy - Use your Laravel named routes in JavaScript](https://raw.githubusercontent.com/tighten/ziggy/main/ziggy-banner.png)
 
 # Ziggy – Use your Laravel routes in JavaScript
 
@@ -8,133 +8,142 @@
 [![Latest Version on NPM](https://img.shields.io/npm/v/ziggy-js.svg?style=flat)](https://npmjs.com/package/ziggy-js)
 [![Downloads on NPM](https://img.shields.io/npm/dt/ziggy-js.svg?style=flat)](https://npmjs.com/package/ziggy-js)
 
-Ziggy provides a JavaScript `route()` function that works like Laravel's, making it a breeze to use your named Laravel routes in JavaScript.
+Ziggy provides a JavaScript `route()` helper function that works like Laravel's, making it easy to use your Laravel named routes in JavaScript.
 
 Ziggy supports all versions of Laravel from `5.4` onward, and all modern browsers.
 
 - [**Installation**](#installation)
 - [**Usage**](#usage)
-    - [`route()` function](#route-function)
-    - [`Router` class](#router-class)
+    - [The `route()` helper](#the-route-helper)
+    - [The `Router` class](#the-router-class)
     - [Route-model binding](#route-model-binding)
-    - [TypeScript](#typescript)
-- [**JavaScript frameworks**](#javascript-frameworks)
-    - [Generating and importing Ziggy's configuration](#generating-and-importing-ziggys-configuration)
-    - [Importing the `route()` function](#importing-the-route-function)
+    - [TypeScript support](#typescript-support)
+- [**Advanced Setup**](#advanced-setup)
+    - [JavaScript frameworks](#javascript-frameworks)
     - [Vue](#vue)
     - [React](#react)
     - [SPAs or separate repos](#spas-or-separate-repos)
 - [**Filtering Routes**](#filtering-routes)
-    - [Including/excluding routes](#includingexcluding-routes)
-    - [Filtering with groups](#filtering-with-groups)
+    - [Basic Filtering](#basic-filtering)
+    - [Filtering using Groups](#filtering-using-groups)
 - [**Other**](#other)
 - [**Contributing**](#contributing)
 
 ## Installation
 
-Install Ziggy in your Laravel app with Composer:
+Install Ziggy into your Laravel app with `composer require tightenco/ziggy`.
 
-```bash
-composer require tightenco/ziggy
-```
-
-Add the `@routes` Blade directive to your main layout (_before_ your application's JavaScript), and the `route()` helper function will be available globally!
+Add the `@routes` Blade directive to your main layout (_before_ your application's JavaScript), and the `route()` helper function will now be available globally!
 
 > By default, the output of the `@routes` Blade directive includes a list of all your application's routes and their parameters. This route list is included in the HTML of the page and can be viewed by end users. To configure which routes are included in this list, or to show and hide different routes on different pages, see [Filtering Routes](#filtering-routes).
 
 ## Usage
 
-### `route()` function
+#### The `route()` helper
 
-Ziggy's `route()` function works like [Laravel's `route()` helper](https://laravel.com/docs/10.x/helpers#method-route)—you can pass it the name of a route, and the parameters you want to pass to the route, and it will generate a URL.
+Ziggy's `route()` helper function works like Laravel's—you can pass it the name of one of your routes, and the parameters you want to pass to the route, and it will return a URL.
 
-#### Basic usage
+**Basic usage**
 
 ```php
+// routes/web.php
+
 Route::get('posts', fn (Request $request) => /* ... */)->name('posts.index');
 ```
 
 ```js
+// app.js
+
 route('posts.index'); // 'https://ziggy.test/posts'
 ```
 
-#### Parameters
+**With parameters**
 
 ```php
-Route::get('posts/{post}', fn (Post $post) => /* ... */)->name('posts.show');
+// routes/web.php
+
+Route::get('posts/{post}', fn (Request $request, Post $post) => /* ... */)->name('posts.show');
 ```
 
 ```js
+// app.js
+
 route('posts.show', 1);           // 'https://ziggy.test/posts/1'
 route('posts.show', [1]);         // 'https://ziggy.test/posts/1'
 route('posts.show', { post: 1 }); // 'https://ziggy.test/posts/1'
 ```
 
-#### Multiple parameters
+**With multiple parameters**
 
 ```php
-Route::get('venues/{venue}/events/{event}', fn (Venue $venue, Event $event) => /* ... */)
-    ->name('venues.events.show');
+// routes/web.php
+
+Route::get('events/{event}/venues/{venue}', fn (Request $request, Event $event, Venue $venue) => /* ... */)->name('events.venues.show');
 ```
 
 ```js
-route('venues.events.show', [1, 2]);                 // 'https://ziggy.test/venues/1/events/2'
-route('venues.events.show', { venue: 1, event: 2 }); // 'https://ziggy.test/venues/1/events/2'
+// app.js
+
+route('events.venues.show', [1, 2]);                 // 'https://ziggy.test/events/1/venues/2'
+route('events.venues.show', { event: 1, venue: 2 }); // 'https://ziggy.test/events/1/venues/2'
 ```
 
-#### Query parameters
-
-Ziggy adds arguments that don't match any named route parameters as query parameters:
+**With query parameters**
 
 ```php
-Route::get('venues/{venue}/events/{event}', fn (Venue $venue, Event $event) => /* ... */)
-    ->name('venues.events.show');
+// routes/web.php
+
+Route::get('events/{event}/venues/{venue}', fn (Request $request, Event $event, Venue $venue) => /* ... */)->name('events.venues.show');
 ```
 
 ```js
-route('venues.events.show', {
-    venue: 1,
-    event: 2,
+// app.js
+
+route('events.venues.show', {
+    event: 1,
+    venue: 2,
     page: 5,
     count: 10,
 });
-// 'https://ziggy.test/venues/1/events/2?page=5&count=10'
+// 'https://ziggy.test/events/1/venues/2?page=5&count=10'
 ```
 
-If you need to pass a query parameter with the same name as a route parameter, nest it under the special `_query` key:
+If you have a query parameter with the same name as a route parameter, nest it under a `_query` key:
 
 ```js
-route('venues.events.show', {
-    venue: 1,
-    event: 2,
+route('events.venues.show', {
+    event: 1,
+    venue: 2,
     _query: {
         event: 3,
         page: 5,
     },
 });
-// 'https://ziggy.test/venues/1/events/2?event=3&page=5'
+// 'https://ziggy.test/events/1/venues/2?event=3&page=5'
 ```
 
-Like Laravel, Ziggy automatically encodes boolean query parameters as integers in the query string:
+Like Laravel's `route()` helper, Ziggy automatically encodes boolean query parameters as integers in the query string:
 
 ```js
-route('venues.events.show', {
-    venue: 1,
-    event: 2,
+route('events.venues.show', {
+    event: 1,
+    venue: 2,
     _query: {
         draft: false,
         overdue: true,
     },
 });
-// 'https://ziggy.test/venues/1/events/2?draft=0&overdue=1'
+// 'https://ziggy.test/events/1/venues/2?draft=0&overdue=1'
 ```
 
-#### Default parameter values
+**With default parameter values**
 
-Ziggy supports default route parameter values ([Laravel docs](https://laravel.com/docs/urls#default-values)).
+See the [Laravel documentation on default route parameter values](https://laravel.com/docs/urls#default-values).
 
 ```php
-Route::get('{locale}/posts/{post}', fn (Post $post) => /* ... */)->name('posts.show');
+// routes/web.php
+
+Route::get('{locale}/posts/{post}', fn (Request $request, Post $post) => /* ... */)->name('posts.show');
 ```
 
 ```php
@@ -144,12 +153,12 @@ URL::defaults(['locale' => $request->user()->locale ?? 'de']);
 ```
 
 ```js
+// app.js
+
 route('posts.show', 1); // 'https://ziggy.test/de/posts/1'
 ```
 
-#### Examples
-
-HTTP request with `axios`:
+**Practical AJAX example**
 
 ```js
 const post = { id: 1, title: 'Ziggy Stardust' };
@@ -157,14 +166,14 @@ const post = { id: 1, title: 'Ziggy Stardust' };
 return axios.get(route('posts.show', post)).then((response) => response.data);
 ```
 
-### `Router` class
+#### The `Router` class
 
-Calling Ziggy's `route()` function with no arguments will return an instance of its JavaScript `Router` class, which has some other useful properties and methods.
+Calling Ziggy's `route()` helper function with no arguments will return an instance of the JavaScript `Router` class, which has some other useful properties and methods.
 
-#### Check the current route: `route().current()`
+**Checking the current route: `route().current()`**
 
 ```js
-// Laravel route called 'events.index' with URI '/events'
+// Route called 'events.index', with URI '/events'
 // Current window URL is https://ziggy.test/events
 
 route().current();               // 'events.index'
@@ -173,41 +182,40 @@ route().current('events.*');     // true
 route().current('events.show');  // false
 ```
 
-`route().current()` optionally accepts parameters as its second argument, and will check that their values also match in the current URL:
+The `current()` method optionally accepts parameters as its second argument, and will check that their values also match in the current URL:
 
 ```js
-// Laravel route called 'venues.events.show' with URI '/venues/{venue}/events/{event}'
-// Current window URL is https://myapp.com/venues/1/events/2?hosts=all
+// Route called 'events.venues.show', with URI '/events/{event}/venues/{venue}'
+// Current window URL is https://myapp.com/events/1/venues/2?authors=all
 
-route().current('venues.events.show', { venue: 1 });           // true
-route().current('venues.events.show', { venue: 1, event: 2 }); // true
-route().current('venues.events.show', { hosts: 'all' });       // true
-route().current('venues.events.show', { venue: 6 });           // false
+route().current('events.venues.show', { event: 1, venue: 2 }); // true
+route().current('events.venues.show', { authors: 'all' });     // true
+route().current('events.venues.show', { venue: 6 });           // false
 ```
 
-#### Check if a route exists: `route().has()`
+**Checking if a route exists: `route().has()`**
 
 ```js
-// Laravel app has only one named route, 'home'
+// App has only one named route, 'home'
 
 route().has('home');   // true
 route().has('orders'); // false
 ```
 
-#### Retrieve the current route params: `route().params`
+**Retrieving the current route params: `route().params`**
 
 ```js
-// Laravel route called 'venues.events.show' with URI '/venues/{venue}/events/{event}'
-// Current window URL is https://myapp.com/venues/1/events/2?hosts=all
+// Route called 'events.venues.show', with URI '/events/{event}/venues/{venue}'
+// Current window URL is https://myapp.com/events/1/venues/2?authors=all
 
-route().params; // { venue: '1', event: '2', hosts: 'all' }
+route().params; // { event: '1', venue: '2', authors: 'all' }
 ```
 
 > Note: parameter values retrieved with `route().params` will always be returned as strings.
 
-### Route-model binding
+#### Route-model binding
 
-Ziggy supports Laravel's [route-model binding](https://laravel.com/docs/routing#route-model-binding), and can even recognize custom route key names. If you pass `route()` a JavaScript object as a route parameter, Ziggy will use the registered route-model binding keys for that route to find the correct parameter value inside the object. If no route-model binding keys are explicitly registered for a parameter, Ziggy will use the object's `id` key.
+Ziggy supports Laravel [route-model binding](https://laravel.com/docs/routing#route-model-binding), and can even recognize custom route key names. If you pass `route()` a JavaScript object as one of the route parameters, Ziggy will use the registered route-model binding keys for that route to find the parameter value in the object and insert it into the URL (falling back to an `id` key if there is one and the route-model binding key isn't present).
 
 ```php
 // app/Models/Post.php
@@ -222,231 +230,210 @@ class Post extends Model
 ```
 
 ```php
-Route::get('blog/{post}', function (Post $post) {
-    return view('posts.show', ['post' => $post]);
-})->name('posts.show');
+// app/Http/Controllers/PostController.php
+
+class PostController
+{
+    public function show(Request $request, Post $post)
+    {
+        return view('posts.show', ['post' => $post]);
+    }
+}
+```
+
+```php
+// routes/web.php
+
+Route::get('blog/{post}', [PostController::class, 'show'])->name('posts.show');
 ```
 
 ```js
+// app.js
+
 const post = {
-    id: 3,
     title: 'Introducing Ziggy v1',
     slug: 'introducing-ziggy-v1',
     date: '2020-10-23T20:59:24.359278Z',
 };
 
-// Ziggy knows that this route uses the 'slug' route-model binding key:
+// Ziggy knows that this route uses the 'slug' route-model binding key name:
 
 route('posts.show', post); // 'https://ziggy.test/blog/introducing-ziggy-v1'
 ```
 
-Ziggy also supports [custom keys](https://laravel.com/docs/routing#customizing-the-key) for scoped bindings declared directly in a route definition:
+Ziggy also supports [custom keys](https://laravel.com/docs/routing#customizing-the-key) for scoped bindings in the route definition (requires Laravel 7+):
 
 ```php
-Route::get('authors/{author}/photos/{photo:uuid}', fn (Author $author, Photo $photo) => /* ... */)
-    ->name('authors.photos.show');
+// routes/web.php
+
+Route::get('authors/{author}/photos/{photo:uuid}', fn (Request $request, Author $author, Photo $photo) => /* ... */)->name('authors.photos.show');
 ```
 
 ```js
+// app.js
+
 const photo = {
     uuid: '714b19e8-ac5e-4dab-99ba-34dc6fdd24a5',
     filename: 'sunset.jpg',
 }
 
-route('authors.photos.show', [{ id: 1, name: 'Ansel' }, photo]);
+route('authors.photos.show', [{ id: 1, name: 'Jacob' }, photo]);
 // 'https://ziggy.test/authors/1/photos/714b19e8-ac5e-4dab-99ba-34dc6fdd24a5'
 ```
 
-### TypeScript
+#### TypeScript support
 
-Ziggy includes TypeScript type definitions, and an Artisan command that can generate additional type definitions to enable route name and parameter autocompletion.
+Unofficial TypeScript type definitions for Ziggy are maintained by [benallfree](https://github.com/benallfree) as part of [Definitely Typed](https://github.com/DefinitelyTyped/DefinitelyTyped), and can be installed with `npm install @types/ziggy-js`.
 
-To generate route types, run the `ziggy:generate` command with the `--types` or `--types-only` option:
+## Advanced Setup
 
-```bash
-php artisan ziggy:generate --types
-```
+#### JavaScript frameworks
 
-To make your IDE aware that Ziggy's `route()` helper is available globally, and to type it correctly, add a declaration like this in a `.d.ts` file somewhere in your project:
+If you are not using Blade, or would prefer not to use the `@routes` directive, Ziggy provides an Artisan command to output its config and routes to a file: `php artisan ziggy:generate`. By default this command stores your routes at `resources/js/ziggy.js`, but you can customize this path by passing a different value as an argument to the Artisan command or setting the `ziggy.output.path` config value. Alternatively, you can return Ziggy's config as JSON from an endpoint in your Laravel API (see [Retrieving Ziggy's routes and config from an API endpoint](#retrieving-ziggys-routes-and-config-from-an-api-endpoint) below for an example of how to set this up).
 
-```ts
-import routeFn from 'ziggy-js';
-
-declare global {
-    var route: typeof routeFn;
-}
-```
-
-If you don't have Ziggy's NPM package installed, add the following to your `jsconfig.json` or `tsconfig.json` to load Ziggy's types from your vendor directory:
-
-```json
-{
-    "compilerOptions": {
-        "paths": {
-            "ziggy-js": ["./vendor/tightenco/ziggy"]
-        }
-    }
-}
-```
-
-## JavaScript frameworks
-
-> [!NOTE]
-> Many applications don't need the additional setup described here—the `@routes` Blade directive makes Ziggy's `route()` function and config available globally, including within bundled JavaScript files.
-
-If you are not using the `@routes` Blade directive, you can import Ziggy's `route()` function and configuration directly into JavaScript/TypeScript files.
-
-### Generating and importing Ziggy's configuration
-
-Ziggy provides an Artisan command to output its config and routes to a file:
-
-```bash
-php artisan ziggy:generate
-```
-
-This command places your configuration in `resources/js/ziggy.js` by default, but you can customize this path by passing an argument to the Artisan command or setting the `ziggy.output.path` config value.
-
-The file `ziggy:generate` creates looks something like this:
+The file generated by `php artisan ziggy:generate` will look something like this:
 
 ```js
-// resources/js/ziggy.js
+// ziggy.js
 
 const Ziggy = {
-    url: 'https://ziggy.test',
-    port: null,
-    routes: {
-        home: {
-            uri: '/',
-            methods: [ 'GET', 'HEAD'],
-            domain: null,
-        },
-        login: {
-            uri: 'login',
-            methods: ['GET', 'HEAD'],
-            domain: null,
-        },
-    },
+    routes: {"home":{"uri":"\/","methods":["GET","HEAD"],"domain":null},"login":{"uri":"login","methods":["GET","HEAD"],"domain":null}},
+    url: 'http://ziggy.test',
+    port: false
 };
 
 export { Ziggy };
 ```
 
-### Importing the `route()` function
-
-You can import Ziggy like any other JavaScript library. Without the `@routes` Blade directive Ziggy's config is not available globally, so it must be passed to the `route()` function manually:
-
-```js
-import route from '../../vendor/tightenco/ziggy/dist';
-import { Ziggy } from './ziggy.js';
-
-route('home', undefined, undefined, Ziggy);
-```
-
-To simplify importing the `route()` function, you can create an alias to the vendor path:
+You can optionally create an alias to make importing Ziggy's core source files easier:
 
 ```js
 // vite.config.js
-
 export default defineConfig({
     resolve: {
         alias: {
-            'ziggy-js': 'vendor/tightenco/ziggy/dist',
-            // 'vendor/tightenco/ziggy/dist/vue.es' if using the Vue plugin
+            ziggy: 'vendor/tightenco/ziggy/dist',
+            // 'vendor/tightenco/ziggy/dist/vue.es.js' if using the Vue plugin
         },
     },
 });
 ```
 
-Now your imports can be shortened to:
-
 ```js
-import route from 'ziggy-js';
+// webpack.mix.js
+
+// Mix v6
+const path = require('path');
+
+mix.alias({
+    ziggy: path.resolve('vendor/tightenco/ziggy/dist'),
+    // 'vendor/tightenco/ziggy/dist/vue' if using the Vue plugin
+});
+
+// Mix v5
+const path = require('path');
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            ziggy: path.resolve('vendor/tightenco/ziggy/dist'),
+        },
+    },
+});
 ```
 
-### Vue
+Finally, import and use Ziggy like any other JavaScript library. Because the Ziggy config object is not available globally in this setup, you'll usually have to pass it to the `route()` function manually:
+
+```js
+// app.js
+
+import route from 'ziggy';
+import { Ziggy } from './ziggy';
+
+// ...
+
+route('home', undefined, undefined, Ziggy);
+```
+
+#### Vue
 
 Ziggy includes a Vue plugin to make it easy to use the `route()` helper throughout your Vue app:
 
 ```js
 import { createApp } from 'vue';
-import { ZiggyVue } from 'ziggy-js';
-import App from './App.vue';
+import { ZiggyVue } from 'ziggy';
+import { Ziggy } from './ziggy';
+import App from './App';
 
-createApp(App).use(ZiggyVue);
+createApp(App).use(ZiggyVue, Ziggy);
+
+// Vue 2
+import Vue from 'vue'
+import { ZiggyVue } from 'ziggy';
+import { Ziggy } from './ziggy';
+
+Vue.use(ZiggyVue, Ziggy);
 ```
 
-Now you can use the `route()` function anywhere in your Vue components and templates:
+If you use this plugin with the `ziggy` import alias shown above, make sure to update the alias to `vendor/tightenco/ziggy/dist/vue.es.js` (Vite) or `vendor/tightenco/ziggy/dist/vue` (Laravel Mix).
 
-```vue
+> Note: If you use the `@routes` Blade directive in your views, Ziggy's configuration will already be available globally, so you don't need to import the `Ziggy` config object and pass it into `use()`.
+
+Now you can use `route()` anywhere in your Vue components and templates, like so:
+
+```html
 <a class="nav-link" :href="route('home')">Home</a>
 ```
 
-If you are not using the `@routes` Blade directive, import Ziggy's configuration too and pass it to `.use()`:
+#### React
 
-```js
-import { createApp } from 'vue';
-import { ZiggyVue } from 'ziggy-js';
-import { Ziggy } from './ziggy.js';
-import App from './App.vue';
-
-createApp(App).use(ZiggyVue, Ziggy);
-```
-
-If you use the Vue plugin with the `ziggy-js` import alias shown above, make sure to update the alias to `vendor/tightenco/ziggy/dist/vue.es`.
-
-### React
-
-Ziggy includes a `useRoute()` hook to make it easy to use the `route()` helper in your React app:
-
-```jsx
-import React from 'react';
-import { useRoute } from 'ziggy-js';
-
-export default function PostsLink() {
-    const route = useRoute();
-
-    return <a href={route('posts.index')}>Posts</a>;
-}
-```
-
-If you are not using the `@routes` Blade directive, import Ziggy's configuration too and pass it to `useRoute()`:
-
-```jsx
-import React from 'react';
-import { useRoute } from 'ziggy-js';
-import { Ziggy } from './ziggy.js';
-
-export default function PostsLink() {
-    const route = useRoute(Ziggy);
-
-    return <a href={route('posts.index')}>Posts</a>;
-}
-```
-
-You can also make the `Ziggy` config object available globally, so you can call `useRoute()` without passing Ziggy's configuration to it every time:
+To use Ziggy with React, start by importing the `route()` function and your Ziggy config. Because the Ziggy config object is not available globally in this setup, you'll have to pass it to the `route()` function manually:
 
 ```js
 // app.js
-import { Ziggy } from './ziggy.js';
-globalThis.Ziggy = Ziggy;
+
+import route from 'ziggy';
+import { Ziggy } from './ziggy';
+
+// ...
+
+route('home', undefined, undefined, Ziggy);
 ```
 
-### SPAs or separate repos
+We're working on adding a Hook to Ziggy to make this cleaner, but for now make sure you pass the configuration object as the fourth argument to the `route()` function as shown above.
 
-Ziggy's `route()` function is available as an NPM package, for use in JavaScript projects managed separately from their Laravel backend (i.e. without Composer or a `vendor` directory). You can install the NPM package with `npm install ziggy-js`.
+> Note: If you include the `@routes` Blade directive in your views, the `route()` helper will already be available globally, including in your React app, so you don't need to import `route` or `Ziggy` anywhere.
 
-To make your routes available on the frontend for this function to use, you can either run `php artisan ziggy:generate` and add the generated config file to your frontend project, or you can return Ziggy's config as JSON from an endpoint in your Laravel API (see [Retrieving Ziggy's config from an API endpoint](#retrieving-ziggys-routes-from-an-api-endpoint) below for an example of how to set this up).
+#### SPAs or separate repos
+
+Ziggy's `route()` helper function is also available as an NPM package, for use in JavaScript projects managed separately from their Laravel backend (i.e. without Composer or a `vendor` directory). You can install the NPM package with `npm install ziggy-js`.
+
+To make your routes available on the frontend for this function to use, you can either run `php artisan ziggy:generate` and add the generated routes file to your project, or you can return Ziggy's config as JSON from an endpoint in your Laravel API (see [Retrieving Ziggy's routes and config from an API endpoint](#retrieving-ziggys-routes-and-config-from-an-api-endpoint) below for an example of how to set this up).
+
+Then, import and use Ziggy as above:
+
+```js
+// app.js
+
+import route from 'ziggy-js';
+
+import { Ziggy } from './ziggy';
+// or...
+const response = await fetch('/api/ziggy');
+const Ziggy = await response.json();
+
+// ...
+
+route('home', undefined, undefined, Ziggy);
+```
 
 ## Filtering Routes
 
-Ziggy supports filtering the list of routes it outputs, which is useful if you have certain routes that you don't want to be included and visible in your HTML source.
+Ziggy supports filtering the routes it makes available to your JavaScript, which is great if you have certain routes that you don't want to be included and visible in the source of the response sent back to clients. Filtering routes is optional—by default, Ziggy includes all your application's named routes.
 
-> [!IMPORTANT]
-> Hiding routes from Ziggy's output is not a replacement for thorough authentication and authorization. Routes that should not be accessibly publicly should be protected by authentication whether they're filtered out of Ziggy's output or not.
+#### Basic filtering
 
-### Including/excluding routes
-
-To set up route filtering, create a config file in your Laravel app at `config/ziggy.php` and add **either** an `only` or `except` key containing an array of route name patterns.
+To set up basic route filtering, create a config file in your Laravel app at `config/ziggy.php` and define **either** an `only` or `except` setting as an array of route name patterns.
 
 > Note: You have to choose one or the other. Setting both `only` and `except` will disable filtering altogether and return all named routes.
 
@@ -458,7 +445,7 @@ return [
 ];
 ```
 
-You can use asterisks as wildcards in route filters. In the example below, `admin.*` will exclude routes named `admin.login`, `admin.register`, etc.:
+You can also use asterisks as wildcards in route filters. In the example below, `admin.*` will exclude routes named `admin.login` and `admin.register`:
 
 ```php
 // config/ziggy.php
@@ -468,7 +455,7 @@ return [
 ];
 ```
 
-### Filtering with groups
+#### Filtering using groups
 
 You can also define groups of routes that you want make available in different places in your app, using a `groups` key in your config file:
 
@@ -503,27 +490,39 @@ To expose multiple groups you can pass an array of group names:
 
 ## Other
 
-### TLS/SSL termination and trusted proxies
+#### TLS/SSL termination and trusted proxies
 
 <!-- Or: What to do if your app is served over `https` but Ziggy's `route()` helper generates `http` URLs -->
 
-If your application is using [TLS/SSL termination](https://en.wikipedia.org/wiki/TLS_termination_proxy) or is behind a load balancer or proxy, or if it's hosted on a service that is, Ziggy may generate URLs with a scheme of `http` instead of `https`, even if your app URL uses `https`. To fix this, set up your Laravel app's trusted proxies according to the documentation on [Configuring Trusted Proxies](https://laravel.com/docs/requests#configuring-trusted-proxies).
+If your application is using [TLS/SSL termination](https://en.wikipedia.org/wiki/TLS_termination_proxy) or is behind a load balancer or proxy, or if it's hosted on a service that is, Ziggy may generate URLs with a scheme of `http` instead of `https`, even if your app URL uses `https`. To avoid this happening, set up your Laravel app's `TrustProxies` middleware according to the documentation on [Configuring Trusted Proxies](https://laravel.com/docs/requests#configuring-trusted-proxies).
 
-### Using `@routes` with a Content Security Policy
+#### Using `@routes` with a Content Security Policy
 
-A [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) may block inline scripts, including those output by Ziggy's `@routes` Blade directive. If you have a CSP and are using a nonce to flag safe inline scripts, you can pass the nonce to the `@routes` directive and it will be added to Ziggy's script tag:
+A [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) may block inline scripts, including those output by Ziggy's `@routes` Blade directive. If you have a CSP and are using a nonce to flag safe inline scripts, you can pass the nonce as as the second argument to the `@routes` directive and it will be added to Ziggy's script tag:
 
 ```php
+// PHP ^8.0
 @routes(nonce: 'your-nonce-here')
+
+// PHP <=7.4
+@routes(null, 'your-nonce-here')
 ```
 
-### Disabling the `route()` helper
+#### Disabling the `route()` helper
 
-If you only want to use the `@routes` directive to make Ziggy's configuration available in JavaScript, but don't need the `route()` helper function, set the `ziggy.skip-route-function` config to `true`.
+If you only want to use the `@routes` directive to make your app's routes available in JavaScript, but don't need the `route()` helper function, set the `skip-route-function` config value to `true`:
 
-### Retrieving Ziggy's config from an API endpoint
+```php
+// config/ziggy.php
 
-If you need to retrieve Ziggy's config from your Laravel backend over the network, you can create a route that looks something like this:
+return [
+    'skip-route-function' => true,
+];
+```
+
+#### Retrieving Ziggy's routes and config from an API endpoint
+
+Ziggy can easily return its config object as JSON from an endpoint in your Laravel app. For example, you could set up an `/api/ziggy` route that looks something like this:
 
 ```php
 // routes/api.php
@@ -533,12 +532,27 @@ use Tightenco\Ziggy\Ziggy;
 Route::get('api/ziggy', fn () => response()->json(new Ziggy));
 ```
 
-### Re-generating the routes file when your app routes change
+Then, client-side, you could retrieve the config with an HTTP request:
 
-If you are generating your Ziggy config as a file by running `php artisan ziggy:generate`, you may want to re-run that command when your app's route files change. The example below is a Laravel Mix plugin, but similar functionality could be achieved without Mix. Huge thanks to [Nuno Rodrigues](https://github.com/nacr) for [the idea and a sample implementation](https://github.com/tighten/ziggy/issues/321#issuecomment-689150082). See [#655 for a Vite example](https://github.com/tighten/ziggy/pull/655/files#diff-4aeb78f813e14842fcf95bdace9ced23b8a6eed60b23c165eaa52e8db2f97b61).
+```js
+// app.js
+
+import route from 'ziggy-js';
+
+const response = await fetch('/api/ziggy');
+const Ziggy = await response.toJson();
+
+// ...
+
+route('home', undefined, undefined, Ziggy);
+```
+
+#### Re-generating the routes file when your app routes change
+
+If you're exporting your Ziggy routes as a file by running `php artisan ziggy:generate`, you may want to watch your app's route files and re-run the command automatically whenever they're updated. The example below is a Laravel Mix plugin, but similar functionality could be achieved without Mix. Huge thanks to [Nuno Rodrigues](https://github.com/nacr) for [the idea and a sample implementation](https://github.com/tighten/ziggy/issues/321#issuecomment-689150082)!
 
 <details>
-<summary>Laravel Mix plugin example</summary>
+<summary>Code example</summary>
 <p></p>
 
 ```js
@@ -598,4 +612,4 @@ Please review our [security policy](../../security/policy) on how to report secu
 
 ## License
 
-Ziggy is open-source software released under the MIT license. See [LICENSE](LICENSE) for more information.
+Ziggy is open source software released under the MIT license. See [LICENSE](LICENSE) for more information.

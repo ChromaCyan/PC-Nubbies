@@ -105,13 +105,6 @@ final class Invocation implements SelfDescribing
      */
     public function generateReturnValue(): mixed
     {
-        if ($this->returnType === 'never') {
-            throw new NeverReturningMethodException(
-                $this->className,
-                $this->methodName,
-            );
-        }
-
         if ($this->isReturnTypeNullable || $this->proxiedCall) {
             return null;
         }

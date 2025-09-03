@@ -23,7 +23,6 @@ class DirectoryListing implements IteratorAggregate
 
     /**
      * @param callable(T): bool $filter
-     *
      * @return DirectoryListing<T>
      */
     public function filter(callable $filter): DirectoryListing
@@ -41,9 +40,7 @@ class DirectoryListing implements IteratorAggregate
 
     /**
      * @template R
-     *
      * @param callable(T): R $mapper
-     *
      * @return DirectoryListing<R>
      */
     public function map(callable $mapper): DirectoryListing

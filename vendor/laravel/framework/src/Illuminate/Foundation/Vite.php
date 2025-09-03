@@ -56,13 +56,6 @@ class Vite implements Htmlable
     protected $manifestFilename = 'manifest.json';
 
     /**
-     * The custom asset path resolver.
-     *
-     * @var callable|null
-     */
-    protected $assetPathResolver = null;
-
-    /**
      * The script tag attributes resolvers.
      *
      * @var array
@@ -163,19 +156,6 @@ class Vite implements Htmlable
     public function useManifestFilename($filename)
     {
         $this->manifestFilename = $filename;
-
-        return $this;
-    }
-
-    /**
-     * Resolve asset paths using the provided resolver.
-     *
-     * @param  callable|null  $urlResolver
-     * @return $this
-     */
-    public function createAssetPathsUsing($resolver)
-    {
-        $this->assetPathResolver = $resolver;
 
         return $this;
     }
@@ -708,7 +688,7 @@ class Vite implements Htmlable
      */
     protected function assetPath($path, $secure = null)
     {
-        return ($this->assetPathResolver ?? asset(...))($path, $secure);
+        return asset($path, $secure);
     }
 
     /**

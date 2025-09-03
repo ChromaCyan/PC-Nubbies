@@ -12,15 +12,14 @@ namespace PHPUnit\Event\Code;
 use function assert;
 use function debug_backtrace;
 use function is_numeric;
-use PHPUnit\Event\Facade as EventFacade;
 use PHPUnit\Event\TestData\DataFromDataProvider;
 use PHPUnit\Event\TestData\DataFromTestDependency;
 use PHPUnit\Event\TestData\MoreThanOneDataSetFromDataProviderException;
 use PHPUnit\Event\TestData\TestDataCollection;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Metadata\Parser\Registry as MetadataRegistry;
-use PHPUnit\Util\Exporter;
 use PHPUnit\Util\Reflection;
+use SebastianBergmann\Exporter\Exporter;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -79,14 +78,13 @@ final class TestMethodBuilder
 
             $testData[] = DataFromDataProvider::from(
                 $dataSetName,
-                Exporter::export($testCase->providedData(), EventFacade::emitter()->exportsObjects()),
-                $testCase->dataSetAsStringWithData(),
+                (new Exporter)->export($testCase->providedData()),
             );
         }
 
         if ($testCase->hasDependencyInput()) {
             $testData[] = DataFromTestDependency::from(
-                Exporter::export($testCase->dependencyInput(), EventFacade::emitter()->exportsObjects()),
+                (new Exporter)->export($testCase->dependencyInput()),
             );
         }
 

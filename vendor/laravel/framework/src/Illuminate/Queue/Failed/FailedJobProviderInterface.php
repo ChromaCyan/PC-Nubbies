@@ -2,9 +2,6 @@
 
 namespace Illuminate\Queue\Failed;
 
-/**
- * @method array ids(string $queue = null)
- */
 interface FailedJobProviderInterface
 {
     /**

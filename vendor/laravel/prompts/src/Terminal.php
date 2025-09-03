@@ -2,7 +2,6 @@
 
 namespace Laravel\Prompts;
 
-use RuntimeException;
 use Symfony\Component\Console\Terminal as SymfonyTerminal;
 
 class Terminal
@@ -37,9 +36,9 @@ class Terminal
      */
     public function setTty(string $mode): void
     {
-        $this->initialTtyMode ??= $this->exec('stty -g');
+        $this->initialTtyMode ??= (shell_exec('stty -g') ?: null);
 
-        $this->exec("stty $mode");
+        shell_exec("stty $mode");
     }
 
     /**
@@ -47,8 +46,8 @@ class Terminal
      */
     public function restoreTty(): void
     {
-        if (isset($this->initialTtyMode)) {
-            $this->exec("stty {$this->initialTtyMode}");
+        if ($this->initialTtyMode) {
+            shell_exec("stty {$this->initialTtyMode}");
 
             $this->initialTtyMode = null;
         }
@@ -76,30 +75,5 @@ class Terminal
     public function exit(): void
     {
         exit(1);
-    }
-
-    /**
-     * Execute the given command and return the output.
-     */
-    protected function exec(string $command): string
-    {
-        $process = proc_open($command, [
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w'],
-        ], $pipes);
-
-        if (! $process) {
-            throw new RuntimeException('Failed to create process.');
-        }
-
-        $stdout = stream_get_contents($pipes[1]);
-        $stderr = stream_get_contents($pipes[2]);
-        $code = proc_close($process);
-
-        if ($code !== 0 || $stdout === false) {
-            throw new RuntimeException(trim($stderr ?: "Unknown error (code: $code)"), $code);
-        }
-
-        return $stdout;
     }
 }

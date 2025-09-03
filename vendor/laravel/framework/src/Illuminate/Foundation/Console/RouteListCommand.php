@@ -90,9 +90,7 @@ class RouteListCommand extends Command
      */
     public function handle()
     {
-        if (! $this->output->isVeryVerbose()) {
-            $this->router->flushMiddlewareGroups();
-        }
+        $this->router->flushMiddlewareGroups();
 
         if (! $this->router->getRoutes()->count()) {
             return $this->components->error("Your application doesn't have any routes.");

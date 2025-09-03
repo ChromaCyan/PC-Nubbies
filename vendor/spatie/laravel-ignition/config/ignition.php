@@ -89,8 +89,9 @@ return [
     | Solution Providers
     |--------------------------------------------------------------------------
     |
-    | List of solution providers that should be loaded. You may specify additional 
-    | providers as fully qualified class names. 
+    | You may specify a list of solution providers (as fully qualified class
+    | names) that shouldn't be loaded. Ignition will ignore these classes
+    | and possible solutions provided by them will never be displayed.
     |
     */
 
@@ -238,7 +239,6 @@ return [
     /*
      * When a key is set, we'll send your exceptions to Open AI to generate a solution
      */
-
     'open_ai_key' => env('IGNITION_OPEN_AI_KEY'),
 
     /*
@@ -263,7 +263,6 @@ return [
     | specify a list of classes here which summarize the variables.
     |
     */
-
     'argument_reducers' => [
         \Spatie\Backtrace\Arguments\Reducers\BaseTypeArgumentReducer::class,
         \Spatie\Backtrace\Arguments\Reducers\ArrayArgumentReducer::class,
@@ -277,5 +276,4 @@ return [
         \Spatie\LaravelIgnition\ArgumentReducers\CollectionArgumentReducer::class,
         \Spatie\Backtrace\Arguments\Reducers\StringableArgumentReducer::class,
     ],
-
 ];

@@ -9,12 +9,7 @@
  */
 namespace SebastianBergmann\Complexity;
 
-use function array_filter;
-use function array_merge;
-use function array_reverse;
-use function array_values;
 use function count;
-use function usort;
 use Countable;
 use IteratorAggregate;
 
@@ -79,54 +74,5 @@ final class ComplexityCollection implements Countable, IteratorAggregate
         }
 
         return $cyclomaticComplexity;
-    }
-
-    public function isFunction(): self
-    {
-        return new self(
-            array_values(
-                array_filter(
-                    $this->items,
-                    static fn (Complexity $complexity): bool => $complexity->isFunction(),
-                ),
-            ),
-        );
-    }
-
-    public function isMethod(): self
-    {
-        return new self(
-            array_values(
-                array_filter(
-                    $this->items,
-                    static fn (Complexity $complexity): bool => $complexity->isMethod(),
-                ),
-            ),
-        );
-    }
-
-    public function mergeWith(self $other): self
-    {
-        return new self(
-            array_merge(
-                $this->asArray(),
-                $other->asArray(),
-            ),
-        );
-    }
-
-    public function sortByDescendingCyclomaticComplexity(): self
-    {
-        $items = $this->items;
-
-        usort(
-            $items,
-            static function (Complexity $a, Complexity $b): int
-            {
-                return $a->cyclomaticComplexity() <=> $b->cyclomaticComplexity();
-            },
-        );
-
-        return new self(array_reverse($items));
     }
 }

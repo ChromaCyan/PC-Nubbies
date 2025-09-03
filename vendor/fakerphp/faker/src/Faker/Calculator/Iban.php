@@ -7,9 +7,11 @@ class Iban
     /**
      * Generates IBAN Checksum
      *
+     * @param string $iban
+     *
      * @return string Checksum (numeric string)
      */
-    public static function checksum(string $iban)
+    public static function checksum($iban)
     {
         // Move first four digits to end and set checksum to '00'
         $checkString = substr($iban, 4) . substr($iban, 0, 2) . '00';
@@ -32,9 +34,11 @@ class Iban
     /**
      * Converts letter to number
      *
+     * @param string $char
+     *
      * @return int
      */
-    public static function alphaToNumber(string $char)
+    public static function alphaToNumber($char)
     {
         return ord($char) - 55;
     }
@@ -46,7 +50,7 @@ class Iban
      *
      * @return int
      */
-    public static function mod97(string $number)
+    public static function mod97($number)
     {
         $checksum = (int) $number[0];
 
@@ -60,9 +64,11 @@ class Iban
     /**
      * Checks whether an IBAN has a valid checksum
      *
+     * @param string $iban
+     *
      * @return bool
      */
-    public static function isValid(string $iban)
+    public static function isValid($iban)
     {
         return self::checksum($iban) === substr($iban, 2, 2);
     }

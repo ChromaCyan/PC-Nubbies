@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace League\Flysystem\Local;
 
 use League\MimeTypeDetection\MimeTypeDetector;
+
 use function in_array;
 
 class FallbackMimeTypeDetector implements MimeTypeDetector
@@ -19,10 +20,8 @@ class FallbackMimeTypeDetector implements MimeTypeDetector
 
     public function __construct(
         private MimeTypeDetector $detector,
-        private array $inconclusiveMimetypes = self::INCONCLUSIVE_MIME_TYPES,
-        private bool $useInconclusiveMimeTypeFallback = false,
-    ) {
-    }
+        private array $inconclusiveMimetypes = self::INCONCLUSIVE_MIME_TYPES
+    ) {}
 
     public function detectMimeType(string $path, $contents): ?string
     {
@@ -47,6 +46,6 @@ class FallbackMimeTypeDetector implements MimeTypeDetector
             return $mimeType;
         }
 
-        return $this->detector->detectMimeTypeFromPath($path) ?? ($this->useInconclusiveMimeTypeFallback ? $mimeType : null);
+        return $this->detector->detectMimeTypeFromPath($path);
     }
 }

@@ -12,7 +12,6 @@ namespace SebastianBergmann\Complexity;
 use function assert;
 use function is_array;
 use PhpParser\Node;
-use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
@@ -104,11 +103,6 @@ final class ComplexityCalculatingVisitor extends NodeVisitorAbstract
         $parent = $node->getAttribute('parent');
 
         assert($parent instanceof Class_ || $parent instanceof Trait_);
-
-        if ($parent->getAttribute('parent') instanceof New_) {
-            return 'anonymous class';
-        }
-
         assert(isset($parent->namespacedName));
         assert($parent->namespacedName instanceof Name);
 

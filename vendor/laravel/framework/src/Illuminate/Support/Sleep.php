@@ -80,12 +80,12 @@ class Sleep
     /**
      * Sleep until the given timestamp.
      *
-     * @param  \DateTimeInterface|int|float|numeric-string  $timestamp
+     * @param  \DateTimeInterface|int  $timestamp
      * @return static
      */
     public static function until($timestamp)
     {
-        if (is_numeric($timestamp)) {
+        if (is_int($timestamp)) {
             $timestamp = Carbon::createFromTimestamp($timestamp);
         }
 

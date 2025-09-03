@@ -7,7 +7,6 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Events\MaintenanceModeEnabled;
 use Illuminate\Foundation\Exceptions\RegisterErrorViewPaths;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Throwable;
 
@@ -24,7 +23,6 @@ class DownCommand extends Command
                                  {--retry= : The number of seconds after which the request may be retried}
                                  {--refresh= : The number of seconds after which the browser may refresh}
                                  {--secret= : The secret phrase that may be used to bypass maintenance mode}
-                                 {--with-secret : Generate a random secret phrase that may be used to bypass maintenance mode}
                                  {--status=503 : The status code that should be used when returning the maintenance mode response}';
 
     /**
@@ -48,9 +46,7 @@ class DownCommand extends Command
                 return 0;
             }
 
-            $downFilePayload = $this->getDownFilePayload();
-
-            $this->laravel->maintenanceMode()->activate($downFilePayload);
+            $this->laravel->maintenanceMode()->activate($this->getDownFilePayload());
 
             file_put_contents(
                 storage_path('framework/maintenance.php'),
@@ -60,10 +56,6 @@ class DownCommand extends Command
             $this->laravel->get('events')->dispatch(new MaintenanceModeEnabled());
 
             $this->components->info('Application is now in maintenance mode.');
-
-            if ($downFilePayload['secret'] !== null) {
-                $this->components->info('You may bypass maintenance mode via ['.config('app.url')."/{$downFilePayload['secret']}].");
-            }
         } catch (Exception $e) {
             $this->components->error(sprintf(
                 'Failed to enter maintenance mode: %s.',
@@ -86,7 +78,7 @@ class DownCommand extends Command
             'redirect' => $this->redirectPath(),
             'retry' => $this->getRetryTime(),
             'refresh' => $this->option('refresh'),
-            'secret' => $this->getSecret(),
+            'secret' => $this->option('secret'),
             'status' => (int) $this->option('status', 503),
             'template' => $this->option('render') ? $this->prerenderView() : null,
         ];
@@ -144,19 +136,5 @@ class DownCommand extends Command
         $retry = $this->option('retry');
 
         return is_numeric($retry) && $retry > 0 ? (int) $retry : null;
-    }
-
-    /**
-     * Get the secret phrase that may be used to bypass maintenance mode.
-     *
-     * @return string|null
-     */
-    protected function getSecret()
-    {
-        return match (true) {
-            ! is_null($this->option('secret')) => $this->option('secret'),
-            $this->option('with-secret') => Str::random(),
-            default => null,
-        };
     }
 }

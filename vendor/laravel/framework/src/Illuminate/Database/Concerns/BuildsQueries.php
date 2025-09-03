@@ -113,35 +113,6 @@ trait BuildsQueries
      */
     public function chunkById($count, callable $callback, $column = null, $alias = null)
     {
-        return $this->orderedChunkById($count, $callback, $column, $alias);
-    }
-
-    /**
-     * Chunk the results of a query by comparing IDs in descending order.
-     *
-     * @param  int  $count
-     * @param  callable  $callback
-     * @param  string|null  $column
-     * @param  string|null  $alias
-     * @return bool
-     */
-    public function chunkByIdDesc($count, callable $callback, $column = null, $alias = null)
-    {
-        return $this->orderedChunkById($count, $callback, $column, $alias, descending: true);
-    }
-
-    /**
-     * Chunk the results of a query by comparing IDs in a given order.
-     *
-     * @param  int  $count
-     * @param  callable  $callback
-     * @param  string|null  $column
-     * @param  string|null  $alias
-     * @param  bool  $descending
-     * @return bool
-     */
-    public function orderedChunkById($count, callable $callback, $column = null, $alias = null, $descending = false)
-    {
         $column ??= $this->defaultKeyName();
 
         $alias ??= $column;
@@ -156,11 +127,7 @@ trait BuildsQueries
             // We'll execute the query for the given page and get the results. If there are
             // no results we can just break and return from here. When there are results
             // we will call the callback with the current chunk of these results here.
-            if ($descending) {
-                $results = $clone->forPageBeforeId($count, $lastId, $column)->get();
-            } else {
-                $results = $clone->forPageAfterId($count, $lastId, $column)->get();
-            }
+            $results = $clone->forPageAfterId($count, $lastId, $column)->get();
 
             $countResults = $results->count();
 
@@ -314,10 +281,6 @@ trait BuildsQueries
                 }
 
                 $lastId = $results->last()->{$alias};
-
-                if ($lastId === null) {
-                    throw new RuntimeException("The lazyById operation was aborted because the [{$alias}] column is not present in the query result.");
-                }
             }
         });
     }

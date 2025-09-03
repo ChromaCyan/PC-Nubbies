@@ -285,7 +285,7 @@ class DynamoDbStore implements LockProvider, Store
                 ],
                 'ExpressionAttributeValues' => [
                     ':now' => [
-                        'N' => (string) $this->currentTime(),
+                        'N' => (string) Carbon::now()->getTimestamp(),
                     ],
                 ],
             ]);
@@ -326,7 +326,7 @@ class DynamoDbStore implements LockProvider, Store
                 ],
                 'ExpressionAttributeValues' => [
                     ':now' => [
-                        'N' => (string) $this->currentTime(),
+                        'N' => (string) Carbon::now()->getTimestamp(),
                     ],
                     ':amount' => [
                         'N' => (string) $value,
@@ -371,7 +371,7 @@ class DynamoDbStore implements LockProvider, Store
                 ],
                 'ExpressionAttributeValues' => [
                     ':now' => [
-                        'N' => (string) $this->currentTime(),
+                        'N' => (string) Carbon::now()->getTimestamp(),
                     ],
                     ':amount' => [
                         'N' => (string) $value,
@@ -469,7 +469,7 @@ class DynamoDbStore implements LockProvider, Store
     {
         return $seconds > 0
                     ? $this->availableAt($seconds)
-                    : $this->currentTime();
+                    : Carbon::now()->getTimestamp();
     }
 
     /**

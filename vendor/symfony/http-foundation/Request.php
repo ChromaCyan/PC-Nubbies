@@ -136,57 +136,57 @@ class Request
     protected $content;
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
     protected $languages;
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
     protected $charsets;
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
     protected $encodings;
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
     protected $acceptableContentTypes;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $pathInfo;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $requestUri;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $baseUrl;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $basePath;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $method;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $format;
 
     /**
-     * @var SessionInterface|callable():SessionInterface|null
+     * @var SessionInterface|callable(): SessionInterface
      */
     protected $session;
 
@@ -201,7 +201,7 @@ class Request
     protected $defaultLocale = 'en';
 
     /**
-     * @var array<string, string[]>|null
+     * @var array<string, string[]>
      */
     protected static $formats;
 
@@ -211,8 +211,6 @@ class Request
     private bool $isHostValid = true;
     private bool $isForwardedValid = true;
     private bool $isSafeContentPreferred;
-
-    private array $trustedValuesCache = [];
 
     private static int $trustedHeaderSet = -1;
 
@@ -448,7 +446,7 @@ class Request
      * @param array|null $files      The FILES parameters
      * @param array|null $server     The SERVER parameters
      */
-    public function duplicate(?array $query = null, ?array $request = null, ?array $attributes = null, ?array $cookies = null, ?array $files = null, ?array $server = null): static
+    public function duplicate(array $query = null, array $request = null, array $attributes = null, array $cookies = null, array $files = null, array $server = null): static
     {
         $dup = clone $this;
         if (null !== $query) {
@@ -771,7 +769,7 @@ class Request
      */
     public function setSessionFactory(callable $factory): void
     {
-        $this->session = $factory(...);
+        $this->session = $factory;
     }
 
     /**
@@ -1588,7 +1586,7 @@ class Request
      */
     public function getPreferredFormat(?string $default = 'html'): ?string
     {
-        if ($this->preferredFormat ??= $this->getRequestFormat(null)) {
+        if (null !== $this->preferredFormat || null !== $this->preferredFormat = $this->getRequestFormat(null)) {
             return $this->preferredFormat;
         }
 
@@ -1606,7 +1604,7 @@ class Request
      *
      * @param string[] $locales An array of ordered available locales
      */
-    public function getPreferredLanguage(?array $locales = null): ?string
+    public function getPreferredLanguage(array $locales = null): ?string
     {
         $preferredLanguages = $this->getLanguages();
 
@@ -1682,7 +1680,11 @@ class Request
      */
     public function getCharsets(): array
     {
-        return $this->charsets ??= array_map('strval', array_keys(AcceptHeader::fromString($this->headers->get('Accept-Charset'))->all()));
+        if (null !== $this->charsets) {
+            return $this->charsets;
+        }
+
+        return $this->charsets = array_map('strval', array_keys(AcceptHeader::fromString($this->headers->get('Accept-Charset'))->all()));
     }
 
     /**
@@ -1692,7 +1694,11 @@ class Request
      */
     public function getEncodings(): array
     {
-        return $this->encodings ??= array_map('strval', array_keys(AcceptHeader::fromString($this->headers->get('Accept-Encoding'))->all()));
+        if (null !== $this->encodings) {
+            return $this->encodings;
+        }
+
+        return $this->encodings = array_map('strval', array_keys(AcceptHeader::fromString($this->headers->get('Accept-Encoding'))->all()));
     }
 
     /**
@@ -1702,7 +1708,11 @@ class Request
      */
     public function getAcceptableContentTypes(): array
     {
-        return $this->acceptableContentTypes ??= array_map('strval', array_keys(AcceptHeader::fromString($this->headers->get('Accept'))->all()));
+        if (null !== $this->acceptableContentTypes) {
+            return $this->acceptableContentTypes;
+        }
+
+        return $this->acceptableContentTypes = array_map('strval', array_keys(AcceptHeader::fromString($this->headers->get('Accept'))->all()));
     }
 
     /**
@@ -1999,20 +2009,8 @@ class Request
         return self::$trustedProxies && IpUtils::checkIp($this->server->get('REMOTE_ADDR', ''), self::$trustedProxies);
     }
 
-    /**
-     * This method is rather heavy because it splits and merges headers, and it's called by many other methods such as
-     * getPort(), isSecure(), getHost(), getClientIps(), getBaseUrl() etc. Thus, we try to cache the results for
-     * best performance.
-     */
-    private function getTrustedValues(int $type, ?string $ip = null): array
+    private function getTrustedValues(int $type, string $ip = null): array
     {
-        $cacheKey = $type."\0".((self::$trustedHeaderSet & $type) ? $this->headers->get(self::TRUSTED_HEADERS[$type]) : '');
-        $cacheKey .= "\0".$ip."\0".$this->headers->get(self::TRUSTED_HEADERS[self::HEADER_FORWARDED]);
-
-        if (isset($this->trustedValuesCache[$cacheKey])) {
-            return $this->trustedValuesCache[$cacheKey];
-        }
-
         $clientValues = [];
         $forwardedValues = [];
 
@@ -2025,6 +2023,7 @@ class Request
         if ((self::$trustedHeaderSet & self::HEADER_FORWARDED) && (isset(self::FORWARDED_PARAMS[$type])) && $this->headers->has(self::TRUSTED_HEADERS[self::HEADER_FORWARDED])) {
             $forwarded = $this->headers->get(self::TRUSTED_HEADERS[self::HEADER_FORWARDED]);
             $parts = HeaderUtils::split($forwarded, ',;=');
+            $forwardedValues = [];
             $param = self::FORWARDED_PARAMS[$type];
             foreach ($parts as $subParts) {
                 if (null === $v = HeaderUtils::combine($subParts)[$param] ?? null) {
@@ -2046,15 +2045,15 @@ class Request
         }
 
         if ($forwardedValues === $clientValues || !$clientValues) {
-            return $this->trustedValuesCache[$cacheKey] = $forwardedValues;
+            return $forwardedValues;
         }
 
         if (!$forwardedValues) {
-            return $this->trustedValuesCache[$cacheKey] = $clientValues;
+            return $clientValues;
         }
 
         if (!$this->isForwardedValid) {
-            return $this->trustedValuesCache[$cacheKey] = null !== $ip ? ['0.0.0.0', $ip] : [];
+            return null !== $ip ? ['0.0.0.0', $ip] : [];
         }
         $this->isForwardedValid = false;
 

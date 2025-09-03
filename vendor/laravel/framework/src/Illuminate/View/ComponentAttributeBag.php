@@ -11,10 +11,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use IteratorAggregate;
-use JsonSerializable;
 use Traversable;
 
-class ComponentAttributeBag implements ArrayAccess, IteratorAggregate, JsonSerializable, Htmlable
+class ComponentAttributeBag implements ArrayAccess, Htmlable, IteratorAggregate
 {
     use Conditionable, Macroable;
 
@@ -351,26 +350,6 @@ class ComponentAttributeBag implements ArrayAccess, IteratorAggregate, JsonSeria
     }
 
     /**
-     * Determine if the attribute bag is empty.
-     *
-     * @return bool
-     */
-    public function isEmpty()
-    {
-        return trim((string) $this) === '';
-    }
-
-    /**
-     * Determine if the attribute bag is not empty.
-     *
-     * @return bool
-     */
-    public function isNotEmpty()
-    {
-        return ! $this->isEmpty();
-    }
-
-    /**
      * Get all of the raw attributes.
      *
      * @return array
@@ -474,16 +453,6 @@ class ComponentAttributeBag implements ArrayAccess, IteratorAggregate, JsonSeria
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->attributes);
-    }
-
-    /**
-     * Convert the object into a JSON serializable form.
-     *
-     * @return mixed
-     */
-    public function jsonSerialize(): mixed
-    {
-        return $this->attributes;
     }
 
     /**

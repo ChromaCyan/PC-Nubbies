@@ -15,6 +15,7 @@ use Psy\Shell;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -30,13 +31,13 @@ abstract class Command extends BaseCommand
      *
      * @api
      */
-    public function setApplication(Application $application = null): void
+    public function setApplication(Application $application = null)
     {
         if ($application !== null && !$application instanceof Shell) {
             throw new \InvalidArgumentException('PsySH Commands require an instance of Psy\Shell');
         }
 
-        parent::setApplication($application);
+        return parent::setApplication($application);
     }
 
     /**
@@ -230,10 +231,16 @@ abstract class Command extends BaseCommand
     /**
      * Get a Table instance.
      *
-     * @return Table
+     * Falls back to legacy TableHelper.
+     *
+     * @return Table|TableHelper
      */
     protected function getTable(OutputInterface $output)
     {
+        if (!\class_exists(Table::class)) {
+            return $this->getTableHelper();
+        }
+
         $style = new TableStyle();
 
         // Symfony 4.1 deprecated single-argument style setters.
@@ -252,5 +259,19 @@ abstract class Command extends BaseCommand
         return $table
             ->setRows([])
             ->setStyle($style);
+    }
+
+    /**
+     * Legacy fallback for getTable.
+     */
+    protected function getTableHelper(): TableHelper
+    {
+        $table = $this->getApplication()->getHelperSet()->get('table');
+
+        return $table
+            ->setRows([])
+            ->setLayout(TableHelper::LAYOUT_BORDERLESS)
+            ->setHorizontalBorderChar('')
+            ->setCrossingChar('');
     }
 }

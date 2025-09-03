@@ -14,7 +14,6 @@ use function sprintf;
 use function str_contains;
 use function trim;
 use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit\Util\Exporter;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Comparator\Factory as ComparatorFactory;
 
@@ -83,7 +82,7 @@ final class IsEqualIgnoringCase extends Constraint
     /**
      * Returns a string representation of the constraint.
      */
-    public function toString(bool $exportObjects = false): string
+    public function toString(): string
     {
         if (is_string($this->value)) {
             if (str_contains($this->value, "\n")) {
@@ -98,7 +97,7 @@ final class IsEqualIgnoringCase extends Constraint
 
         return sprintf(
             'is equal to %s',
-            Exporter::export($this->value, $exportObjects),
+            $this->exporter()->export($this->value),
         );
     }
 }

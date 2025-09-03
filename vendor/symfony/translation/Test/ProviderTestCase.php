@@ -25,6 +25,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * A test case to ease testing a translation provider.
  *
  * @author Mathieu Santostefano <msantostefano@protonmail.com>
+ *
+ * @internal
  */
 abstract class ProviderTestCase extends TestCase
 {

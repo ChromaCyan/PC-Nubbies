@@ -19,14 +19,7 @@ use PHPUnit\Framework\UnknownClassOrInterfaceException;
  */
 final class IsInstanceOf extends Constraint
 {
-    /**
-     * @psalm-var class-string
-     */
     private readonly string $name;
-
-    /**
-     * @psalm-var 'class'|'interface'
-     */
     private readonly string $type;
 
     /**
@@ -74,6 +67,11 @@ final class IsInstanceOf extends Constraint
      */
     protected function failureDescription(mixed $other): string
     {
-        return $this->valueToTypeStringFragment($other) . $this->toString(true);
+        return sprintf(
+            '%s is an instance of %s %s',
+            $this->exporter()->shortenedExport($other),
+            $this->type,
+            $this->name,
+        );
     }
 }

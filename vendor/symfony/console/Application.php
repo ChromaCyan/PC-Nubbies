@@ -79,7 +79,6 @@ class Application implements ResetInterface
     private string $version;
     private ?CommandLoaderInterface $commandLoader = null;
     private bool $catchExceptions = true;
-    private bool $catchErrors = false;
     private bool $autoExit = true;
     private InputDefinition $definition;
     private HelperSet $helperSet;
@@ -143,7 +142,7 @@ class Application implements ResetInterface
      *
      * @throws \Exception When running fails. Bypass this when {@link setCatchExceptions()}.
      */
-    public function run(?InputInterface $input = null, ?OutputInterface $output = null): int
+    public function run(InputInterface $input = null, OutputInterface $output = null): int
     {
         if (\function_exists('putenv')) {
             @putenv('LINES='.$this->terminal->getHeight());
@@ -173,11 +172,8 @@ class Application implements ResetInterface
 
         try {
             $exitCode = $this->doRun($input, $output);
-        } catch (\Throwable $e) {
-            if ($e instanceof \Exception && !$this->catchExceptions) {
-                throw $e;
-            }
-            if (!$e instanceof \Exception && !$this->catchErrors) {
+        } catch (\Exception $e) {
+            if (!$this->catchExceptions) {
                 throw $e;
             }
 
@@ -429,14 +425,6 @@ class Application implements ResetInterface
     public function setCatchExceptions(bool $boolean)
     {
         $this->catchExceptions = $boolean;
-    }
-
-    /**
-     * Sets whether to catch errors or not during commands execution.
-     */
-    public function setCatchErrors(bool $catchErrors = true): void
-    {
-        $this->catchErrors = $catchErrors;
     }
 
     /**
@@ -795,7 +783,7 @@ class Application implements ResetInterface
      *
      * @return Command[]
      */
-    public function all(?string $namespace = null)
+    public function all(string $namespace = null)
     {
         $this->init();
 
@@ -1046,10 +1034,7 @@ class Application implements ResetInterface
                         }
 
                         if (false !== $exitCode) {
-                            $event = new ConsoleTerminateEvent($command, $event->getInput(), $event->getOutput(), $exitCode, $signal);
-                            $this->dispatcher->dispatch($event, ConsoleEvents::TERMINATE);
-
-                            exit($event->getExitCode());
+                            exit($exitCode);
                         }
                     });
                 }
@@ -1177,7 +1162,7 @@ class Application implements ResetInterface
      *
      * This method is not part of public API and should not be used directly.
      */
-    public function extractNamespace(string $name, ?int $limit = null): string
+    public function extractNamespace(string $name, int $limit = null): string
     {
         $parts = explode(':', $name, -1);
 

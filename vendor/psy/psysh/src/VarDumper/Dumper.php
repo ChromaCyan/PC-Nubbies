@@ -23,9 +23,9 @@ class Dumper extends CliDumper
     private $formatter;
     private $forceArrayIndexes;
 
-    private const ONLY_CONTROL_CHARS = '/^[\x00-\x1F\x7F]+$/';
-    private const CONTROL_CHARS = '/([\x00-\x1F\x7F]+)/';
-    private const CONTROL_CHARS_MAP = [
+    protected static $onlyControlCharsRx = '/^[\x00-\x1F\x7F]+$/';
+    protected static $controlCharsRx = '/([\x00-\x1F\x7F]+)/';
+    protected static $controlCharsMap = [
         "\0"   => '\0',
         "\t"   => '\t',
         "\n"   => '\n',
@@ -46,7 +46,7 @@ class Dumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function enterHash(Cursor $cursor, $type, $class, $hasChild): void
+    public function enterHash(Cursor $cursor, $type, $class, $hasChild)
     {
         if (Cursor::HASH_INDEXED === $type || Cursor::HASH_ASSOC === $type) {
             $class = 0;
@@ -57,7 +57,7 @@ class Dumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    protected function dumpKey(Cursor $cursor): void
+    protected function dumpKey(Cursor $cursor)
     {
         if ($this->forceArrayIndexes || Cursor::HASH_INDEXED !== $cursor->hashType) {
             parent::dumpKey($cursor);
@@ -71,15 +71,16 @@ class Dumper extends CliDumper
         }
 
         $styled = '';
+        $map = self::$controlCharsMap;
         $cchr = $this->styles['cchr'];
 
-        $chunks = \preg_split(self::CONTROL_CHARS, $value, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
+        $chunks = \preg_split(self::$controlCharsRx, $value, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
         foreach ($chunks as $chunk) {
-            if (\preg_match(self::ONLY_CONTROL_CHARS, $chunk)) {
+            if (\preg_match(self::$onlyControlCharsRx, $chunk)) {
                 $chars = '';
                 $i = 0;
                 do {
-                    $chars .= isset(self::CONTROL_CHARS_MAP[$chunk[$i]]) ? self::CONTROL_CHARS_MAP[$chunk[$i]] : \sprintf('\x%02X', \ord($chunk[$i]));
+                    $chars .= isset($map[$chunk[$i]]) ? $map[$chunk[$i]] : \sprintf('\x%02X', \ord($chunk[$i]));
                 } while (isset($chunk[++$i]));
 
                 $chars = $this->formatter->escape($chars);
@@ -97,7 +98,7 @@ class Dumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    protected function dumpLine($depth, $endOfValue = false): void
+    protected function dumpLine($depth, $endOfValue = false)
     {
         if ($endOfValue && 0 < $depth) {
             $this->line .= ',';

@@ -7,7 +7,6 @@ use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Types\DecimalType;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -159,7 +158,7 @@ class ShowModelCommand extends DatabaseInspectionCommand
             ->reject(
                 fn (ReflectionMethod $method) => $method->isStatic()
                     || $method->isAbstract()
-                    || $method->getDeclaringClass()->getName() === Model::class
+                    || $method->getDeclaringClass()->getName() !== get_class($model)
             )
             ->mapWithKeys(function (ReflectionMethod $method) use ($model) {
                 if (preg_match('/^get(.+)Attribute$/', $method->getName(), $matches) === 1) {
@@ -199,7 +198,7 @@ class ShowModelCommand extends DatabaseInspectionCommand
             ->reject(
                 fn (ReflectionMethod $method) => $method->isStatic()
                     || $method->isAbstract()
-                    || $method->getDeclaringClass()->getName() === Model::class
+                    || $method->getDeclaringClass()->getName() !== get_class($model)
             )
             ->filter(function (ReflectionMethod $method) {
                 $file = new SplFileObject($method->getFileName());

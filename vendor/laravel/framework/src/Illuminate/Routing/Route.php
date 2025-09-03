@@ -268,10 +268,6 @@ class Route
      */
     public function getController()
     {
-        if (! $this->isControllerAction()) {
-            return null;
-        }
-
         if (! $this->controller) {
             $class = $this->getControllerClass();
 
@@ -583,7 +579,7 @@ class Route
     {
         $key = array_search($parameter, array_keys($this->parameters));
 
-        if ($key === 0 || $key === false) {
+        if ($key === 0) {
             return;
         }
 

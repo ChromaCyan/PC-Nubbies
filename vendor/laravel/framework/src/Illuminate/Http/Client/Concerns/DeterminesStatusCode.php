@@ -66,16 +66,6 @@ trait DeterminesStatusCode
     }
 
     /**
-     * Determine if the response code was a 304 "Not Modified" response.
-     *
-     * @return bool
-     */
-    public function notModified()
-    {
-        return $this->status() === 304;
-    }
-
-    /**
      * Determine if the response was a 400 "Bad Request" response.
      *
      * @return bool

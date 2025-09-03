@@ -192,8 +192,6 @@ class SlackHandler extends SocketHandler
 
     /**
      * Channel used by the bot when posting
-     *
-     * @return $this
      */
     public function setChannel(string $channel): self
     {
@@ -204,8 +202,6 @@ class SlackHandler extends SocketHandler
 
     /**
      * Username used by the bot when posting
-     *
-     * @return $this
      */
     public function setUsername(string $username): self
     {
@@ -214,9 +210,6 @@ class SlackHandler extends SocketHandler
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function useAttachment(bool $useAttachment): self
     {
         $this->slackRecord->useAttachment($useAttachment);
@@ -224,9 +217,6 @@ class SlackHandler extends SocketHandler
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setIconEmoji(string $iconEmoji): self
     {
         $this->slackRecord->setUserIcon($iconEmoji);
@@ -234,9 +224,6 @@ class SlackHandler extends SocketHandler
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function useShortAttachment(bool $useShortAttachment): self
     {
         $this->slackRecord->useShortAttachment($useShortAttachment);
@@ -244,9 +231,6 @@ class SlackHandler extends SocketHandler
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function includeContextAndExtra(bool $includeContextAndExtra): self
     {
         $this->slackRecord->includeContextAndExtra($includeContextAndExtra);
@@ -256,7 +240,6 @@ class SlackHandler extends SocketHandler
 
     /**
      * @param string[] $excludeFields
-     * @return $this
      */
     public function excludeFields(array $excludeFields): self
     {

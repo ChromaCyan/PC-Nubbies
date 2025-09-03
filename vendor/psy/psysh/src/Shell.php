@@ -27,7 +27,6 @@ use Psy\TabCompletion\Matcher;
 use Psy\VarDumper\PresenterAware;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command as BaseCommand;
-use Symfony\Component\Console\Exception\ExceptionInterface as SymfonyConsoleException;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -50,7 +49,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Shell extends Application
 {
-    const VERSION = 'v0.12.0';
+    const VERSION = 'v0.11.20';
+
+    /** @deprecated */
+    const PROMPT = '>>> ';
+    /** @deprecated */
+    const BUFF_PROMPT = '... ';
+    /** @deprecated */
+    const REPLAY = '--> ';
+    /** @deprecated */
+    const RETVAL = '=> ';
 
     private $config;
     private $cleaner;
@@ -142,8 +150,6 @@ class Shell extends Application
      */
     public static function debug(array $vars = [], $bindTo = null): array
     {
-        @\trigger_error('`Psy\\Shell::debug` is deprecated; call `Psy\\debug` instead.', \E_USER_DEPRECATED);
-
         return \Psy\debug($vars, $bindTo);
     }
 
@@ -249,6 +255,14 @@ class Shell extends Application
     }
 
     /**
+     * @deprecated Nothing should use this anymore
+     */
+    protected function getTabCompletionMatchers()
+    {
+        @\trigger_error('getTabCompletionMatchers is no longer used', \E_USER_DEPRECATED);
+    }
+
+    /**
      * Gets the default command loop listeners.
      *
      * @return array An array of Execution Loop Listener instances
@@ -289,8 +303,6 @@ class Shell extends Application
      */
     public function addTabCompletionMatchers(array $matchers)
     {
-        @\trigger_error('`addTabCompletionMatchers` is deprecated; call `addMatchers` instead.', \E_USER_DEPRECATED);
-
         $this->addMatchers($matchers);
     }
 
@@ -436,7 +448,7 @@ class Shell extends Application
     /**
      * Configures the input and output instances based on the user arguments and options.
      */
-    protected function configureIO(InputInterface $input, OutputInterface $output): void
+    protected function configureIO(InputInterface $input, OutputInterface $output)
     {
         // @todo overrides via environment variables (or should these happen in config? ... probably config)
         $input->setInteractive($this->config->getInputInteractive());
@@ -654,7 +666,7 @@ class Shell extends Application
      *
      * @param bool $includeBoundObject Pass false to exclude 'this'. If you're
      *                                 passing the scope variables to `extract`
-     *                                 you _must_ exclude 'this'
+     *                                 in PHP 7.1+, you _must_ exclude 'this'
      *
      * @return array Associative array of scope variables
      */
@@ -674,7 +686,7 @@ class Shell extends Application
      *
      * @param bool $includeBoundObject Pass false to exclude 'this'. If you're
      *                                 passing the scope variables to `extract`
-     *                                 you _must_ exclude 'this'
+     *                                 in PHP 7.1+, you _must_ exclude 'this'
      *
      * @return array Associative array of magic scope variables
      */
@@ -1307,21 +1319,10 @@ class Shell extends Application
             }
         }
 
-        if ($e instanceof PsyException || $e instanceof SymfonyConsoleException) {
+        if ($e instanceof PsyException) {
             $exceptionShortName = (new \ReflectionClass($e))->getShortName();
             $typeParts = \preg_split('/(?=[A-Z])/', $exceptionShortName);
-
-            switch ($exceptionShortName) {
-                case 'RuntimeException':
-                case 'LogicException':
-                    // These ones look weird without 'Exception'
-                    break;
-                default:
-                    if (\end($typeParts) === 'Exception') {
-                        \array_pop($typeParts);
-                    }
-                    break;
-            }
+            \array_pop($typeParts); // Removes "Exception"
 
             return \trim(\strtoupper(\implode(' ', $typeParts)));
         }
@@ -1519,8 +1520,6 @@ class Shell extends Application
      */
     public function getVersion(): string
     {
-        @\trigger_error('`getVersion` is deprecated; call `self::getVersionHeader` instead.', \E_USER_DEPRECATED);
-
         return self::getVersionHeader($this->config->useUnicode());
     }
 
@@ -1544,6 +1543,14 @@ class Shell extends Application
     public function getManualDb()
     {
         return $this->config->getManualDb();
+    }
+
+    /**
+     * @deprecated Tab completion is provided by the AutoCompleter service
+     */
+    protected function autocomplete($text)
+    {
+        @\trigger_error('Tab completion is provided by the AutoCompleter service', \E_USER_DEPRECATED);
     }
 
     /**

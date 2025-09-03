@@ -30,6 +30,14 @@ class ShowCommand extends ReflectingCommand
     private $lastExceptionIndex;
 
     /**
+     * @param string|null $colorMode (deprecated and ignored)
+     */
+    public function __construct($colorMode = null)
+    {
+        parent::__construct();
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure()
@@ -64,7 +72,7 @@ HELP
      *
      * @return int 0 if everything went fine, or an exit code
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         // n.b. As far as I can tell, InputInterface doesn't want to tell me
         // whether an option with an optional value was actually passed. If you

@@ -13,8 +13,10 @@ use function assert;
 use function file_get_contents;
 use function substr_count;
 use PhpParser\Error;
+use PhpParser\Lexer;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
+use PhpParser\Parser;
 use PhpParser\ParserFactory;
 
 final class Counter
@@ -41,7 +43,7 @@ final class Counter
         assert($linesOfCode >= 0);
 
         try {
-            $nodes = (new ParserFactory)->createForHostVersion()->parse($source);
+            $nodes = $this->parser()->parse($source);
 
             assert($nodes !== null);
 
@@ -86,5 +88,10 @@ final class Counter
         // @codeCoverageIgnoreEnd
 
         return $visitor->result();
+    }
+
+    private function parser(): Parser
+    {
+        return (new ParserFactory)->create(ParserFactory::PREFER_PHP7, new Lexer);
     }
 }

@@ -3,10 +3,9 @@
 namespace Illuminate\Validation\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Contracts\Validation\ValidatorAwareRule;
 use TypeError;
 
-class Enum implements Rule, ValidatorAwareRule
+class Enum implements Rule
 {
     /**
      * The type of the enum.
@@ -14,13 +13,6 @@ class Enum implements Rule, ValidatorAwareRule
      * @var string
      */
     protected $type;
-
-    /**
-     * The current validator instance.
-     *
-     * @var \Illuminate\Validation\Validator
-     */
-    protected $validator;
 
     /**
      * Create a new rule instance.
@@ -64,23 +56,10 @@ class Enum implements Rule, ValidatorAwareRule
      */
     public function message()
     {
-        $message = $this->validator->getTranslator()->get('validation.enum');
+        $message = trans('validation.enum');
 
         return $message === 'validation.enum'
             ? ['The selected :attribute is invalid.']
             : $message;
-    }
-
-    /**
-     * Set the current validator.
-     *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return $this
-     */
-    public function setValidator($validator)
-    {
-        $this->validator = $validator;
-
-        return $this;
     }
 }

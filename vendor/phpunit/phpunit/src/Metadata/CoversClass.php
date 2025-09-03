@@ -22,7 +22,6 @@ final class CoversClass extends Metadata
     private readonly string $className;
 
     /**
-     * @psalm-param 0|1 $level
      * @psalm-param class-string $className
      */
     protected function __construct(int $level, string $className)
@@ -32,9 +31,6 @@ final class CoversClass extends Metadata
         $this->className = $className;
     }
 
-    /**
-     * @psalm-assert-if-true CoversClass $this
-     */
     public function isCoversClass(): bool
     {
         return true;

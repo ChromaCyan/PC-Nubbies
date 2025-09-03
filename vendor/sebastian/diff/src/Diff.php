@@ -9,23 +9,9 @@
  */
 namespace SebastianBergmann\Diff;
 
-use ArrayIterator;
-use IteratorAggregate;
-use Traversable;
-
-/**
- * @template-implements IteratorAggregate<int, Chunk>
- */
-final class Diff implements IteratorAggregate
+final class Diff
 {
-    /**
-     * @psalm-var non-empty-string
-     */
     private string $from;
-
-    /**
-     * @psalm-var non-empty-string
-     */
     private string $to;
 
     /**
@@ -34,8 +20,6 @@ final class Diff implements IteratorAggregate
     private array $chunks;
 
     /**
-     * @psalm-param non-empty-string $from
-     * @psalm-param non-empty-string $to
      * @psalm-param list<Chunk> $chunks
      */
     public function __construct(string $from, string $to, array $chunks = [])
@@ -45,18 +29,12 @@ final class Diff implements IteratorAggregate
         $this->chunks = $chunks;
     }
 
-    /**
-     * @psalm-return non-empty-string
-     */
-    public function from(): string
+    public function getFrom(): string
     {
         return $this->from;
     }
 
-    /**
-     * @psalm-return non-empty-string
-     */
-    public function to(): string
+    public function getTo(): string
     {
         return $this->to;
     }
@@ -64,7 +42,7 @@ final class Diff implements IteratorAggregate
     /**
      * @psalm-return list<Chunk>
      */
-    public function chunks(): array
+    public function getChunks(): array
     {
         return $this->chunks;
     }
@@ -75,40 +53,5 @@ final class Diff implements IteratorAggregate
     public function setChunks(array $chunks): void
     {
         $this->chunks = $chunks;
-    }
-
-    /**
-     * @psalm-return non-empty-string
-     *
-     * @deprecated
-     */
-    public function getFrom(): string
-    {
-        return $this->from;
-    }
-
-    /**
-     * @psalm-return non-empty-string
-     *
-     * @deprecated
-     */
-    public function getTo(): string
-    {
-        return $this->to;
-    }
-
-    /**
-     * @psalm-return list<Chunk>
-     *
-     * @deprecated
-     */
-    public function getChunks(): array
-    {
-        return $this->chunks;
-    }
-
-    public function getIterator(): Traversable
-    {
-        return new ArrayIterator($this->chunks);
     }
 }

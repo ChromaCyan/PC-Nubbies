@@ -66,20 +66,6 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
     protected $stringableHandlers = [];
 
     /**
-     * The callback that is responsible for handling missing translation keys.
-     *
-     * @var callable|null
-     */
-    protected $missingTranslationKeyCallback;
-
-    /**
-     * Indicates whether missing translation keys should be handled.
-     *
-     * @var bool
-     */
-    protected $handleMissingTranslationKeys = true;
-
-    /**
      * Create a new translator instance.
      *
      * @param  \Illuminate\Contracts\Translation\Loader  $loader
@@ -160,17 +146,13 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
             // the translator was instantiated. Then, we can load the lines and return.
             $locales = $fallback ? $this->localeArray($locale) : [$locale];
 
-            foreach ($locales as $languageLineLocale) {
+            foreach ($locales as $locale) {
                 if (! is_null($line = $this->getLine(
-                    $namespace, $group, $languageLineLocale, $item, $replace
+                    $namespace, $group, $locale, $item, $replace
                 ))) {
                     return $line;
                 }
             }
-
-            $key = $this->handleMissingTranslationKey(
-                $key, $replace, $locale, $fallback
-            );
         }
 
         // If the line doesn't exist, we will return back the key which was requested as
@@ -183,7 +165,7 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
      * Get a translation according to an integer value.
      *
      * @param  string  $key
-     * @param  \Countable|int|float|array  $number
+     * @param  \Countable|int|array  $number
      * @param  array  $replace
      * @param  string|null  $locale
      * @return string
@@ -324,48 +306,6 @@ class Translator extends NamespacedItemResolver implements TranslatorContract
     protected function isLoaded($namespace, $group, $locale)
     {
         return isset($this->loaded[$namespace][$group][$locale]);
-    }
-
-    /**
-     * Handle a missing translation key.
-     *
-     * @param  string  $key
-     * @param  array  $replace
-     * @param  string|null  $locale
-     * @param  bool  $fallback
-     * @return string
-     */
-    protected function handleMissingTranslationKey($key, $replace, $locale, $fallback)
-    {
-        if (! $this->handleMissingTranslationKeys ||
-            ! isset($this->missingTranslationKeyCallback)) {
-            return $key;
-        }
-
-        // Prevent infinite loops...
-        $this->handleMissingTranslationKeys = false;
-
-        $key = call_user_func(
-            $this->missingTranslationKeyCallback,
-            $key, $replace, $locale, $fallback
-        ) ?? $key;
-
-        $this->handleMissingTranslationKeys = true;
-
-        return $key;
-    }
-
-    /**
-     * Register a callback that is responsible for handling missing translation keys.
-     *
-     * @param  callable|null  $callback
-     * @return static
-     */
-    public function handleMissingKeysUsing(?callable $callback)
-    {
-        $this->missingTranslationKeyCallback = $callback;
-
-        return $this;
     }
 
     /**

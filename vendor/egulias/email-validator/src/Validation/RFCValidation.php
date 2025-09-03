@@ -11,6 +11,11 @@ use Egulias\EmailValidator\Warning\Warning;
 class RFCValidation implements EmailValidation
 {
     /**
+     * @var EmailParser|null
+     */
+    private $parser;
+
+    /**
      * @var Warning[]
      */
     private array $warnings = [];
@@ -22,10 +27,10 @@ class RFCValidation implements EmailValidation
 
     public function isValid(string $email, EmailLexer $emailLexer): bool
     {
-        $parser = new EmailParser($emailLexer);
+        $this->parser = new EmailParser($emailLexer);
         try {
-            $result = $parser->parse($email);
-            $this->warnings = $parser->getWarnings();
+            $result = $this->parser->parse($email);
+            $this->warnings = $this->parser->getWarnings();
             if ($result->isInvalid()) {
                 /** @psalm-suppress PropertyTypeCoercion */
                 $this->error = $result;

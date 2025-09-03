@@ -268,12 +268,11 @@ class Filesystem
      *
      * @param  string  $path
      * @param  string  $data
-     * @param  bool  $lock
      * @return int
      */
-    public function append($path, $data, $lock = false)
+    public function append($path, $data)
     {
-        return file_put_contents($path, $data, FILE_APPEND | ($lock ? LOCK_EX : 0));
+        return file_put_contents($path, $data, FILE_APPEND);
     }
 
     /**
@@ -546,7 +545,7 @@ class Filesystem
     {
         $hash = @md5_file($firstFile);
 
-        return $hash && hash_equals($hash, (string) @md5_file($secondFile));
+        return $hash && $hash === @md5_file($secondFile);
     }
 
     /**
@@ -749,8 +748,6 @@ class Filesystem
                 $this->delete($item->getPathname());
             }
         }
-
-        unset($items);
 
         if (! $preserve) {
             @rmdir($directory);

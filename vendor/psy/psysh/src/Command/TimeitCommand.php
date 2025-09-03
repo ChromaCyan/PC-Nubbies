@@ -15,6 +15,7 @@ use PhpParser\NodeTraverser;
 use PhpParser\PrettyPrinter\Standard as Printer;
 use Psy\Command\TimeitCommand\TimeitVisitor;
 use Psy\Input\CodeArgument;
+use Psy\ParserFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,6 +29,7 @@ class TimeitCommand extends Command
     const AVG_RESULT_MSG = '<info>Command took %.6f seconds on average (%.6f median; %.6f total) to complete.</info>';
 
     // All times stored as nanoseconds!
+    private static $useHrtime;
     private static $start = null;
     private static $times = [];
 
@@ -40,7 +42,11 @@ class TimeitCommand extends Command
      */
     public function __construct($name = null)
     {
-        $this->parser = new CodeArgumentParser();
+        // @todo Remove microtime use after we drop support for PHP < 7.3
+        self::$useHrtime = \function_exists('hrtime');
+
+        $parserFactory = new ParserFactory();
+        $this->parser = $parserFactory->createParser();
 
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new TimeitVisitor());
@@ -78,20 +84,20 @@ HELP
      *
      * @return int 0 if everything went fine, or an exit code
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $code = $input->getArgument('code');
-        $num = (int) ($input->getOption('num') ?: 1);
+        $num = $input->getOption('num') ?: 1;
         $shell = $this->getApplication();
 
         $instrumentedCode = $this->instrumentCode($code);
 
         self::$times = [];
 
-        do {
+        for ($i = 0; $i < $num; $i++) {
             $_ = $shell->execute($instrumentedCode);
             $this->ensureEndMarked();
-        } while (\count(self::$times) < $num);
+        }
 
         $shell->writeReturnValue($_);
 
@@ -120,7 +126,7 @@ HELP
      */
     public static function markStart()
     {
-        self::$start = \hrtime(true);
+        self::$start = self::$useHrtime ? \hrtime(true) : (\microtime(true) * 1e+6);
     }
 
     /**
@@ -139,7 +145,7 @@ HELP
      */
     public static function markEnd($ret = null)
     {
-        self::$times[] = \hrtime(true) - self::$start;
+        self::$times[] = (self::$useHrtime ? \hrtime(true) : (\microtime(true) * 1e+6)) - self::$start;
         self::$start = null;
 
         return $ret;
@@ -163,9 +169,34 @@ HELP
      *
      * This inserts `markStart` and `markEnd` calls to ensure that (reasonably)
      * accurate times are recorded for just the code being executed.
+     *
+     * @param string $code
      */
     private function instrumentCode(string $code): string
     {
-        return $this->printer->prettyPrint($this->traverser->traverse($this->parser->parse($code)));
+        return $this->printer->prettyPrint($this->traverser->traverse($this->parse($code)));
+    }
+
+    /**
+     * Lex and parse a string of code into statements.
+     *
+     * @param string $code
+     *
+     * @return array Statements
+     */
+    private function parse(string $code): array
+    {
+        $code = '<?php '.$code;
+
+        try {
+            return $this->parser->parse($code);
+        } catch (\PhpParser\Error $e) {
+            if (\strpos($e->getMessage(), 'unexpected EOF') === false) {
+                throw $e;
+            }
+
+            // If we got an unexpected EOF, let's try it again with a semicolon.
+            return $this->parser->parse($code.';');
+        }
     }
 }

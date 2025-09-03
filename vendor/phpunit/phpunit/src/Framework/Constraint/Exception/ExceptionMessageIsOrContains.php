@@ -11,7 +11,6 @@ namespace PHPUnit\Framework\Constraint;
 
 use function sprintf;
 use function str_contains;
-use PHPUnit\Util\Exporter;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -31,7 +30,7 @@ final class ExceptionMessageIsOrContains extends Constraint
             return 'exception message is empty';
         }
 
-        return 'exception message contains ' . Exporter::export($this->expectedMessage);
+        return 'exception message contains ' . $this->exporter()->export($this->expectedMessage);
     }
 
     protected function matches(mixed $other): bool

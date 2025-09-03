@@ -18,17 +18,20 @@ use Symfony\Component\Finder\Gitignore;
  */
 final class VcsIgnoredFilterIterator extends \FilterIterator
 {
-    private string $baseDir;
+    /**
+     * @var string
+     */
+    private $baseDir;
 
     /**
      * @var array<string, array{0: string, 1: string}|null>
      */
-    private array $gitignoreFilesCache = [];
+    private $gitignoreFilesCache = [];
 
     /**
      * @var array<string, bool>
      */
-    private array $ignoredPathsCache = [];
+    private $ignoredPathsCache = [];
 
     /**
      * @param \Iterator<string, \SplFileInfo> $iterator

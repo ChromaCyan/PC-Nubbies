@@ -128,7 +128,11 @@ abstract class File extends FileGeneric implements StreamBufferable, StreamLocka
 
             default:
                 if (true === \ctype_digit($streamName)) {
-                    $streamName = 'php://fd/'.$streamName;
+                    if (\PHP_VERSION_ID >= 50306) {
+                        $streamName = 'php://fd/'.$streamName;
+                    } else {
+                        throw new FileException('You need PHP5.3.6 to use a file descriptor '.'other than 0, 1 or 2 (tried %d with PHP%s).', 0, [$streamName, \PHP_VERSION]);
+                    }
                 }
         }
 
@@ -185,7 +189,7 @@ abstract class File extends FileGeneric implements StreamBufferable, StreamLocka
     {
         $this->setStreamBuffer($size);
 
-        // @todo manage $callable as a filter?
+        // @TODO manage $callable as a filter?
 
         return 1;
     }

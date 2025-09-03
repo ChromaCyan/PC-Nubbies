@@ -73,9 +73,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $formatter = $this->createMock(FormatterInterface::class);
         $formatter->expects(self::any())
             ->method('format')
-            ->willReturnCallback(function ($record) {
+            ->will(self::returnCallback(function ($record) {
                 return $record->message;
-            });
+            }));
 
         return $formatter;
     }

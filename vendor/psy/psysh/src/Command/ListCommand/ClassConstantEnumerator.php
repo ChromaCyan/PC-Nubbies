@@ -11,6 +11,7 @@
 
 namespace Psy\Command\ListCommand;
 
+use Psy\Reflection\ReflectionClassConstant;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
@@ -66,7 +67,7 @@ class ClassConstantEnumerator extends Enumerator
 
         $constants = [];
         foreach ($reflector->getConstants() as $name => $constant) {
-            $constReflector = new \ReflectionClassConstant($reflector->name, $name);
+            $constReflector = ReflectionClassConstant::create($reflector->name, $name);
 
             if ($noInherit && $constReflector->getDeclaringClass()->getName() !== $className) {
                 continue;

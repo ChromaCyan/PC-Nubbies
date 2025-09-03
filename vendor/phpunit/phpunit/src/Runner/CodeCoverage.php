@@ -13,6 +13,7 @@ use function file_put_contents;
 use function sprintf;
 use PHPUnit\Event\Facade as EventFacade;
 use PHPUnit\Event\TestData\MoreThanOneDataSetFromDataProviderException;
+use PHPUnit\Event\TestData\NoDataSetFromDataProviderException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\TextUI\Configuration\CodeCoverageFilterRegistry;
 use PHPUnit\TextUI\Configuration\Configuration;
@@ -140,6 +141,7 @@ final class CodeCoverage
 
     /**
      * @throws MoreThanOneDataSetFromDataProviderException
+     * @throws NoDataSetFromDataProviderException
      */
     public function start(TestCase $test): void
     {
@@ -201,21 +203,6 @@ final class CodeCoverage
     {
         if (!$this->isActive()) {
             return;
-        }
-
-        if ($configuration->hasCoveragePhp()) {
-            $this->codeCoverageGenerationStart($printer, 'PHP');
-
-            try {
-                $writer = new PhpReport;
-                $writer->process($this->codeCoverage(), $configuration->coveragePhp());
-
-                $this->codeCoverageGenerationSucceeded($printer);
-
-                unset($writer);
-            } catch (CodeCoverageException $e) {
-                $this->codeCoverageGenerationFailed($printer, $e);
-            }
         }
 
         if ($configuration->hasCoverageClover()) {
@@ -293,6 +280,21 @@ final class CodeCoverage
                 );
 
                 $writer->process($this->codeCoverage(), $configuration->coverageHtml());
+
+                $this->codeCoverageGenerationSucceeded($printer);
+
+                unset($writer);
+            } catch (CodeCoverageException $e) {
+                $this->codeCoverageGenerationFailed($printer, $e);
+            }
+        }
+
+        if ($configuration->hasCoveragePhp()) {
+            $this->codeCoverageGenerationStart($printer, 'PHP');
+
+            try {
+                $writer = new PhpReport;
+                $writer->process($this->codeCoverage(), $configuration->coveragePhp());
 
                 $this->codeCoverageGenerationSucceeded($printer);
 

@@ -22,6 +22,7 @@ use function substr_count;
 use function token_get_all;
 use function trim;
 use PhpParser\Error;
+use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
@@ -139,7 +140,10 @@ final class ParsingFileAnalyser implements FileAnalyser
 
         assert($linesOfCode > 0);
 
-        $parser = (new ParserFactory)->createForHostVersion();
+        $parser = (new ParserFactory)->create(
+            ParserFactory::PREFER_PHP7,
+            new Lexer
+        );
 
         try {
             $nodes = $parser->parse($source);

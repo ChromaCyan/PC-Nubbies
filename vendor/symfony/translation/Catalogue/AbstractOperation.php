@@ -35,6 +35,11 @@ abstract class AbstractOperation implements OperationInterface
     protected $result;
 
     /**
+     * @var array|null The domains affected by this operation
+     */
+    private $domains;
+
+    /**
      * This array stores 'all', 'new' and 'obsolete' messages for all valid domains.
      *
      * The data structure of this array is as follows:
@@ -57,8 +62,6 @@ abstract class AbstractOperation implements OperationInterface
      */
     protected $messages;
 
-    private array $domains;
-
     /**
      * @throws LogicException
      */
@@ -76,7 +79,7 @@ abstract class AbstractOperation implements OperationInterface
 
     public function getDomains(): array
     {
-        if (!isset($this->domains)) {
+        if (null === $this->domains) {
             $domains = [];
             foreach ([$this->source, $this->target] as $catalogue) {
                 foreach ($catalogue->getDomains() as $domain) {

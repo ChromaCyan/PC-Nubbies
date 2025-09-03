@@ -11,7 +11,6 @@ namespace PHPUnit\TextUI\XmlConfiguration;
 
 use function sprintf;
 use function trim;
-use LibXMLError;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -26,7 +25,7 @@ final class ValidationResult
     private readonly array $validationErrors;
 
     /**
-     * @psalm-param array<int,LibXMLError> $errors
+     * @psalm-param array<int,\LibXMLError> $errors
      */
     public static function fromArray(array $errors): self
     {

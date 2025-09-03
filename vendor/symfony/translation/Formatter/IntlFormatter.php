@@ -20,8 +20,8 @@ use Symfony\Component\Translation\Exception\LogicException;
  */
 class IntlFormatter implements IntlFormatterInterface
 {
-    private bool $hasMessageFormatter;
-    private array $cache = [];
+    private $hasMessageFormatter;
+    private $cache = [];
 
     public function formatIntl(string $message, string $locale, array $parameters = []): string
     {

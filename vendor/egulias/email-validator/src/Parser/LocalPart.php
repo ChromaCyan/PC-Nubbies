@@ -118,7 +118,7 @@ class LocalPart extends PartParser
         $foldingWS = new FoldingWhiteSpace($this->lexer);
         $resultFWS = $foldingWS->parse();
         if ($resultFWS->isValid()) {
-            $this->warnings = [...$this->warnings, ...$foldingWS->getWarnings()];
+            $this->warnings = array_merge($this->warnings, $foldingWS->getWarnings());
         }
         return $resultFWS;
     }
@@ -132,7 +132,7 @@ class LocalPart extends PartParser
     {
         $dquoteParser = new DoubleQuote($this->lexer);
         $parseAgain = $dquoteParser->parse();
-        $this->warnings = [...$this->warnings, ...$dquoteParser->getWarnings()];
+        $this->warnings = array_merge($this->warnings, $dquoteParser->getWarnings());
 
         return $parseAgain;
     }
@@ -141,8 +141,10 @@ class LocalPart extends PartParser
     {
         $commentParser = new Comment($this->lexer, new LocalComment());
         $result = $commentParser->parse();
-        $this->warnings = [...$this->warnings, ...$commentParser->getWarnings()];
-
+        $this->warnings = array_merge($this->warnings, $commentParser->getWarnings());
+        if ($result->isInvalid()) {
+            return $result;
+        }
         return $result;
     }
 
@@ -155,6 +157,10 @@ class LocalPart extends PartParser
 
         if ($this->lexer->isNextToken(EmailLexer::GENERIC)) {
             return new InvalidEmail(new ExpectingATEXT('Found ATOM after escaping'), $this->lexer->current->value);
+        }
+
+        if (!$this->lexer->isNextTokenAny(array(EmailLexer::S_SP, EmailLexer::S_HTAB, EmailLexer::C_DEL))) {
+            return new ValidEmail();
         }
 
         return new ValidEmail();

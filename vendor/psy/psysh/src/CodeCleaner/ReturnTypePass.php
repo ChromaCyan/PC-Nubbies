@@ -32,7 +32,13 @@ class ReturnTypePass extends CodeCleanerPass
     const VOID_NULL_MESSAGE = 'A void function must not return a value (did you mean "return;" instead of "return null;"?)';
     const NULLABLE_VOID_MESSAGE = 'Void type cannot be nullable';
 
+    private $atLeastPhp71;
     private $returnTypeStack = [];
+
+    public function __construct()
+    {
+        $this->atLeastPhp71 = \version_compare(\PHP_VERSION, '7.1', '>=');
+    }
 
     /**
      * {@inheritdoc}
@@ -41,6 +47,10 @@ class ReturnTypePass extends CodeCleanerPass
      */
     public function enterNode(Node $node)
     {
+        if (!$this->atLeastPhp71) {
+            return; // @codeCoverageIgnore
+        }
+
         if ($this->isFunctionNode($node)) {
             $this->returnTypeStack[] = $node->returnType;
 
@@ -72,7 +82,7 @@ class ReturnTypePass extends CodeCleanerPass
             }
 
             if ($msg !== null) {
-                throw new FatalErrorException($msg, 0, \E_ERROR, null, $node->getStartLine());
+                throw new FatalErrorException($msg, 0, \E_ERROR, null, $node->getLine());
             }
         }
     }
@@ -84,6 +94,10 @@ class ReturnTypePass extends CodeCleanerPass
      */
     public function leaveNode(Node $node)
     {
+        if (!$this->atLeastPhp71) {
+            return; // @codeCoverageIgnore
+        }
+
         if (!empty($this->returnTypeStack) && $this->isFunctionNode($node)) {
             \array_pop($this->returnTypeStack);
         }

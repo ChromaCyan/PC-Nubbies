@@ -13,7 +13,6 @@ use function trim;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\PhptAssertionFailedError;
 use PHPUnit\Framework\SelfDescribing;
-use PHPUnit\Runner\ErrorException;
 use Throwable;
 
 /**
@@ -23,10 +22,6 @@ final class ThrowableToStringMapper
 {
     public static function map(Throwable $t): string
     {
-        if ($t instanceof ErrorException) {
-            return $t->getMessage();
-        }
-
         if ($t instanceof SelfDescribing) {
             $buffer = $t->toString();
 

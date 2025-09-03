@@ -1179,10 +1179,6 @@ class BelongsToMany extends Relation
      */
     public function touch()
     {
-        if ($this->related->isIgnoringTouch()) {
-            return;
-        }
-
         $columns = [
             $this->related->getUpdatedAtColumn() => $this->related->freshTimestampString(),
         ];

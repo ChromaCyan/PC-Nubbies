@@ -19,19 +19,13 @@ class ParseErrorException extends \PhpParser\Error implements Exception
     /**
      * Constructor!
      *
-     * @param string    $message    (default: '')
-     * @param array|int $attributes Attributes of node/token where error occurred
-     *                              (or start line of error -- deprecated)
+     * @param string $message (default: "")
+     * @param int    $line    (default: -1)
      */
-    public function __construct(string $message = '', $attributes = [])
+    public function __construct(string $message = '', int $line = -1)
     {
         $message = \sprintf('PHP Parse error: %s', $message);
-
-        if (!\is_array($attributes)) {
-            $attributes = ['startLine' => $attributes];
-        }
-
-        parent::__construct($message, $attributes);
+        parent::__construct($message, $line);
     }
 
     /**
@@ -41,6 +35,6 @@ class ParseErrorException extends \PhpParser\Error implements Exception
      */
     public static function fromParseError(\PhpParser\Error $e): self
     {
-        return new self($e->getRawMessage(), $e->getAttributes());
+        return new self($e->getRawMessage(), $e->getStartLine());
     }
 }

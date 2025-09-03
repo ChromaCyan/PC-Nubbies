@@ -21,6 +21,7 @@ use Symfony\Component\Routing\RequestContextAwareInterface;
  */
 final class UrlHelper
 {
+
     public function __construct(
         private RequestStack $requestStack,
         private RequestContextAwareInterface|RequestContext|null $requestContext = null,

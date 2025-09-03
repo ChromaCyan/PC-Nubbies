@@ -14,6 +14,7 @@ namespace Psy\Command;
 use PhpParser\NodeTraverser;
 use PhpParser\PrettyPrinter\Standard as Printer;
 use Psy\Input\CodeArgument;
+use Psy\ParserFactory;
 use Psy\Readline\Readline;
 use Psy\Sudo\SudoVisitor;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,7 +35,8 @@ class SudoCommand extends Command
      */
     public function __construct($name = null)
     {
-        $this->parser = new CodeArgumentParser();
+        $parserFactory = new ParserFactory();
+        $this->parser = $parserFactory->createParser();
 
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new SudoVisitor());
@@ -96,7 +98,7 @@ HELP
      *
      * @return int 0 if everything went fine, or an exit code
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $code = $input->getArgument('code');
 
@@ -109,12 +111,37 @@ HELP
             $code = $history[\count($history) - 2];
         }
 
-        $nodes = $this->traverser->traverse($this->parser->parse($code));
+        if (\strpos($code, '<?') === false) {
+            $code = '<?php '.$code;
+        }
+
+        $nodes = $this->traverser->traverse($this->parse($code));
 
         $sudoCode = $this->printer->prettyPrint($nodes);
         $shell = $this->getApplication();
         $shell->addCode($sudoCode, !$shell->hasCode());
 
         return 0;
+    }
+
+    /**
+     * Lex and parse a string of code into statements.
+     *
+     * @param string $code
+     *
+     * @return array Statements
+     */
+    private function parse(string $code): array
+    {
+        try {
+            return $this->parser->parse($code);
+        } catch (\PhpParser\Error $e) {
+            if (\strpos($e->getMessage(), 'unexpected EOF') === false) {
+                throw $e;
+            }
+
+            // If we got an unexpected EOF, let's try it again with a semicolon.
+            return $this->parser->parse($code.';');
+        }
     }
 }

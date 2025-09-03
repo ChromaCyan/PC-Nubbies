@@ -10,7 +10,6 @@
 namespace PHPUnit\Metadata\Parser;
 
 use function array_merge;
-use function assert;
 use function count;
 use function explode;
 use function method_exists;
@@ -250,18 +249,15 @@ final class AnnotationParser implements Parser
                         }
 
                         if (str_contains($value, '::')) {
-                            [$_className, $_methodName] = explode('::', $value);
+                            [$className, $methodName] = explode('::', $value);
 
-                            assert($_className !== '');
-                            assert($_methodName !== '');
-
-                            if ($_methodName === 'class') {
-                                $result[] = Metadata::dependsOnClass($_className, $deepClone, $shallowClone);
+                            if ($methodName === 'class') {
+                                $result[] = Metadata::dependsOnClass($className, $deepClone, $shallowClone);
 
                                 continue;
                             }
 
-                            $result[] = Metadata::dependsOnMethod($_className, $_methodName, $deepClone, $shallowClone);
+                            $result[] = Metadata::dependsOnMethod($className, $methodName, $deepClone, $shallowClone);
 
                             continue;
                         }

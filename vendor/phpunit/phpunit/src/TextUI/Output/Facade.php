@@ -47,10 +47,6 @@ final class Facade
 
         assert(self::$printer !== null);
 
-        if ($configuration->debug()) {
-            return self::$printer;
-        }
-
         self::createUnexpectedOutputPrinter();
 
         if (!$extensionReplacesProgressOutput) {
@@ -120,10 +116,6 @@ final class Facade
     private static function createPrinter(Configuration $configuration): void
     {
         $printerNeeded = false;
-
-        if ($configuration->debug()) {
-            $printerNeeded = true;
-        }
 
         if ($configuration->outputIsTeamCity()) {
             $printerNeeded = true;
@@ -204,14 +196,14 @@ final class Facade
                 true,
                 false,
                 false,
-                true,
                 false,
                 false,
-                $configuration->displayDetailsOnTestsThatTriggerDeprecations(),
-                $configuration->displayDetailsOnTestsThatTriggerErrors(),
-                $configuration->displayDetailsOnTestsThatTriggerNotices(),
-                $configuration->displayDetailsOnTestsThatTriggerWarnings(),
-                $configuration->reverseDefectList(),
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
             );
         }
 

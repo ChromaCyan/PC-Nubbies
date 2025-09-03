@@ -5,13 +5,10 @@ namespace Illuminate\Foundation\Bus;
 use Closure;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Queue\CallQueuedClosure;
-use Illuminate\Support\Traits\Conditionable;
 use Laravel\SerializableClosure\SerializableClosure;
 
 class PendingChain
 {
-    use Conditionable;
-
     /**
      * The class name of the job being dispatched.
      *
@@ -132,7 +129,7 @@ class PendingChain
     }
 
     /**
-     * Dispatch the job chain.
+     * Dispatch the job with the given arguments.
      *
      * @return \Illuminate\Foundation\Bus\PendingDispatch
      */
@@ -164,27 +161,5 @@ class PendingChain
         $firstJob->chainCatchCallbacks = $this->catchCallbacks();
 
         return app(Dispatcher::class)->dispatch($firstJob);
-    }
-
-    /**
-     * Dispatch the job chain if the given truth test passes.
-     *
-     * @param  bool|\Closure  $boolean
-     * @return \Illuminate\Foundation\Bus\PendingDispatch|null
-     */
-    public function dispatchIf($boolean)
-    {
-        return value($boolean) ? $this->dispatch() : null;
-    }
-
-    /**
-     * Dispatch the job chain unless the given truth test passes.
-     *
-     * @param  bool|\Closure  $boolean
-     * @return \Illuminate\Foundation\Bus\PendingDispatch|null
-     */
-    public function dispatchUnless($boolean)
-    {
-        return ! value($boolean) ? $this->dispatch() : null;
     }
 }

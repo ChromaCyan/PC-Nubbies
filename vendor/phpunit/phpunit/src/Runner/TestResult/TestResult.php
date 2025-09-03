@@ -124,11 +124,6 @@ final class TestResult
     private readonly array $phpWarnings;
 
     /**
-     * @psalm-var non-negative-int
-     */
-    private readonly int $numberOfIssuesIgnoredByBaseline;
-
-    /**
      * @psalm-param list<BeforeFirstTestMethodErrored|Errored> $testErroredEvents
      * @psalm-param list<Failed> $testFailedEvents
      * @psalm-param array<string,list<ConsideredRisky>> $testConsideredRiskyEvents
@@ -147,9 +142,8 @@ final class TestResult
      * @psalm-param list<Issue> $phpDeprecations
      * @psalm-param list<Issue> $phpNotices
      * @psalm-param list<Issue> $phpWarnings
-     * @psalm-param non-negative-int $numberOfIssuesIgnoredByBaseline
      */
-    public function __construct(int $numberOfTests, int $numberOfTestsRun, int $numberOfAssertions, array $testErroredEvents, array $testFailedEvents, array $testConsideredRiskyEvents, array $testSuiteSkippedEvents, array $testSkippedEvents, array $testMarkedIncompleteEvents, array $testTriggeredPhpunitDeprecationEvents, array $testTriggeredPhpunitErrorEvents, array $testTriggeredPhpunitWarningEvents, array $testRunnerTriggeredDeprecationEvents, array $testRunnerTriggeredWarningEvents, array $errors, array $deprecations, array $notices, array $warnings, array $phpDeprecations, array $phpNotices, array $phpWarnings, int $numberOfIssuesIgnoredByBaseline)
+    public function __construct(int $numberOfTests, int $numberOfTestsRun, int $numberOfAssertions, array $testErroredEvents, array $testFailedEvents, array $testConsideredRiskyEvents, array $testSuiteSkippedEvents, array $testSkippedEvents, array $testMarkedIncompleteEvents, array $testTriggeredPhpunitDeprecationEvents, array $testTriggeredPhpunitErrorEvents, array $testTriggeredPhpunitWarningEvents, array $testRunnerTriggeredDeprecationEvents, array $testRunnerTriggeredWarningEvents, array $errors, array $deprecations, array $notices, array $warnings, array $phpDeprecations, array $phpNotices, array $phpWarnings)
     {
         $this->numberOfTests                         = $numberOfTests;
         $this->numberOfTestsRun                      = $numberOfTestsRun;
@@ -172,7 +166,6 @@ final class TestResult
         $this->phpDeprecations                       = $phpDeprecations;
         $this->phpNotices                            = $phpNotices;
         $this->phpWarnings                           = $phpWarnings;
-        $this->numberOfIssuesIgnoredByBaseline       = $numberOfIssuesIgnoredByBaseline;
     }
 
     public function numberOfTestsRun(): int
@@ -535,18 +528,5 @@ final class TestResult
     public function hasSkippedTests(): bool
     {
         return !empty($this->testSkippedEvents);
-    }
-
-    public function hasIssuesIgnoredByBaseline(): bool
-    {
-        return $this->numberOfIssuesIgnoredByBaseline > 0;
-    }
-
-    /**
-     * @psalm-return non-negative-int
-     */
-    public function numberOfIssuesIgnoredByBaseline(): int
-    {
-        return $this->numberOfIssuesIgnoredByBaseline;
     }
 }

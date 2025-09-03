@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\TextUI\Command;
 
-use const PHP_EOL;
 use function printf;
 use PHPUnit\TextUI\Configuration\CodeCoverageFilterRegistry;
 use PHPUnit\TextUI\Configuration\Configuration;
@@ -69,7 +68,7 @@ final class WarmCodeCoverageCacheCommand implements Command
         printf(
             '[%s]%s',
             $timer->stop()->asString(),
-            PHP_EOL,
+            \PHP_EOL,
         );
 
         return Result::from();

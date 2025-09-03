@@ -11,7 +11,6 @@ namespace PHPUnit\Framework\MockObject\Rule;
 
 use function is_string;
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\InvalidArgumentException;
 use PHPUnit\Framework\MockObject\Invocation as BaseInvocation;
 use PHPUnit\Framework\MockObject\MethodNameConstraint;
@@ -41,7 +40,7 @@ final class MethodName
     }
 
     /**
-     * @throws ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function matches(BaseInvocation $invocation): bool
     {
@@ -49,7 +48,7 @@ final class MethodName
     }
 
     /**
-     * @throws ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function matchesName(string $methodName): bool
     {

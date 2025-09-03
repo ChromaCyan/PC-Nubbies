@@ -70,7 +70,7 @@ class GroupHandler extends Handler implements ProcessableHandlerInterface, Reset
         }
 
         foreach ($this->handlers as $handler) {
-            $handler->handle(clone $record);
+            $handler->handle($record);
         }
 
         return false === $this->bubble;
@@ -90,7 +90,7 @@ class GroupHandler extends Handler implements ProcessableHandlerInterface, Reset
         }
 
         foreach ($this->handlers as $handler) {
-            $handler->handleBatch(array_map(fn ($record) => clone $record, $records));
+            $handler->handleBatch($records);
         }
     }
 

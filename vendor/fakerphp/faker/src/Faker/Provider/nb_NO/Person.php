@@ -288,7 +288,8 @@ class Person extends \Faker\Provider\Person
      *
      * @see https://no.wikipedia.org/wiki/Personnummer
      *
-     * @param string $gender Person::GENDER_MALE || Person::GENDER_FEMALE
+     * @param \DateTime $birthdate
+     * @param string    $gender    Person::GENDER_MALE || Person::GENDER_FEMALE
      *
      * @return string on format DDMMYY#####
      */

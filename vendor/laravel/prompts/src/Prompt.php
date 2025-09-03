@@ -6,7 +6,6 @@ use Closure;
 use Laravel\Prompts\Output\ConsoleOutput;
 use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
-use Throwable;
 
 abstract class Prompt
 {
@@ -16,7 +15,6 @@ abstract class Prompt
     use Concerns\Events;
     use Concerns\FakesInputOutput;
     use Concerns\Fallback;
-    use Concerns\Interactivity;
     use Concerns\Themes;
 
     /**
@@ -45,24 +43,14 @@ abstract class Prompt
     public bool|string $required;
 
     /**
-     * The validator callback or rules.
+     * The validator callback.
      */
-    public mixed $validate;
-
-    /**
-     * The cancellation callback.
-     */
-    protected static Closure $cancelUsing;
+    protected ?Closure $validate;
 
     /**
      * Indicates if the prompt has been validated.
      */
     protected bool $validated = false;
-
-    /**
-     * The custom validation callback.
-     */
-    protected static ?Closure $validateUsing;
 
     /**
      * The output instance.
@@ -84,61 +72,39 @@ abstract class Prompt
      */
     public function prompt(): mixed
     {
-        try {
-            $this->capturePreviousNewLines();
+        $this->capturePreviousNewLines();
 
-            if (static::shouldFallback()) {
-                return $this->fallback();
-            }
+        if (static::shouldFallback()) {
+            return $this->fallback();
+        }
 
-            static::$interactive ??= stream_isatty(STDIN);
+        $this->checkEnvironment();
 
-            if (! static::$interactive) {
-                return $this->default();
-            }
+        register_shutdown_function(function () {
+            $this->restoreCursor();
+            static::terminal()->restoreTty();
+        });
 
-            $this->checkEnvironment();
+        static::terminal()->setTty('-icanon -isig -echo');
+        $this->hideCursor();
+        $this->render();
 
-            try {
-                static::terminal()->setTty('-icanon -isig -echo');
-            } catch (Throwable $e) {
-                static::output()->writeln("<comment>{$e->getMessage()}</comment>");
-                static::fallbackWhen(true);
+        while (($key = static::terminal()->read()) !== null) {
+            $continue = $this->handleKeyPress($key);
 
-                return $this->fallback();
-            }
-
-            $this->hideCursor();
             $this->render();
 
-            while (($key = static::terminal()->read()) !== null) {
-                $continue = $this->handleKeyPress($key);
+            if ($continue === false || $key === Key::CTRL_C) {
+                $this->restoreCursor();
+                static::terminal()->restoreTty();
 
-                $this->render();
-
-                if ($continue === false || $key === Key::CTRL_C) {
-                    if ($key === Key::CTRL_C) {
-                        if (isset(static::$cancelUsing)) {
-                            return (static::$cancelUsing)();
-                        } else {
-                            static::terminal()->exit();
-                        }
-                    }
-
-                    return $this->value();
+                if ($key === Key::CTRL_C) {
+                    static::terminal()->exit();
                 }
-            }
-        } finally {
-            $this->clearListeners();
-        }
-    }
 
-    /**
-     * Register a callback to be invoked when a user cancels a prompt.
-     */
-    public static function cancelUsing(Closure $callback): void
-    {
-        static::$cancelUsing = $callback;
+                return $this->value();
+            }
+        }
     }
 
     /**
@@ -193,14 +159,6 @@ abstract class Prompt
     public static function terminal(): Terminal
     {
         return static::$terminal ??= new Terminal();
-    }
-
-    /**
-     * Set the custom validation callback.
-     */
-    public static function validateUsing(Closure $callback): void
-    {
-        static::$validateUsing = $callback;
     }
 
     /**
@@ -337,39 +295,27 @@ abstract class Prompt
     {
         $this->validated = true;
 
-        if ($this->required !== false && $this->isInvalidWhenRequired($value)) {
+        if (($this->required ?? false) && ($value === '' || $value === [] || $value === false)) {
             $this->state = 'error';
-            $this->error = is_string($this->required) && strlen($this->required) > 0 ? $this->required : 'Required.';
+            $this->error = is_string($this->required) ? $this->required : 'Required.';
 
             return;
         }
 
-        if (! isset($this->validate) && ! isset(static::$validateUsing)) {
+        if (! isset($this->validate)) {
             return;
         }
 
-        $error = match (true) {
-            is_callable($this->validate) => ($this->validate)($value),
-            isset(static::$validateUsing) => (static::$validateUsing)($this),
-            default => throw new RuntimeException('The validation logic is missing.'),
-        };
+        $error = ($this->validate)($value);
 
         if (! is_string($error) && ! is_null($error)) {
-            throw new RuntimeException('The validator must return a string or null.');
+            throw new \RuntimeException('The validator must return a string or null.');
         }
 
         if (is_string($error) && strlen($error) > 0) {
             $this->state = 'error';
             $this->error = $error;
         }
-    }
-
-    /**
-     * Determine whether the given value is invalid when the prompt is required.
-     */
-    protected function isInvalidWhenRequired(mixed $value): bool
-    {
-        return $value === '' || $value === [] || $value === false || $value === null;
     }
 
     /**
@@ -380,15 +326,5 @@ abstract class Prompt
         if (PHP_OS_FAMILY === 'Windows') {
             throw new RuntimeException('Prompts is not currently supported on Windows. Please use WSL or configure a fallback.');
         }
-    }
-
-    /**
-     * Restore the cursor and terminal state.
-     */
-    public function __destruct()
-    {
-        $this->restoreCursor();
-
-        static::terminal()->restoreTty();
     }
 }

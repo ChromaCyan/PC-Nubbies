@@ -16,42 +16,26 @@ use PHPUnit\Runner\Version;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
- *
- * @codeCoverageIgnore
  */
 final class VersionCheckCommand implements Command
 {
     public function execute(): Result
     {
-        $latestVersion           = file_get_contents('https://phar.phpunit.de/latest-version-of/phpunit');
-        $latestCompatibleVersion = file_get_contents('https://phar.phpunit.de/latest-version-of/phpunit-' . Version::majorVersionNumber());
+        $latestVersion = file_get_contents('https://phar.phpunit.de/latest-version-of/phpunit');
+        $isOutdated    = version_compare($latestVersion, Version::id(), '>');
 
-        $notLatest           = version_compare($latestVersion, Version::id(), '>');
-        $notLatestCompatible = version_compare($latestCompatibleVersion, Version::id(), '>');
-
-        if (!$notLatest && !$notLatestCompatible) {
+        if ($isOutdated) {
             return Result::from(
-                'You are using the latest version of PHPUnit.' . PHP_EOL,
+                sprintf(
+                    'You are not using the latest version of PHPUnit.' . PHP_EOL .
+                    'The latest version is PHPUnit %s.' . PHP_EOL,
+                    $latestVersion,
+                ),
             );
         }
 
-        $buffer = 'You are not using the latest version of PHPUnit.' . PHP_EOL;
-
-        if ($notLatestCompatible) {
-            $buffer .= sprintf(
-                'The latest version compatible with PHPUnit %s is PHPUnit %s.' . PHP_EOL,
-                Version::id(),
-                $latestCompatibleVersion,
-            );
-        }
-
-        if ($notLatest) {
-            $buffer .= sprintf(
-                'The latest version is PHPUnit %s.' . PHP_EOL,
-                $latestVersion,
-            );
-        }
-
-        return Result::from($buffer);
+        return Result::from(
+            'You are using the latest version of PHPUnit.' . PHP_EOL,
+        );
     }
 }

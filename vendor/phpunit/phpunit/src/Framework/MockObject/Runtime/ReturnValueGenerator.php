@@ -178,7 +178,7 @@ final class ReturnValueGenerator
      *
      * @throws RuntimeException
      */
-    private function newInstanceOf(string $stubClassName, string $className, string $methodName): Stub
+    private function newInstanceOf(string $stubClassName, string $className, string $methodName): MockObject
     {
         try {
             return (new ReflectionClass($stubClassName))->newInstanceWithoutConstructor();
@@ -201,10 +201,10 @@ final class ReturnValueGenerator
      *
      * @throws RuntimeException
      */
-    private function testDoubleFor(string $type, string $className, string $methodName): Stub
+    private function testDoubleFor(string $type, string $className, string $methodName): MockObject
     {
         try {
-            return (new Generator)->testDouble($type, false, [], [], '', false);
+            return (new Generator)->getMock($type, [], [], '', false);
         } catch (Throwable $t) {
             throw new RuntimeException(
                 sprintf(
@@ -224,10 +224,10 @@ final class ReturnValueGenerator
      *
      * @throws RuntimeException
      */
-    private function testDoubleForIntersectionOfInterfaces(array $types, string $className, string $methodName): Stub
+    private function testDoubleForIntersectionOfInterfaces(array $types, string $className, string $methodName): MockObject
     {
         try {
-            return (new Generator)->testDoubleForInterfaceIntersection($types, false);
+            return (new Generator)->getMockForInterfaces($types);
         } catch (Throwable $t) {
             throw new RuntimeException(
                 sprintf(

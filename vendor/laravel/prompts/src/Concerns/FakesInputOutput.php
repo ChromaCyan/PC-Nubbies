@@ -16,9 +16,6 @@ trait FakesInputOutput
      */
     public static function fake(array $keys = []): void
     {
-        // Force interactive mode when testing because we will be mocking the terminal.
-        static::interactive();
-
         $mock = \Mockery::mock(Terminal::class);
 
         $mock->shouldReceive('write')->byDefault();

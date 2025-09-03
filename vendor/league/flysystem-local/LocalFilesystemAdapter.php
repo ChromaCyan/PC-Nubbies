@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace League\Flysystem\Local;
 
-use const DIRECTORY_SEPARATOR;
-use const LOCK_EX;
 use DirectoryIterator;
 use FilesystemIterator;
 use Generator;
@@ -46,6 +44,8 @@ use function is_dir;
 use function is_file;
 use function mkdir;
 use function rename;
+use const DIRECTORY_SEPARATOR;
+use const LOCK_EX;
 
 class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
 {
@@ -76,16 +76,12 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         private int $linkHandling = self::DISALLOW_LINKS,
         MimeTypeDetector $mimeTypeDetector = null,
         bool $lazyRootCreation = false,
-        bool $useInconclusiveMimeTypeFallback = false,
     ) {
         $this->prefixer = new PathPrefixer($location, DIRECTORY_SEPARATOR);
         $visibility ??= new PortableVisibilityConverter();
         $this->visibility = $visibility;
         $this->rootLocation = $location;
-        $this->mimeTypeDetector = $mimeTypeDetector ?? new FallbackMimeTypeDetector(
-            detector: new FinfoMimeTypeDetector(),
-            useInconclusiveMimeTypeFallback: $useInconclusiveMimeTypeFallback,
-        );
+        $this->mimeTypeDetector = $mimeTypeDetector ?: new FallbackMimeTypeDetector(new FinfoMimeTypeDetector());
 
         if ( ! $lazyRootCreation) {
             $this->ensureRootDirectoryExists();
@@ -99,7 +95,6 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         }
 
         $this->ensureDirectoryExists($this->rootLocation, $this->visibility->defaultForDirectories());
-        $this->rootLocationIsSetup = true;
     }
 
     public function write(string $path, string $contents, Config $config): void
@@ -253,11 +248,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         );
 
         if ( ! @rename($sourcePath, $destinationPath)) {
-            throw UnableToMoveFile::because(error_get_last()['message'] ?? 'unknown reason', $source, $destination);
-        }
-
-        if ($visibility = $config->get(Config::OPTION_VISIBILITY)) {
-            $this->setVisibility($destination, (string) $visibility);
+            throw UnableToMoveFile::fromLocationTo($sourcePath, $destinationPath);
         }
     }
 
@@ -272,18 +263,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         );
 
         if ( ! @copy($sourcePath, $destinationPath)) {
-            throw UnableToCopyFile::because(error_get_last()['message'] ?? 'unknown', $source, $destination);
-        }
-
-        $visibility = $config->get(
-            Config::OPTION_VISIBILITY,
-            $config->get(Config::OPTION_RETAIN_VISIBILITY, true)
-                ? $this->visibility($source)->visibility()
-                : null,
-        );
-
-        if ($visibility) {
-            $this->setVisibility($destination, (string) $visibility);
+            throw UnableToCopyFile::fromLocationTo($sourcePath, $destinationPath);
         }
     }
 

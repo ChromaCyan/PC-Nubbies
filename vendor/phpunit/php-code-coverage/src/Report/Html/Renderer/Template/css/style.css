@@ -120,7 +120,7 @@ svg text {
 
 .scrollbox {
  height:245px;
- overflow-x:scroll;
+ overflow-x:hidden;
  overflow-y:scroll;
 }
 

@@ -55,7 +55,7 @@ $processHoursFunction = function (CarbonInterface $date, string $format) {
  */
 return [
     'year' => ':count рік|:count роки|:count років',
-    'y' => ':countр|:countрр|:countрр',
+    'y' => ':countр',
     'a_year' => '{1}рік|:count рік|:count роки|:count років',
     'month' => ':count місяць|:count місяці|:count місяців',
     'm' => ':countм',

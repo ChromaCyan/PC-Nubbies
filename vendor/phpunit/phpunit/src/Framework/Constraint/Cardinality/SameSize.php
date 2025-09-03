@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-use Countable;
 use PHPUnit\Framework\Exception;
 
 /**
@@ -18,7 +17,7 @@ use PHPUnit\Framework\Exception;
 final class SameSize extends Count
 {
     /**
-     * @psalm-param Countable|iterable $expected
+     * @psalm-param \Countable|iterable $expected
      *
      * @throws Exception
      */

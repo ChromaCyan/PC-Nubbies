@@ -61,7 +61,7 @@ abstract class Seeder
             $seeder->__invoke($parameters);
 
             if ($silent === false && isset($this->command)) {
-                $runTime = number_format((microtime(true) - $startTime) * 1000);
+                $runTime = number_format((microtime(true) - $startTime) * 1000, 2);
 
                 with(new TwoColumnDetail($this->command->getOutput()))->render(
                     $name,

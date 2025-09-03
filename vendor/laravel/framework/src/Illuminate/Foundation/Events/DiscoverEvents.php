@@ -29,7 +29,7 @@ class DiscoverEvents
     public static function within($listenerPath, $basePath)
     {
         $listeners = collect(static::getListenerEvents(
-            Finder::create()->files()->in($listenerPath), $basePath
+            (new Finder)->files()->in($listenerPath), $basePath
         ));
 
         $discoveredEvents = [];

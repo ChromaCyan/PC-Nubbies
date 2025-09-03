@@ -9,8 +9,6 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-use PHPUnit\Util\Exporter;
-
 /**
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  */
@@ -26,9 +24,9 @@ final class LessThan extends Constraint
     /**
      * Returns a string representation of the constraint.
      */
-    public function toString(bool $exportObjects = false): string
+    public function toString(): string
     {
-        return 'is less than ' . Exporter::export($this->value, $exportObjects);
+        return 'is less than ' . $this->exporter()->export($this->value);
     }
 
     /**

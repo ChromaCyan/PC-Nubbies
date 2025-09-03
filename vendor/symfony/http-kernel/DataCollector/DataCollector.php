@@ -82,9 +82,6 @@ abstract class DataCollector implements DataCollectorInterface
         return ['data'];
     }
 
-    /**
-     * @return void
-     */
     public function __wakeup()
     {
     }
@@ -101,13 +98,5 @@ abstract class DataCollector implements DataCollectorInterface
      */
     final protected function unserialize(string $data): void
     {
-    }
-
-    /**
-     * @return void
-     */
-    public function reset()
-    {
-        $this->data = [];
     }
 }

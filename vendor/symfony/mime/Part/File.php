@@ -18,7 +18,7 @@ use Symfony\Component\Mime\MimeTypes;
  */
 class File
 {
-    private static MimeTypes $mimeTypes;
+    private static $mimeTypes;
 
     public function __construct(
         private string $path,

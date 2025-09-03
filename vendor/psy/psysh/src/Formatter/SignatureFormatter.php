@@ -11,7 +11,8 @@
 
 namespace Psy\Formatter;
 
-use Psy\Reflection\ReflectionConstant;
+use Psy\Reflection\ReflectionClassConstant;
+use Psy\Reflection\ReflectionConstant_;
 use Psy\Reflection\ReflectionLanguageConstruct;
 use Psy\Util\Json;
 use Symfony\Component\Console\Formatter\OutputFormatter;
@@ -41,6 +42,7 @@ class SignatureFormatter implements ReflectorFormatter
                 // this case also covers \ReflectionObject
                 return self::formatClass($reflector);
 
+            case $reflector instanceof ReflectionClassConstant:
             case $reflector instanceof \ReflectionClassConstant:
                 return self::formatClassConstant($reflector);
 
@@ -50,7 +52,7 @@ class SignatureFormatter implements ReflectorFormatter
             case $reflector instanceof \ReflectionProperty:
                 return self::formatProperty($reflector);
 
-            case $reflector instanceof ReflectionConstant:
+            case $reflector instanceof ReflectionConstant_:
                 return self::formatConstant($reflector);
 
             default:
@@ -61,7 +63,7 @@ class SignatureFormatter implements ReflectorFormatter
     /**
      * Print the signature name.
      *
-     * @param \ReflectionClass|\ReflectionClassConstant|\ReflectionFunctionAbstract $reflector
+     * @param \ReflectionClass|ReflectionClassConstant|\ReflectionClassConstant|\ReflectionFunctionAbstract $reflector
      *
      * @return string Formatted name
      */
@@ -128,7 +130,7 @@ class SignatureFormatter implements ReflectorFormatter
     /**
      * Format a constant signature.
      *
-     * @param \ReflectionClassConstant $reflector
+     * @param ReflectionClassConstant|\ReflectionClassConstant $reflector
      *
      * @return string Formatted signature
      */
@@ -149,11 +151,11 @@ class SignatureFormatter implements ReflectorFormatter
     /**
      * Format a constant signature.
      *
-     * @param ReflectionConstant $reflector
+     * @param ReflectionConstant_ $reflector
      *
      * @return string Formatted signature
      */
-    private static function formatConstant(ReflectionConstant $reflector): string
+    private static function formatConstant(ReflectionConstant_ $reflector): string
     {
         $value = $reflector->getValue();
         $style = self::getTypeStyle($value);
@@ -232,7 +234,7 @@ class SignatureFormatter implements ReflectorFormatter
             return '';
         }
 
-        return \sprintf(': %s', self::formatReflectionType($reflector->getReturnType(), true));
+        return \sprintf(': %s', self::formatReflectionType($reflector->getReturnType()));
     }
 
     /**
@@ -265,9 +267,7 @@ class SignatureFormatter implements ReflectorFormatter
             $hint = '';
             try {
                 if (\method_exists($param, 'getType')) {
-                    // Only include the inquisitive nullable type iff param default value is not null.
-                    $defaultIsNull = $param->isOptional() && $param->isDefaultValueAvailable() && $param->getDefaultValue() === null;
-                    $hint = self::formatReflectionType($param->getType(), !$defaultIsNull);
+                    $hint = self::formatReflectionType($param->getType());
                 } else {
                     if ($param->isArray()) {
                         $hint = '<keyword>array</keyword>';
@@ -323,36 +323,25 @@ class SignatureFormatter implements ReflectorFormatter
      *
      * @param \ReflectionType $type
      */
-    private static function formatReflectionType(?\ReflectionType $type, bool $indicateNullable): string
+    private static function formatReflectionType(\ReflectionType $type = null): string
     {
         if ($type === null) {
             return '';
         }
 
-        if ($type instanceof \ReflectionUnionType) {
-            $delimeter = '|';
-        } elseif ($type instanceof \ReflectionIntersectionType) {
-            $delimeter = '&';
-        } else {
-            return self::formatReflectionNamedType($type, $indicateNullable);
-        }
-
+        $types = $type instanceof \ReflectionUnionType ? $type->getTypes() : [$type];
         $formattedTypes = [];
-        foreach ($type->getTypes() as $namedType) {
-            $formattedTypes[] = self::formatReflectionNamedType($namedType, $indicateNullable);
+
+        foreach ($types as $type) {
+            $typeStyle = $type->isBuiltin() ? 'keyword' : 'class';
+
+            // PHP 7.0 didn't have `getName` on reflection types, so wheee!
+            $typeName = \method_exists($type, 'getName') ? $type->getName() : (string) $type;
+
+            // @todo Do we want to include the ? for nullable types? Maybe only sometimes?
+            $formattedTypes[] = \sprintf('<%s>%s</%s>', $typeStyle, OutputFormatter::escape($typeName), $typeStyle);
         }
 
-        return \implode($delimeter, $formattedTypes);
-    }
-
-    /**
-     * Print a single named type.
-     */
-    private static function formatReflectionNamedType(\ReflectionNamedType $type, bool $indicateNullable): string
-    {
-        $typeStyle = $type->isBuiltin() ? 'keyword' : 'class';
-        $nullable = $indicateNullable && $type->allowsNull() ? '?' : '';
-
-        return \sprintf('<%s>%s%s</%s>', $typeStyle, $nullable, OutputFormatter::escape($type->getName()), $typeStyle);
+        return \implode('|', $formattedTypes);
     }
 }

@@ -38,7 +38,6 @@ namespace Illuminate\Support\Facades;
  * @method static bool isProduction()
  * @method static string detectEnvironment(\Closure $callback)
  * @method static bool runningInConsole()
- * @method static bool runningConsoleCommand(string|array ...$commands)
  * @method static bool runningUnitTests()
  * @method static bool hasDebugModeEnabled()
  * @method static void registerConfiguredProviders()

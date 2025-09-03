@@ -52,7 +52,7 @@ class RequirePass extends CodeCleanerPass
         $node->expr = new StaticCall(
             new FullyQualifiedName(self::class),
             'resolve',
-            [new Arg($origNode->expr), new Arg(new LNumber($origNode->getStartLine()))],
+            [new Arg($origNode->expr), new Arg(new LNumber($origNode->getLine()))],
             $origNode->getAttributes()
         );
 
@@ -71,11 +71,11 @@ class RequirePass extends CodeCleanerPass
      * @throws ErrorException      if $file is empty and E_WARNING is included in error_reporting level
      *
      * @param string $file
-     * @param int    $startLine Line number of the original require expression
+     * @param int    $lineNumber Line number of the original require expression
      *
      * @return string Exactly the same as $file, unless $file collides with a path in the currently running phar
      */
-    public static function resolve($file, $startLine = null): string
+    public static function resolve($file, $lineNumber = null): string
     {
         $file = (string) $file;
 
@@ -84,7 +84,7 @@ class RequirePass extends CodeCleanerPass
             // fake the file and line number, but we can't call it statically.
             // So we're duplicating some of the logics here.
             if (\E_WARNING & \error_reporting()) {
-                ErrorException::throwException(\E_WARNING, 'Filename cannot be empty', null, $startLine);
+                ErrorException::throwException(\E_WARNING, 'Filename cannot be empty', null, $lineNumber);
             }
             // @todo trigger an error as fallback? this is pretty ugly…
             // trigger_error('Filename cannot be empty', E_USER_WARNING);
@@ -93,7 +93,7 @@ class RequirePass extends CodeCleanerPass
         $resolvedPath = \stream_resolve_include_path($file);
         if ($file === '' || !$resolvedPath) {
             $msg = \sprintf("Failed opening required '%s'", $file);
-            throw new FatalErrorException($msg, 0, \E_ERROR, null, $startLine);
+            throw new FatalErrorException($msg, 0, \E_ERROR, null, $lineNumber);
         }
 
         // Special case: if the path is not already relative or absolute, and it would resolve to

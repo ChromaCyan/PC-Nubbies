@@ -74,7 +74,7 @@ final class Loader
         // Required for XInclude
         if ($filename !== null) {
             // Required for XInclude on Windows
-            if (PHP_OS_FAMILY === 'Windows') {
+            if (DIRECTORY_SEPARATOR === '\\') {
                 $cwd = getcwd();
                 @chdir(dirname($filename));
             }

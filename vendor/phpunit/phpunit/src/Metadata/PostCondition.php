@@ -16,9 +16,6 @@ namespace PHPUnit\Metadata;
  */
 final class PostCondition extends Metadata
 {
-    /**
-     * @psalm-assert-if-true PostCondition $this
-     */
     public function isPostCondition(): bool
     {
         return true;

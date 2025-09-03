@@ -19,7 +19,6 @@ use PhpOption\Some;
 /**
  * @template T
  * @template E
- *
  * @extends \GrahamCampbell\ResultType\Result<T,E>
  */
 final class Error extends Result

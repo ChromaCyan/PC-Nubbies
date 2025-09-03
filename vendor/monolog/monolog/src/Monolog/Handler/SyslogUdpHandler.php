@@ -142,8 +142,6 @@ class SyslogUdpHandler extends AbstractSyslogHandler
 
     /**
      * Inject your own socket, mainly used for testing
-     *
-     * @return $this
      */
     public function setSocket(UdpSocket $socket): self
     {

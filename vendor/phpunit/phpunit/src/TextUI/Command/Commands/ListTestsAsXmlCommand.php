@@ -60,13 +60,9 @@ final class ListTestsAsXmlCommand implements Command
                 }
 
                 $writer->startElement('testCaseMethod');
-                $writer->writeAttribute('id', $test->valueObjectForEvents()->id());
                 $writer->writeAttribute('name', $test->name());
                 $writer->writeAttribute('groups', implode(',', $test->groups()));
 
-                /**
-                 * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5481
-                 */
                 if (!empty($test->dataSetAsString())) {
                     $writer->writeAttribute(
                         'dataSet',
@@ -79,11 +75,7 @@ final class ListTestsAsXmlCommand implements Command
                 }
 
                 $writer->endElement();
-
-                continue;
-            }
-
-            if ($test instanceof PhptTestCase) {
+            } elseif ($test instanceof PhptTestCase) {
                 if ($currentTestCase !== null) {
                     $writer->endElement();
 

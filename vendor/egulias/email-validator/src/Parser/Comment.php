@@ -66,28 +66,29 @@ class Comment extends PartParser
 
         $finalValidations = $this->commentStrategy->endOfLoopValidations($this->lexer);
 
-        $this->warnings = [...$this->warnings, ...$this->commentStrategy->getWarnings()];
+        $this->warnings = array_merge($this->warnings, $this->commentStrategy->getWarnings());
 
         return $finalValidations;
     }
 
 
     /**
-     * @return void
+     * @return bool
      */
-    private function warnEscaping(): void
+    private function warnEscaping(): bool
     {
         //Backslash found
         if (!$this->lexer->current->isA(EmailLexer::S_BACKSLASH)) {
-            return;
+            return false;
         }
 
         if (!$this->lexer->isNextTokenAny(array(EmailLexer::S_SP, EmailLexer::S_HTAB, EmailLexer::C_DEL))) {
-            return;
+            return false;
         }
 
         $this->warnings[QuotedPart::CODE] =
             new QuotedPart($this->lexer->getPrevious()->type, $this->lexer->current->type);
+        return true;
     }
 
     private function noClosingParenthesis(): bool

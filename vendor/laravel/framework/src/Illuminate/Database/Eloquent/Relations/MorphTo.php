@@ -226,7 +226,7 @@ class MorphTo extends BelongsTo
     /**
      * Associate the model instance to the given parent.
      *
-     * @param  \Illuminate\Database\Eloquent\Model|null  $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function associate($model)
